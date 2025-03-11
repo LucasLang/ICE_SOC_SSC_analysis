@@ -1,1 +1,16 @@
+outfolder = "../results"
+
 rule all:
+    input:
+        f"{outfolder}/ICE_transition_energies"
+
+rule extract_transitionenergies:
+    input:
+        ORCAfile = "../resources/ORCA/O2/CAS_12_60_9roots/mol.mpi24.out"
+    output:
+        f"{outfolder}/ICE_transition_energies"
+    params:
+        outfolder = outfolder
+    shell:
+        "julia scripts/extract_transitionenergies.jl {input.ORCAfile} {params.outfolder}"
+        
