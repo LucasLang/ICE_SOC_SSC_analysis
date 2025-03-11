@@ -6,7 +6,8 @@ rule all:
         "../results/ZFS_SOC_4roots",
         "../results/ZFS_SOC_9roots",
         "../results/ZFS_SOCSSC_4roots",
-        "../results/ZFS_SOCSSC_9roots"
+        "../results/ZFS_SOCSSC_9roots",
+        "../results/MoHIPT_gvalues"
 
 
 rule extract_transitionenergies:
@@ -44,6 +45,13 @@ rule extract_ZFS:
     output:
         "../results/ZFS_{settings}_{num}roots"
     shell:
-        """
-        julia scripts/extract_ZFS.jl {input} {wildcards.settings} {output}
-        """
+        "julia scripts/extract_ZFS.jl {input} {wildcards.settings} {output}"
+
+rule extract_gvalues:
+    input:
+        "../resources/ORCA/MoHIPT/STEP5_CASCI_49_33_gtensor/mol.mpi24.out"
+    output:
+        "../results/MoHIPT_gvalues"
+    shell:
+        "julia scripts/extract_gvalues.jl {input} {output}"
+
