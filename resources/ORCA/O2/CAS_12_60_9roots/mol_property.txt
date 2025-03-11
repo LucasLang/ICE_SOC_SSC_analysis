@@ -1,0 +1,181 @@
+*************************************************
+******************* ORCA 5.0  *******************
+* Some details about default units
+*************************************************
+$Calculation_Status
+   &Description 
+   &GeometryIndex 1
+   &PROGNAME [&Type "String"] "ProgCAS"
+   &STATUS [&Type "String"] "NORMAL TERMINATION"
+$End
+$Geometry
+   &Description The current geometry
+   &GeometryIndex 1
+   &NATOMS [&Type "Integer"] 2
+   &NCORELESSECP [&Type "Integer"] 0
+   &NGHOSTATOMS [&Type "Integer"] 0
+   &CartesianCoordinates [&Type "Coordinates", &Dim(2,4), &Units "Bohr"] 
+              O      0.000000000000    0.000000000000    0.000000000000
+              O      0.000000000000    0.000000000000    0.000581418504
+$End
+$PAL_Flags
+   &Description 
+   &GeometryIndex 1
+   &DISKFLAG [&Type "Integer"] 2
+$End
+$CASSCF_Energies
+   &Description The CASSCF energies
+   &GeometryIndex 1
+   &NUMOFELECTRONS [&Type "Integer"] 16
+   &NUMOFFCELECTRONS [&Type "Integer"] 0
+   &NUMOFACTIVEEL [&Type "Integer"] 12 "Number of active electrons"
+   &NUMOFACTIVEORBS [&Type "Integer"] 60 "number of active orbitals"
+   &NUMOFMULTIPLICITIES [&Type "Integer"] 2
+   &TOTALNUMOFROOTS [&Type "Integer"] 9
+   &FINALENERGY [&Type "Double"]          -1.499777533953e+02
+   &CASSCFEnergies [&Type "MixedMatrix", &Dim(9,5), &ColumnDatatypes "Integer Integer Integer Integer Double"] 
+ State    Mult   Irrep    Root              Energy
+
+     0       3       0       0       -150.12306942
+     1       3       0       1       -149.89460721
+     2       3       0       2       -149.89424390
+     3       3       0       3       -149.88945720
+     4       3       0       4       -149.79661549
+     5       1       0       0       -150.08991292
+     6       1       0       1       -150.08916837
+     7       1       0       2       -150.06522007
+     8       1       0       3       -149.89933122
+$End
+$Mayer_Pop
+   &Description The Mayer population analysis
+   &GeometryIndex 1
+   &NATOMS [&Type "Integer"] 2
+   &NBONDORDERSPRINT [&Type "Integer"] 1
+   &BONDTHRESH [&Type "Double"]           1.000000000000e-01  "The threshold for printing"
+$End
+$Prop_CASSCF_DTensor
+   &Description 
+   &GeometryIndex 1
+   &DENSTYPE [&Type "Integer"] 0
+   &MULT [&Type "Integer"] 3
+   &D_RAW [&Type "ArrayOfDoubles", &Dim (3,3)] 
+                                                         0                           1                           2
+
+0                                          3.597362633735e-31             2.182963997278e-31             2.871278333094e-28
+1                                          2.182963997278e-31             1.324673739790e-31             1.742359018390e-28
+2                                          2.871278333094e-28             1.742359018390e-28             2.291745399472e-25
+   &D_EIGENVALUES [&Type "ArrayOfDoubles", &Dim (3,1)] 
+                                                         0
+
+0                                         -1.361393908674e-29
+1                                         -5.588081003870e-31
+2                                          2.389970374576e+00
+   &D_EIGENVECTORS [&Type "ArrayOfDoubles", &Dim (3,3)] 
+                                                         0                           1                           2
+
+0                                          9.820714661358e-01            -1.885089796319e-01             1.846411800626e-14
+1                                         -1.885089796319e-01            -9.820714661358e-01            -2.026844236364e-14
+2                                          2.195386683001e-14             1.642440686318e-14            -1.000000000000e+00
+   &D [&Type "Double"]           2.389970374576e+00
+   &E [&Type "Double"]           2.731232806321e-30
+$End
+$Prop_CASSCF_DTensor
+   &Description 
+   &GeometryIndex 1
+   &DENSTYPE [&Type "Integer"] 0
+   &MULT [&Type "Integer"] 3
+   &D_RAW [&Type "ArrayOfDoubles", &Dim (3,3)] 
+                                                         0                           1                           2
+
+0                                          0.000000000000e+00             0.000000000000e+00             0.000000000000e+00
+1                                          0.000000000000e+00             0.000000000000e+00             0.000000000000e+00
+2                                          0.000000000000e+00             0.000000000000e+00             0.000000000000e+00
+   &D_EIGENVALUES [&Type "ArrayOfDoubles", &Dim (3,1)] 
+                                                         0
+
+0                                         -5.588081003870e-31
+1                                         -1.361393908674e-29
+2                                          2.389970374576e+00
+   &D_EIGENVECTORS [&Type "ArrayOfDoubles", &Dim (3,3)] 
+                                                         0                           1                           2
+
+0                                         -1.885089796319e-01             9.820714661358e-01             2.195386683001e-14
+1                                         -9.820714661358e-01            -1.885089796319e-01             1.642440686318e-14
+2                                         -2.026844236364e-14             1.846411800626e-14            -1.000000000000e+00
+   &D [&Type "Double"]           2.389970374576e+00
+   &E [&Type "Double"]           2.731232806321e-30
+$End
+$Prop_CASSCF_DTensor
+   &Description 
+   &GeometryIndex 1
+   &DENSTYPE [&Type "Integer"] 0
+   &MULT [&Type "Integer"] 3
+   &D_RAW [&Type "ArrayOfDoubles", &Dim (3,3)] 
+                                                         0                           1                           2
+
+0                                          0.000000000000e+00             0.000000000000e+00             0.000000000000e+00
+1                                          0.000000000000e+00             0.000000000000e+00             0.000000000000e+00
+2                                          0.000000000000e+00             0.000000000000e+00             0.000000000000e+00
+   &D_EIGENVALUES [&Type "ArrayOfDoubles", &Dim (3,1)] 
+                                                         0
+
+0                                          6.698076318566e-09
+1                                         -6.698076547136e-09
+2                                          2.389520641454e+00
+   &D_EIGENVECTORS [&Type "ArrayOfDoubles", &Dim (3,3)] 
+                                                         0                           1                           2
+
+0                                         -8.809656635084e-01            -4.731801979365e-01             1.210875930336e-12
+1                                          4.731801979365e-01            -8.809656635084e-01            -3.979361415956e-12
+2                                         -2.949695139858e-12             2.932718257754e-12            -1.000000000000e+00
+   &D [&Type "Double"]           2.389520641454e+00
+   &E [&Type "Double"]           2.803104654821e-09
+$End
+$Prop_CASSCF_DTensor
+   &Description 
+   &GeometryIndex 1
+   &DENSTYPE [&Type "Integer"] 0
+   &MULT [&Type "Integer"] 3
+   &D_RAW [&Type "ArrayOfDoubles", &Dim (3,3)] 
+                                                         0                           1                           2
+
+0                                          3.597362633735e-31             2.182963997278e-31             2.871278333094e-28
+1                                          2.182963997278e-31             1.324673739790e-31             1.742359018390e-28
+2                                          2.871278333094e-28             1.742359018390e-28             2.291745399472e-25
+   &D_EIGENVALUES [&Type "ArrayOfDoubles", &Dim (3,1)] 
+                                                         0
+
+0                                         -1.361393908674e-29
+1                                         -5.588081003870e-31
+2                                          2.389970374576e+00
+   &D_EIGENVECTORS [&Type "ArrayOfDoubles", &Dim (3,3)] 
+                                                         0                           1                           2
+
+0                                          9.820714661358e-01            -1.885089796319e-01             1.846411800626e-14
+1                                         -1.885089796319e-01            -9.820714661358e-01            -2.026844236364e-14
+2                                          2.195386683001e-14             1.642440686318e-14            -1.000000000000e+00
+   &D [&Type "Double"]           2.389970374576e+00
+   &E [&Type "Double"]           2.731232806321e-30
+$End
+$Calculation_Info
+   &Description 
+   &GeometryIndex 1
+   &MULT [&Type "Integer"] 3
+   &CHARGE [&Type "Integer"] 0
+   &NUMOFATOMS [&Type "Integer"] 2
+   &NUMOFELECTRONS [&Type "Integer"] 0
+   &NUMOFFCELECTRONS [&Type "Integer"] 1
+   &NUMOFCORRELECTRONS [&Type "Integer"] 0
+   &NUMOFBASISFUNCTS [&Type "Integer"] 62
+   &NUMOFAUXCBASISFUNCTS [&Type "Integer"] 152
+   &NUMOFAUXJBASISFUNCTS [&Type "Integer"] 0
+   &NUMOFAUXJKBASISFUNCTS [&Type "Integer"] 0
+   &NUMOFCABSBASISFUNCTS [&Type "Integer"] 0
+   &TOTALENERGY [&Type "Double"]          -1.499777533953e+02
+$End
+$Calculation_Timings
+   &Description 
+   &GeometryIndex 1
+   &NUMOFTIMINGS [&Type "Integer"] 47
+   &SUMOFTIMINGS [&Type "Double"]           0.000000000000e+00
+$End
