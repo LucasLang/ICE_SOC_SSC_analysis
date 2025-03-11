@@ -1,0 +1,3 @@
+The mergefrag guess orbitals are the (orthonormalized) combination of orbitals of the isolated ligands and the isolated metal center.
+
+For the Mo ion calculation, the orbitals of the initial PMODEL guess were rotated such that the Mo 4d orbitals are in the active space.

@@ -1,0 +1,149 @@
+*************************************************
+******************* ORCA 5.0  *******************
+* Some details about default units
+*************************************************
+$Calculation_Status
+   &Description            
+   &GeometryIndex 1
+   &PROGNAME [&Type "String"] "ProgCAS"
+   &STATUS [&Type "String"] "NORMAL TERMINATION"
+$End
+$Geometry
+   &Description            The current geometry
+   &GeometryIndex 1
+   &NATOMS [&Type "Integer"] 1
+   &NCORELESSECP [&Type "Integer"] 0
+   &NGHOSTATOMS [&Type "Integer"] 0
+   &CartesianCoordinates [&Type "Coordinates", &Dim(1,4), &Units "Bohr"] 
+              Mo     0.000000000000    0.000000000000    0.000000000000
+$End
+$PAL_Flags
+   &Description          
+   &GeometryIndex 1
+   &DISKFLAG [&Type "Integer"] -1
+$End
+$CASSCF_Energies
+   &Description        The CASSCF energies
+   &GeometryIndex 1
+   &NUMOFELECTRONS [&Type "Integer"] 39
+   &NUMOFFCELECTRONS [&Type "Integer"] 0
+   &NUMOFACTIVEEL [&Type "Integer"] 3 "Number of active electrons"
+   &NUMOFACTIVEORBS [&Type "Integer"] 5 "number of active orbitals"
+   &NUMOFMULTIPLICITIES [&Type "Integer"] 2
+   &TOTALNUMOFROOTS [&Type "Integer"] 50
+   &FINALENERGY [&Type "Double"]          -4.043214009966e+03
+   &CASSCFEnergies [&Type "MixedMatrix", &Dim(50,5), &ColumnDatatypes "Integer Integer Integer Integer Double"] 
+ State    Mult   Irrep    Root              Energy
+
+     0       4       0       0      -4043.50208547
+     1       4       0       1      -4043.49470219
+     2       4       0       2      -4043.49219832
+     3       4       0       3      -4043.46772710
+     4       4       0       4      -4043.09859075
+     5       4       0       5      -4043.09859075
+     6       4       0       6      -4043.09859075
+     7       4       0       7      -4043.08992512
+     8       4       0       8      -4043.06545391
+     9       4       0       9      -4043.06295003
+    10       2       0       0      -4043.45270703
+    11       2       0       1      -4043.45118385
+    12       2       0       2      -4043.45072393
+    13       2       0       3      -4043.44858415
+    14       2       0       4      -4043.44847440
+    15       2       0       5      -4043.44808055
+    16       2       0       6      -4043.44772866
+    17       2       0       7      -4043.44697979
+    18       2       0       8      -4043.44590165
+    19       2       0       9      -4043.43567647
+    20       2       0      10      -4043.43517292
+    21       2       0      11      -4043.43282734
+    22       2       0      12      -4043.42369451
+    23       2       0      13      -4043.42364094
+    24       2       0      14      -4043.42329456
+    25       2       0      15      -4043.41260621
+    26       2       0      16      -4043.37890008
+    27       2       0      17      -4043.36600491
+    28       2       0      18      -4043.36367419
+    29       2       0      19      -4043.35795883
+    30       2       0      20      -4043.05431118
+    31       2       0      21      -4043.05425351
+    32       2       0      22      -4043.05389608
+    33       2       0      23      -4043.04752856
+    34       2       0      24      -4043.04489768
+    35       2       0      25      -4043.04037653
+    36       2       0      26      -4043.03927186
+    37       2       0      27      -4043.03838227
+    38       2       0      28      -4043.03555319
+    39       2       0      29      -4043.02736573
+    40       2       0      30      -4043.02728846
+    41       2       0      31      -4043.02725868
+    42       2       0      32      -4043.02719364
+    43       2       0      33      -4043.01903061
+    44       2       0      34      -4043.01654763
+    45       2       0      35      -4042.96199688
+    46       2       0      36      -4042.55725944
+    47       2       0      37      -4042.55722973
+    48       2       0      38      -4042.55712251
+    49       2       0      39      -4042.55696059
+$End
+$Mayer_Pop
+   &Description       The Mayer population analysis
+   &GeometryIndex 1
+   &NATOMS [&Type "Integer"] 1
+   &NBONDORDERSPRINT [&Type "Integer"] 0
+   &BONDTHRESH [&Type "Double"]           1.000000000000e-01  "The threshold for printing"
+$End
+$CASSCF_ABS
+   &Description      
+   &GeometryIndex 1
+   &NROOTS [&Type "Integer"] 9
+   &DOVELOCITY [&Type "Boolean"] false
+   &CASSCF_ABS [&Type "MixedMatrix", &Dim(9,8), &ColumnDatatypes "Integer Double Double Double Double Double Double Double"] "ABSORPTION SPECTRUM VIA TRANSITION ELECTRIC DIPOLE MOMENTS"
+ State                        Energy                    Wavelength                          fosc                            T2                            TX                            TY                            TZ 
+                              (cm-1)                          (nm)                                                     (au**2)                          (au)                          (au)                          (au) 
+     0            1.620440842564e+03            6.171160178964e+03            4.340773126960e-21            5.688356040731e-18            0.000000000000e+00            0.000000000000e+00            0.000000000000e+00
+     1            2.169977726135e+03            4.608342232993e+03            1.654242867537e-21            1.618813656268e-18            0.000000000000e+00            0.000000000000e+00            0.000000000000e+00
+     2            7.540789452002e+03            1.326121099608e+03            1.943951904798e-20            5.474211410802e-18            0.000000000000e+00            0.000000000000e+00            0.000000000000e+00
+     3            8.855685505180e+04            1.129218059308e+02            1.601869561861e-20            3.841119591246e-19            0.000000000000e+00            0.000000000000e+00            0.000000000000e+00
+     4            8.855685508443e+04            1.129218058892e+02            3.744120946061e-19            8.978019593492e-18            0.000000000000e+00            0.000000000000e+00            0.000000000000e+00
+     5            8.855685509851e+04            1.129218058712e+02            1.519223656463e-20            3.642943149793e-19            0.000000000000e+00            0.000000000000e+00            0.000000000000e+00
+     6            9.045873894970e+04            1.105476388032e+02            7.359564503327e-19            1.727644777164e-17            0.000000000000e+00            0.000000000000e+00            0.000000000000e+00
+     7            9.582955067127e+04            1.043519449893e+02            1.113722461316e-19            2.467916100752e-18            0.000000000000e+00            0.000000000000e+00            0.000000000000e+00
+     8            9.637908756093e+04            1.037569482454e+02            3.710075275645e-20            8.174341466953e-19            0.000000000000e+00            0.000000000000e+00            0.000000000000e+00
+$End
+$CASSCF_CD
+   &Description     
+   &GeometryIndex 1
+   &NROOTS [&Type "Integer"] 9
+$End
+$CASSCF_Dipole_Moment
+   &Description    
+   &GeometryIndex 1
+   &NROOTS [&Type "Integer"] 9
+   &DIPOLE [&Type "ArrayOfDoubles", &Dim (1,4)] 
+                                                         0                           1                           2                           3
+
+0                                          8.707450114683e-10             1.946711681523e-09             3.583597890084e-11             2.132877742244e-09
+$End
+$Calculation_Info
+   &Description   
+   &GeometryIndex 1
+   &MULT [&Type "Integer"] 2
+   &CHARGE [&Type "Integer"] 3
+   &NUMOFATOMS [&Type "Integer"] 1
+   &NUMOFELECTRONS [&Type "Integer"] 0
+   &NUMOFFCELECTRONS [&Type "Integer"] 1
+   &NUMOFCORRELECTRONS [&Type "Integer"] 0
+   &NUMOFBASISFUNCTS [&Type "Integer"] 77
+   &NUMOFAUXCBASISFUNCTS [&Type "Integer"] 0
+   &NUMOFAUXJBASISFUNCTS [&Type "Integer"] 0
+   &NUMOFAUXJKBASISFUNCTS [&Type "Integer"] 0
+   &NUMOFCABSBASISFUNCTS [&Type "Integer"] 0
+   &TOTALENERGY [&Type "Double"]          -4.043214009966e+03
+$End
+$Calculation_Timings
+   &Description  
+   &GeometryIndex 1
+   &NUMOFTIMINGS [&Type "Integer"] 47
+   &SUMOFTIMINGS [&Type "Double"]           0.000000000000e+00
+$End

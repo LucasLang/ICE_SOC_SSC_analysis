@@ -1,0 +1,15 @@
+WARNING (ORCA_MERGEFRAG): CASSCF detected: Only alpha orbitals are merged!
+                                           Skipping further checks.       
+
+ NOTE: For the fragment guess, B should be CASSCF. In that case, B must be the last fragment in the total geometry of the final CASSCF input.
+Fragment A CASSCF with NEL=3 NORB=5
+DAT_C.MOInp   = combined.gbw
+DAT_C.BaseName= combined
+NAtoms(A)     =    1  NAtoms(B)    =   47   NAtoms(C)   =   48
+Dimension(A)  =   77  Dimension(B) =  724   Dimension(C)=  801
+NEl(A)        =   39  NEl(B)       =  140   NEl(C)      =  179
+HOMO-0(A)     =   22  HOMO-0(B)    =   69                    
+Merging orbitals                             ... done
+Merging geometries                           ... done
+Merging basis sets                           ... done
+Writing output                               ... done

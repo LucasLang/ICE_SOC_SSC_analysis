@@ -1,0 +1,1 @@
+orca_mergefrag Mo.gbw ligand.gbw combined.gbw > orca_mergefrag.out

@@ -1,0 +1,7 @@
+Fock matrix file: mol.fsv
+GBW file        : mol.loc
+Block  0 =    0 to   17
+Block  1 =   88 to   92
+Block  2 =   93 to  146
+[file orca_tools/Tool-ORCAData/qcinpdat.cpp, line 2665]: Error: Cannot open GBW file: mol.loc
+

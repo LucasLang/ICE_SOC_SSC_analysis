@@ -1,0 +1,20 @@
+! DKH2 SARC-DKH-TZVP
+
+%pal
+  nprocs 12
+end
+
+%casscf
+  nel 3
+  norb 5
+  mult 4,2
+  nroots 10,40
+  maxiter 1
+  intorbs unchanged
+  actorbs unchanged
+  extorbs unchanged
+end
+
+* xyz 3 2
+Mo 0.000000 0.000000 0.000000
+*

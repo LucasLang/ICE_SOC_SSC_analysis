@@ -1,0 +1,121 @@
+*************************************************
+******************* ORCA 5.0  *******************
+* Some details about default units
+*************************************************
+$Calculation_Status
+   &Description          
+   &GeometryIndex 1
+   &PROGNAME [&Type "String"] "ProgSCF"
+   &STATUS [&Type "String"] "NORMAL TERMINATION"
+$End
+$Geometry
+   &Description          The current geometry
+   &GeometryIndex 1
+   &NATOMS [&Type "Integer"] 47
+   &NCORELESSECP [&Type "Integer"] 0
+   &NGHOSTATOMS [&Type "Integer"] 0
+   &CartesianCoordinates [&Type "Coordinates", &Dim(47,4), &Units "Bohr"] 
+              N      0.000000000000   -0.000000000000    0.007212475965
+              N     -0.000927930684    0.000015352111   -0.007417477739
+              N      0.006521917298    0.001545282102    0.001029333365
+              N     -0.001687625916   -0.006270732285    0.001070394894
+              N     -0.004675388243    0.004553479202    0.001142020726
+              C      0.009664294065    0.003022097952   -0.001933337793
+              C     -0.001891313097   -0.007696955802    0.005672686522
+              C     -0.002702052960   -0.003787598222    0.008629637246
+              C     -0.001896141951    0.004231023037    0.008650755347
+              C     -0.005728589293    0.005472175191    0.005745412188
+              C     -0.007474844786    0.006755960529   -0.001809046865
+              C     -0.006063036244    0.011445542480   -0.002908095997
+              C      0.007543665718    0.002348645273    0.005633281251
+              C      0.004644472514   -0.000465427990    0.008524287530
+              C     -0.002434777191   -0.009725998620   -0.001924230002
+              C     -0.007240524969   -0.011069855032   -0.002530182851
+              C      0.013764306778    0.000128615421   -0.002332040392
+              H      0.010759991634    0.006405660359   -0.001178787049
+              H     -0.002879451521    0.004092447291    0.012153005390
+              H      0.000697473300    0.006715500980    0.008302729684
+              H     -0.006467052535    0.008988944335    0.006270130305
+              H     -0.008749060273    0.003677624650    0.006735916230
+              H      0.005077019392    0.000380138844    0.012037737650
+              H      0.005540049225   -0.003932899871    0.008073554354
+              H     -0.006155370182   -0.002775793856    0.008319920275
+              H     -0.002064403435   -0.004594195813    0.012120179595
+              H     -0.004544078556   -0.010109277520    0.006240935913
+              H      0.001198802063   -0.009406588147    0.006586042788
+              H     -0.003822994633    0.001597859342   -0.008206972598
+              H      0.001503817084    0.001687915517   -0.009072570716
+              H     -0.001096566372   -0.003046349603   -0.008859938441
+              H      0.007162482358    0.005860357787    0.006529482719
+              H      0.011007935717    0.001509101490    0.006354602712
+              H      0.008186062749    0.003243258816   -0.005208218445
+              H     -0.010885196920    0.006860177872   -0.000575720448
+              H     -0.007720657536    0.004922343127   -0.004899269405
+              H     -0.000548585803   -0.012676929545   -0.000985515745
+              H     -0.001119077162   -0.008792412579   -0.005138073158
+              H     -0.009177315198   -0.008280651669   -0.003668097100
+              H     -0.007554423259   -0.013727488392   -0.004918181332
+              H     -0.008685416367   -0.012207404839    0.000542777512
+              H     -0.005931547590    0.013477894559    0.000037729490
+              H     -0.002789684947    0.011430593858   -0.004359667743
+              H     -0.008340185843    0.012996144782   -0.005205078389
+              H      0.016061110202    0.001479539402   -0.004732065453
+              H      0.015500315598   -0.000132113412    0.000789472080
+              H      0.012846040309   -0.003177028024   -0.003354504680
+$End
+$PAL_Flags
+   &Description        
+   &GeometryIndex 1
+   &DISKFLAG [&Type "Integer"] -1
+$End
+$SCF_Energy
+   &Description       
+   &GeometryIndex 1
+   &SCF_ENERGY [&Type "Double"]          -7.491878024833e+02
+$End
+$DFT_Energy
+   &Description      
+   &GeometryIndex 1
+   &NALPHAEL [&Type "Integer"] 70
+   &NBETAEL [&Type "Integer"] 70
+   &NTOTALEL [&Type "Integer"] 139
+   &EEXCHANGE [&Type "Double"]          -1.063955294152e+02
+   &ECORR [&Type "Double"]          -4.971075217433e+00
+   &ECNL [&Type "Double"]           0.000000000000e+00
+   &EXC [&Type "Double"]          -1.113666046327e+02
+   &EEMBED [&Type "Double"]           0.000000000000e+00
+   &FINALEN [&Type "Double"]          -7.491878024833e+02  "No Van der Waals correction"
+$End
+$Mayer_Pop
+   &Description     The Mayer population analysis
+   &GeometryIndex 1
+   &NATOMS [&Type "Integer"] 47
+   &NBONDORDERSPRINT [&Type "Integer"] 61
+   &BONDTHRESH [&Type "Double"]           1.000000000000e-01  "The threshold for printing"
+$End
+$SCF_Timings
+   &Description    Timings of the SCF part of the calculation
+   &GeometryIndex 1
+$End
+$Calculation_Info
+   &Description   
+   &GeometryIndex 1
+   &MULT [&Type "Integer"] 1
+   &CHARGE [&Type "Integer"] -3
+   &NUMOFATOMS [&Type "Integer"] 47
+   &NUMOFELECTRONS [&Type "Integer"] 0
+   &NUMOFFCELECTRONS [&Type "Integer"] 1
+   &NUMOFCORRELECTRONS [&Type "Integer"] 0
+   &NUMOFBASISFUNCTS [&Type "Integer"] 724
+   &NUMOFAUXCBASISFUNCTS [&Type "Integer"] 0
+   &NUMOFAUXJBASISFUNCTS [&Type "Integer"] 1670
+   &NUMOFAUXJKBASISFUNCTS [&Type "Integer"] 0
+   &NUMOFCABSBASISFUNCTS [&Type "Integer"] 0
+   &TOTALENERGY [&Type "Double"]          -7.491878024833e+02
+$End
+$Calculation_Timings
+   &Description  
+   &GeometryIndex 1
+   &NUMOFTIMINGS [&Type "Integer"] 47
+   &SUMOFTIMINGS [&Type "Double"]           0.000000000000e+00
+$End

@@ -1,0 +1,4 @@
+ORCA version to use:
+/hsnfs/software/orca/orca_current_directory/orca_current_20230614
+
+I use a copy of suborca (suborca_othercurrent), in which I use this ORCA version when using the -c option.
