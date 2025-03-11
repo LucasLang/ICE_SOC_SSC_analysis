@@ -1,0 +1,86 @@
+-------------------------------------------------------------
+----------------------- !PROPERTIES! ------------------------
+-------------------------------------------------------------
+# -----------------------------------------------------------
+$ CASSCF_Energies
+   description: The CASSCF energies
+   geom. index: 1
+   prop. index: 1
+       Number of Multiplicities          : 2 
+       FINAL CASSCF Energy               :   -149.6291050804 
+ RESULTS FOR MULTIPLICITY                 3  AND IRREP  0
+       NUMBER OF ROOTS                    1 
+ROOT   0 Energy   -149.6604730631
+ RESULTS FOR MULTIPLICITY                 1  AND IRREP  0
+       NUMBER OF ROOTS                    3 
+ROOT   0 Energy   -149.6134210895
+ROOT   1 Energy   -149.6134210886
+ROOT   2 Energy   -149.5663691151
+# -----------------------------------------------------------
+$ Mayer_Pop
+   description: The Mayer population analysis
+   geom. index: 1
+   prop. index: 1
+     Number of atoms                     : 2
+     Threshold for printing              : 0.1000000
+     Number of bond orders printed       : 1
+  NA   - Mulliken gross atomic population
+  ZA   - Total nuclear charge
+  QA   - Mulliken gross atomic charge
+  VA   - Mayer's total valence
+  BVA  - Mayer's bonded valence
+  FA   - Mayer's free valence
+  ATOM       NA         ZA         QA         VA         BVA        FA
+  0   0     8.0000     8.0000     0.0000     2.3600     1.4850     0.8750
+  1   0     8.0000     8.0000    -0.0000     2.3600     1.4850     0.8750
+      Bond orders larger than 0.1000000
+           Atom A     A.N. of A          Atom B    A.N. of B              Bond order
+                0             8               1            8                1.484974
+# -----------------------------------------------------------
+$ CASSCF_Dipole
+   description: The CASSCF dipole moments 
+   geom. index: 1
+   prop. index: 1
+        Number of states:  0
+        The CASSCF Dipole moments :
+                  0          1          2          3    
+      0       0.000000   0.000000  -0.000000   0.000000
+        Info about the states:
+                  0          1    
+      0         0          0     
+# -----------------------------------------------------------
+$ Calculation_Info
+   description: Details of the calculation
+   geom. index: 1
+   prop. index: 1
+     Multiplicity:                          3
+     Charge:                                0
+     number of atoms:                       2
+     number of electrons:                   0
+     number of frozen core electrons:       1
+     number of correlated electrons:        0
+     number of basis functions:             62
+     number of aux C basis functions:       0
+     number of aux J basis functions:       0
+     number of aux JK basis functions:      0
+     number of aux CABS basis functions:    0
+     Total Energy                           -149.629105
+# -----------------------------------------------------------
+$ Calculation_Timings
+   description: Timings of the calculation
+   geom. index: 1
+   prop. index: 1
+Total number of timings: 3
+Sum of Timings               ...        3.270 sec (=    0.055 min) 
+GTO Integrals                ...        0.349 sec (=    0.006 min) (index: 0 )
+SCF iterations               ...        0.349 sec (=    0.006 min) (index: 2 )
+CASSCF iterations            ...        2.572 sec (=    0.043 min) (index: 16 )
+# -------------------------------------------------------------
+----------------------- !GEOMETRIES! ------------------------
+# -------------------------------------------------------------
+------------------------ !GEOMETRY! -------------------------
+    Number of atoms:    2 
+    Geometry Index:     1 
+    Coordinates:
+               0 O      0.000000000000    0.000000000000    0.000000000000
+               1 O      0.000000000000    0.000000000000    1.205800000000
