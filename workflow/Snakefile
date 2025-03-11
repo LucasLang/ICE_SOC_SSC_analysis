@@ -2,7 +2,12 @@ outfolder = "../results"
 
 rule all:
     input:
-        f"{outfolder}/PES.png"
+        f"{outfolder}/PES.png",
+        "../results/ZFS_SOC_4roots",
+        "../results/ZFS_SOC_9roots",
+        "../results/ZFS_SOCSSC_4roots",
+        "../results/ZFS_SOCSSC_9roots"
+
 
 rule extract_transitionenergies:
     input:
@@ -33,3 +38,12 @@ rule plot_PES:
     shell:
         "python scripts/plot_PES.py ../resources/exp_PES {input.transitionenergy_file} {params.outfolder}"
         
+rule extract_ZFS:
+    input:
+        "../resources/ORCA/O2/CAS_12_60_{num}roots/mol.mpi24.out"
+    output:
+        "../results/ZFS_{settings}_{num}roots"
+    shell:
+        """
+        julia scripts/extract_ZFS.jl {input} {wildcards.settings} {output}
+        """
