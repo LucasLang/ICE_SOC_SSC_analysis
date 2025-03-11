@@ -7,12 +7,12 @@ expfolder = sys.argv[1]
 transitionenergy_file = sys.argv[2]
 outfolder = sys.argv[3]
 
-GS_min = -0.08251407089831986     # this is the lowest energy found in data_X
+data_X = np.loadtxt(f"{expfolder}/data_X.csv", delimiter=",")
+GS_min = np.min(data_X[:,1])     # this is the lowest energy found in data_X
 ICE_E = np.loadtxt(transitionenergy_file) + GS_min        # align the two energy scales
 r_min = 1.2058   # the O-O distance I used in the calculations
 
 
-data_X = np.loadtxt(f"{expfolder}/data_X.csv", delimiter=",")
 spline_X = UnivariateSpline(data_X[:,0], data_X[:,1], s=0.005)
 spline_X_v = np.vectorize(lambda x : spline_X(x))
 grid_X = np.linspace(data_X[0,0], data_X[-1,0], 200)
