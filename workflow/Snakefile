@@ -2,7 +2,7 @@ outfolder = "../results"
 
 rule all:
     input:
-        f"{outfolder}/ICE_transition_energies"
+        f"{outfolder}/PES.png"
 
 rule extract_transitionenergies:
     input:
@@ -13,4 +13,23 @@ rule extract_transitionenergies:
         outfolder = outfolder
     shell:
         "julia scripts/extract_transitionenergies.jl {input.ORCAfile} {params.outfolder}"
+
+rule plot_PES:
+    input:
+        "../resources/exp_PES/data_a.csv",
+        "../resources/exp_PES/data_A.csv",
+        "../resources/exp_PES/data_b.csv",
+        "../resources/exp_PES/data_B.csv",
+        "../resources/exp_PES/data_c.csv",
+        "../resources/exp_PES/data_C.csv",
+        "../resources/exp_PES/data_X.csv",
+        transitionenergy_file = f"{outfolder}/ICE_transition_energies"
+    output:
+        f"{outfolder}/PES.png"
+    params:
+        outfolder = outfolder
+    conda:
+        "envs/scipy_numpy_mpl.yaml"
+    shell:
+        "python scripts/plot_PES.py ../resources/exp_PES {input.transitionenergy_file} {params.outfolder}"
         
