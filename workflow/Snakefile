@@ -9,7 +9,11 @@ rule all:
         "../results/ZFS_SOCSSC_9roots",
         "../results/MoHIPT_gvalues",
         "../results/times_RME",
-        "../results/times_sigma"
+        "../results/times_sigma",
+        "../results/ZFS_CAS_8_10_comparison_SOC_ICE",
+        "../results/ZFS_CAS_8_10_comparison_SOC_MRCI",
+        "../results/ZFS_CAS_8_10_comparison_SOCSSC_ICE",
+        "../results/ZFS_CAS_8_10_comparison_SOCSSC_MRCI"
 
 rule extract_transitionenergies:
     input:
@@ -65,3 +69,10 @@ rule extract_timings:
     shell:
         "julia scripts/extract_timings.jl {input} {output[0]} {output[1]}"
 
+rule extract_ZFS_comparison:
+    input:
+        "../resources/ORCA/O2/comparison_ICE_MRCI_CAS_8_10/{method}_SOMF/mol.mpi4.out"
+    output:
+        "../results/ZFS_CAS_8_10_comparison_{settings}_{method}"
+    shell:
+        "julia scripts/extract_ZFS.jl {input} {wildcards.settings} {output}"
