@@ -7,8 +7,9 @@ rule all:
         "../results/ZFS_SOC_9roots",
         "../results/ZFS_SOCSSC_4roots",
         "../results/ZFS_SOCSSC_9roots",
-        "../results/MoHIPT_gvalues"
-
+        "../results/MoHIPT_gvalues",
+        "../results/times_RME",
+        "../results/times_sigma"
 
 rule extract_transitionenergies:
     input:
@@ -54,4 +55,13 @@ rule extract_gvalues:
         "../results/MoHIPT_gvalues"
     shell:
         "julia scripts/extract_gvalues.jl {input} {output}"
+
+rule extract_timings:
+    input:
+        "../resources/ORCA/O2/CAS_12_60_9roots/mol.mpi24.out"
+    output:
+        "../results/times_sigma",
+        "../results/times_RME"
+    shell:
+        "julia scripts/extract_timings.jl {input} {output[0]} {output[1]}"
 
