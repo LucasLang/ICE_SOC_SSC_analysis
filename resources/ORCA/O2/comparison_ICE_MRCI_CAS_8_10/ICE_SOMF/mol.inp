@@ -1,0 +1,43 @@
+! def2-TZVP def2-TZVP/C moread
+
+%moinp "CASSCF.gbw"
+
+%maxcore 8000
+
+%pal
+  nprocs 4
+end
+
+%casscf
+  nel 8
+  norb 10
+  mult 3,1
+  nroots 1,3
+  maxiter 1
+  cistep ice
+  ci
+    icetype csfs
+    tgen 0.0
+    tvar 0.0
+    csfciwithri 0
+    cibufferlength 1000000
+  end
+  refs
+    {2 2 2 1 1}
+  end
+  refs
+    {2 2 2 2 0}
+    {2 2 2 0 2}
+    {2 2 2 1 -1}
+  end
+  rel
+    dosoc true
+    dossc true
+    ssc_unequalmult false
+  end
+end
+
+*xyz 0 3
+O 0.0 0.0 0.0
+O 0.0 0.0 1.2058
+* 

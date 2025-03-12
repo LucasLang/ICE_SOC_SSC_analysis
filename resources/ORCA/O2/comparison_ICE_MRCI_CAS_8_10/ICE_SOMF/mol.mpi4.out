@@ -1,0 +1,3024 @@
+! Job execution by suborca V 10.01 !
+Job started from head1.mpi-muelheim.mpg.de, running /hsnfs/software/orca/orca_current_directory/orca_current_20250119/orca on xe31th25.mpi-muelheim.mpg.de in /usr/scratch/llang/mol__12201715 (/bin/bash)
+Job execution start: Sun Jan 19 08:16:22 CET 2025
+Shared library path: /hsnfs/software/openmpi-4.1.0/lib:/hsnfs/software/orca/orca_current_directory/orca_current_20250119:/hsnfs/software/themis/llvm-14.0.1/lib::/hsnfs/software/cfour-2.1/lib:/hsnfs/software/orca/orca_stable:/usr/users/openmpi-2.0.4/lib:/opt/intel/lib/intel64:/opt/intel/mkl/lib/intel64
+SLURM Job ID is: 12201715
+SLURM_JOB_NODELIST: xe31th25
+Maxcore enforced by SLURM: 9600 MB per core
+Expanded nodelist (1 nodes):
+xe31th25
+
+                                 *****************
+                                 * O   R   C   A *
+                                 *****************
+
+                                            #,                                       
+                                            ###                                      
+                                            ####                                     
+                                            #####                                    
+                                            ######                                   
+                                           ########,                                 
+                                     ,,################,,,,,                         
+                               ,,#################################,,                 
+                          ,,##########################################,,             
+                       ,#########################################, ''#####,          
+                    ,#############################################,,   '####,        
+                  ,##################################################,,,,####,       
+                ,###########''''           ''''###############################       
+              ,#####''   ,,,,##########,,,,          '''####'''          '####       
+            ,##' ,,,,###########################,,,                        '##       
+           ' ,,###''''                  '''############,,,                           
+         ,,##''                                '''############,,,,        ,,,,,,###''
+      ,#''                                            '''#######################'''  
+     '                                                          ''''####''''         
+             ,#######,   #######,   ,#######,      ##                                
+            ,#'     '#,  ##    ##  ,#'     '#,    #''#        ,####,   ,####,        
+            ##       ##  ##   ,#'  ##            #'  '#       #'       #'  '#        
+            ##       ##  #######   ##           ,######,      #####,   #    #        
+            '#,     ,#'  ##    ##  '#,     ,#' ,#      #,     #,   #   #,  ,#        
+             '#######'   ##     ##  '#######'  #'      '#     '####' # '####'        
+
+
+
+                #########################################################
+                #                        -***-                          #
+                #          Department of theory and spectroscopy        #
+                #                                                       #
+                #                      Frank Neese                      #
+                #                                                       #
+                #     Directorship, Architecture, Infrastructure        #
+                #                    SHARK, DRIVERS                     #
+                #        Core code/Algorithms in most modules           #
+                #                                                       #
+                #        Max Planck Institute fuer Kohlenforschung      #
+                #                Kaiser Wilhelm Platz 1                 #
+                #                 D-45470 Muelheim/Ruhr                 #
+                #                      Germany                          #
+                #                                                       #
+                #                  All rights reserved                  #
+                #                        -***-                          #
+                #########################################################
+
+
+                         Program Version 6.0.x  -  CURRENT   -
+                                (GIT: $f781d03d$)
+                ($2025-01-18 19:13:00 +0100 $)
+
+                  !                     WARNING:                         !
+                  !         This is a DEVELOPMENT version                !
+
+                         (BUILD: $Sun 19 Jan 2025 12:04:51 AM CET$)
+
+
+ With contributions from (in alphabetic order):
+[Max-Planck-Institut fuer Kohlenforschung]                               
+  Daniel Aravena         : Magnetic Suceptibility                        
+  Michael Atanasov       : Ab Initio Ligand Field Theory (pilot matlab implementation)
+  Alexander A. Auer      : GIAO ZORA, VPT2 properties, NMR spectrum      
+  Ute Becker             : All parallelization in ORCA, NUMFREQ, NUMCALC 
+  Giovanni Bistoni       : ED, misc. LED, open-shell LED, HFLD           
+  Martin Brehm           : Molecular dynamics                            
+  Dmytro Bykov           : pre 5.0 version of the SCF Hessian            
+  Marcos Casanova-Páez   : Triplet and SCS-CIS(D). UHF-(DLPNO)-IP/EA/STEOM-CCSD. UHF-CVS-IP/STEOM-CCSD   
+  Vijay G. Chilkuri      : MRCI spin determinant printing, contributions to CSF-ICE 
+  Pauline Colinet        : FMM embedding                                 
+  Dipayan Datta          : RHF DLPNO-CCSD density                        
+  Achintya Kumar Dutta   : EOM-CC, STEOM-CC                              
+  Nicolas Foglia         : Exact transition moments, OPA infrastructure, MCD improvements    
+  Dmitry Ganyushin       : Spin-Orbit,Spin-Spin,Magnetic field MRCI      
+  Miquel Garcia-Rates    : C-PCM and meta-GGA Hessian, CCSD/C-PCM, Gaussian charge scheme 
+  Tiago L. C. Gouveia    : GS-ROHF, GS-ROCIS                             
+  Yang Guo               : DLPNO-NEVPT2, F12-NEVPT2, CIM, IAO-localization        
+  Andreas Hansen         : Spin unrestricted coupled pair/coupled cluster methods 
+  Ingolf Harden          : AUTO-CI MPn and infrastructure                
+  Benjamin Helmich-Paris : MC-RPA, TRAH-(SCF,CASSCF), AVAS, COSX integrals, SCF dyn. polar. 
+  Lee Huntington         : MR-EOM, pCC                                   
+  Robert Izsak           : Overlap fitted RIJCOSX, COSX-SCS-MP3, EOM     
+  Riya Kayal             : Wick's Theorem for AUTO-CI, AUTO-CI UHF-CCSDT 
+  Emily Kempfer          : AUTO-CI, RHF CISDT and CCSDT                  
+  Christian Kollmar      : KDIIS, OOCD, Brueckner-CCSD(T), CCSD density, CASPT2, CASPT2-K, improved NEVPT2 
+  Axel Koslowski         : Symmetry handling                             
+  Simone Kossmann        : meta-GGA functionals, TD-DFT gradient, OOMP2, (MP2 Hessian; deprecated post 5.0) 
+  Lucas Lang             : DCDCAS                                        
+  Marvin Lechner         : AUTO-CI (C++ implementation), FIC-MRCC        
+  Spencer Leger          : CASSCF response                               
+  Dagmar Lenk            : GEPOL surface, SMD, ORCA-2-JSON               
+  Dimitrios Liakos       : Extrapolation schemes; Compound Job, initial MDCI parallelization 
+  Dimitrios Manganas     : Further ROCIS development; embedding schemes. LFT, Crystal Embedding 
+  Dimitrios Pantazis     : SARC Basis sets                               
+  Anastasios Papadopoulos: AUTO-CI, single reference methods and gradients 
+  Taras Petrenko         : pre 6.0 DFT Hessian and TD-DFT gradient, (ASA, deprecated), ECA, 1-Electron XAS/XES, NRVS 
+  Peter Pinski           : DLPNO-MP2, DLPNO-MP2 Gradient                 
+  Christoph Reimann      : Effective Core Potentials                     
+  Marius Retegan         : Local ZFS, SOC                                
+  Christoph Riplinger    : Optimizer, TS searches, QM/MM, DLPNO-CCSD(T), (RO)-DLPNO pert. Triples 
+  Michael Roemelt        : Original ROCIS implementation                 
+  Masaaki Saitow         : Open-shell DLPNO-CCSD energy and density      
+  Barbara Sandhoefer     : DKH picture change effects                    
+  Kantharuban Sivalingam : CASSCF convergence/infrastructure, NEVPT2 and variants, FIC-MRCI 
+  Bernardo de Souza      : ESD, SOC TD-DFT                               
+  Georgi L. Stoychev     : AutoAux, RI-MP2 NMR, DLPNO-MP2 response, X2C  
+  Van Anh Tran           : RI-MP2 g-tensors                              
+  Willem Van den Heuvel  : Paramagnetic NMR                              
+  Zikuan Wang            : NOTCH, Electric field optimization            
+  Frank Wennmohs         : Technical directorship and infrastructure     
+  Hang Xu                : AUTO-CI-Response properties                   
+                                                                         
+[FACCTs GmbH]                                                            
+  Markus Bursch, Miquel Garcia-Rates, Christoph Riplinger, Bernardo de Souza, Georgi L. Stoychev 
+                                                                 
+  APM, Basis sets (HGBS, AHGBS, def-TZVP (Ac-Lr), def2-XVPD (La-Lu)), CI-OPT, improved COSX, DLPNO-Multilevel,           
+  DOCKER, DRACO, updates on ESD, GOAT, IRC, LR-CPCM, MBIS, meta-GGA TD-DFT gradient, ML-optimized integration grids, 
+  MM, NACMEs, nearIR, NEB, NEB-TS, NL-DFT gradient (VV10), 2- and 3-layer-ONIOM, interface openCOSMO-RS, QMMM,   
+  Crystal-QMMM, SF, symmetry and pop. for TD-DFT, r2SCAN hybrids, SOLVATOR                                   
+                                                                         
+[Other institutions]                                                     
+  V. Asgeirsson          : NEB                                           
+  Christoph Bannwarth    : sTDA-DFT, sTD-DFT, PBEh-3c, B97-3c, D3        
+  Sebastian Ehlert       : rSCAN, r2SCAN, r2SCAN-3c, D4, dhf basis sets  
+  Marvin Friede          : D4 for Fr, Ra, Ac-Lr                          
+  Lars Goerigk           : TD-DFT with DH, B97 family of functionals     
+  Stefan Grimme          : VdW corrections, initial TS optimization, DFT functionals, gCP, sTDA/sTD-DF 
+  Waldemar Hujo          : DFT-NL                                        
+  H. Jonsson             : NEB                                           
+  Holger Kruse           : gCP                                           
+  Marcel Mueller         : wB97X-3c, vDZP basis set                      
+  Hagen Neugebauer       : wr2SCAN                                       
+  Tobias Risthaus        : range-separated hybrid DFT                    
+  Lukas Wittmann         : regularized MP2, r2SCAN double-hybrids, wr2SCAN        
+                                                                         
+We gratefully acknowledge several colleagues who have allowed us to      
+interface, adapt or use parts of their codes:                            
+  Ed Valeev, F. Pavosevic, A. Kumar             : LibInt (2-el integral package), F12 methods 
+  Garnet Chan, S. Sharma, J. Yang, R. Olivares  : DMRG                   
+  Ulf Ekstrom                                   : XCFun DFT Library      
+  Mihaly Kallay                                 : mrcc  (arbitrary order and MRCC methods)
+  Frank Weinhold                                : gennbo (NPA and NBO analysis)           
+  Simon Mueller                                 : openCOSMO-RS                            
+  Christopher J. Cramer and Donald G. Truhlar   : smd solvation model                     
+  S Lehtola, MJT Oliveira, MAL Marques          : LibXC Library                           
+  Liviu Ungur et al                             : ANISO software                          
+
+
+ Your calculation uses the libint2 library for the computation of 2-el integrals
+ For citations please refer to: http://libint.valeyev.net
+
+ Your ORCA version has been built with support for libXC version: 6.2.2
+ For citations please refer to: https://libxc.gitlab.io
+
+ This ORCA versions uses:
+   CBLAS   interface :  Fast vector & matrix operations
+   LAPACKE interface :  Fast linear algebra routines
+   SCALAPACK package :  Parallel linear algebra routines
+   Shared memory     :  Shared parallel matrices
+   BLAS/LAPACK       :  OpenBLAS 0.3.26  USE64BITINT DYNAMIC_ARCH NO_AFFINITY Haswell SINGLE_THREADED
+        Core in use  :  Haswell
+   Copyright (c) 2011-2014, The OpenBLAS Project
+
+
+NOTE: MaxCore=8000 MB was set to SCF,MP2,MDCI,CIPSI,MRCI,RASCI and CIS
+      => If you want to overwrite this, your respective input block should be placed after the MaxCore statement
+================================================================================
+
+----- Orbital basis set information -----
+Your calculation utilizes the basis: def2-TZVP
+   F. Weigend and R. Ahlrichs, Phys. Chem. Chem. Phys. 7, 3297 (2005).
+
+----- AuxC basis set information -----
+Your calculation utilizes the auxiliary basis: def2-TZVP/C
+  H-La, Hf-Rn : A. Hellweg, C. Hattig, S. Hofener and W. Klopper, Theor. Chem. Acc. 117, 587 (2007).
+        Ce-Lu : J. Chmela and M. E. Harding, Mol. Phys. (2018).
+
+Entering PROP_SetInput_PropInt
+   => GeomPert = NO
+================================================================================
+                                        WARNINGS
+                       Please study these warnings very carefully!
+================================================================================
+
+WARNING: Old DensityContainer found on disk!
+         Will remove this file - 
+         If you want to keep old densities, please start your calculation with a different basename. 
+
+
+================================================================================
+                                       INPUT FILE
+================================================================================
+NAME = mol.inp
+|  1> ! def2-TZVP def2-TZVP/C moread
+|  2> 
+|  3> %moinp "CASSCF.gbw"
+|  4> 
+|  5> %maxcore 8000
+|  6> 
+|  7> %pal
+|  8>   nprocs 4
+|  9> end
+| 10> 
+| 11> %casscf
+| 12>   nel 8
+| 13>   norb 10
+| 14>   mult 3,1
+| 15>   nroots 1,3
+| 16>   maxiter 1
+| 17>   cistep ice
+| 18>   ci
+| 19>     icetype csfs
+| 20>     tgen 0.0
+| 21>     tvar 0.0
+| 22>     csfciwithri 0
+| 23>     cibufferlength 1000000
+| 24>   end
+| 25>   refs
+| 26>     {2 2 2 1 1}
+| 27>   end
+| 28>   refs
+| 29>     {2 2 2 2 0}
+| 30>     {2 2 2 0 2}
+| 31>     {2 2 2 1 -1}
+| 32>   end
+| 33>   rel
+| 34>     dosoc true
+| 35>     dossc true
+| 36>     ssc_unequalmult false
+| 37>   end
+| 38> end
+| 39> 
+| 40> *xyz 0 3
+| 41> O 0.0 0.0 0.0
+| 42> O 0.0 0.0 1.2058
+| 43> * 
+| 44> 
+| 45>                          ****END OF INPUT****
+================================================================================
+
+                       ****************************
+                       * Single Point Calculation *
+                       ****************************
+
+---------------------------------
+CARTESIAN COORDINATES (ANGSTROEM)
+---------------------------------
+  O      0.000000    0.000000    0.000000
+  O      0.000000    0.000000    1.205800
+
+----------------------------
+CARTESIAN COORDINATES (A.U.)
+----------------------------
+  NO LB      ZA    FRAG     MASS         X           Y           Z
+   0 O     8.0000    0    15.999    0.000000    0.000000    0.000000
+   1 O     8.0000    0    15.999    0.000000    0.000000    2.278632
+
+--------------------------------
+INTERNAL COORDINATES (ANGSTROEM)
+--------------------------------
+ O      0   0   0     0.000000000000     0.00000000     0.00000000
+ O      1   0   0     1.205800000000     0.00000000     0.00000000
+
+---------------------------
+INTERNAL COORDINATES (A.U.)
+---------------------------
+ O      0   0   0     0.000000000000     0.00000000     0.00000000
+ O      1   0   0     2.278631772282     0.00000000     0.00000000
+
+---------------------
+BASIS SET INFORMATION
+---------------------
+There are 1 groups of distinct atoms
+
+ Group   1 Type O   : 11s6p2d1f contracted to 5s3p2d1f pattern {62111/411/11/1}
+
+Atom   0O    basis set group =>   1
+Atom   1O    basis set group =>   1
+---------------------------------
+AUXILIARY/C BASIS SET INFORMATION
+---------------------------------
+There are 1 groups of distinct atoms
+
+ Group   1 Type O   : 8s6p5d3f1g contracted to 8s6p4d3f1g pattern {11111111/111111/2111/111/1}
+
+Atom   0O    basis set group =>   1
+Atom   1O    basis set group =>   1
+
+
+           ************************************************************
+           *        Program running with 4 parallel MPI-processes     *
+           *              working on a common directory               *
+           ************************************************************
+------------------------------------------------------------------------------
+                             ORCA STARTUP CALCULATIONS
+------------------------------------------------------------------------------
+------------------------------------------------------------------------------
+                   ___                                                        
+                  /   \      - P O W E R E D   B Y -                         
+                 /     \                                                     
+                 |  |  |   _    _      __       _____    __    __             
+                 |  |  |  | |  | |    /  \     |  _  \  |  |  /  |          
+                  \  \/   | |  | |   /    \    | | | |  |  | /  /          
+                 / \  \   | |__| |  /  /\  \   | |_| |  |  |/  /          
+                |  |  |   |  __  | /  /__\  \  |    /   |      \           
+                |  |  |   | |  | | |   __   |  |    \   |  |\   \          
+                \     /   | |  | | |  |  |  |  | |\  \  |  | \   \       
+                 \___/    |_|  |_| |__|  |__|  |_| \__\ |__|  \__/        
+                                                                              
+                      - O R C A' S   B I G   F R I E N D -                    
+                                      &                                       
+                       - I N T E G R A L  F E E D E R -                       
+                                                                              
+ v1 FN, 2020, v2 2021, v3 2022-2024                                           
+------------------------------------------------------------------------------
+
+
+----------------------
+SHARK INTEGRAL PACKAGE
+----------------------
+
+Number of atoms                             ...      2
+Number of basis functions                   ...     62
+Number of shells                            ...     22
+Maximum angular momentum                    ...      3
+Integral batch strategy                     ... SHARK/LIBINT Hybrid
+RI-J (if used) integral strategy            ... SPLIT-RIJ (Revised 2003 algorithm where possible)
+Printlevel                                  ...      1
+Contraction scheme used                     ... SEGMENTED contraction
+Prescreening option                         ... SCHWARTZ
+   Thresh                                   ... 1.000e-10
+   Tcut                                     ... 1.000e-11
+   Tpresel                                  ... 1.000e-11 
+Coulomb Range Separation                    ... NOT USED
+Exchange Range Separation                   ... NOT USED
+Multipole approximations                    ... NOT USED
+Finite Nucleus Model                        ... NOT USED
+CABS basis                                  ... NOT available
+Auxiliary Coulomb fitting basis             ... NOT available
+Auxiliary J/K fitting basis                 ... NOT available
+Auxiliary Correlation fitting basis         ... AVAILABLE
+   # of basis functions in Aux-C            ...    152
+   # of shells in Aux-C                     ...     44
+   Maximum angular momentum in Aux-C        ...      4
+Auxiliary 'external' fitting basis          ... NOT available
+
+Checking pre-screening integrals            ... done (  0.0 sec) Dimension = 22
+Check shell pair data                       ... done (  0.0 sec)
+Shell pair information
+Shell pair cut-off parameter TPreSel        ...   1.0e-11
+Total number of shell pairs                 ...       253
+Shell pairs after pre-screening             ...       252
+Total number of primitive shell pairs       ...       864
+Primitive shell pairs kept                  ...       783
+          la=0 lb=0:     54 shell pairs
+          la=1 lb=0:     60 shell pairs
+          la=1 lb=1:     21 shell pairs
+          la=2 lb=0:     40 shell pairs
+          la=2 lb=1:     24 shell pairs
+          la=2 lb=2:     10 shell pairs
+          la=3 lb=0:     20 shell pairs
+          la=3 lb=1:     12 shell pairs
+          la=3 lb=2:      8 shell pairs
+          la=3 lb=3:      3 shell pairs
+
+Calculating one electron integrals          ... done (  0.0 sec)
+Calculating RI/C V-Matrix + Cholesky decomp.... done (  0.1 sec)
+Calculating Nuclear repulsion               ... done (  0.0 sec) ENN=     28.087030462100 Eh
+
+Diagonalization of the overlap matrix:
+Smallest eigenvalue                        ... 1.850e-03
+Time for diagonalization                   ...    0.007 sec
+Threshold for overlap eigenvalues          ... 1.000e-07
+Number of eigenvalues below threshold      ... 0
+Time for construction of square roots      ...    0.018 sec
+Total time needed                          ...    0.026 sec
+
+-------------------
+DFT GRID GENERATION
+-------------------
+
+General Integration Accuracy     IntAcc      ... 4.388
+Radial Grid Type                 RadialGrid  ... OptM3 with GC (2021)
+Angular Grid (max. ang.)         AngularGrid ... 4 (Lebedev-302)
+Angular grid pruning method      GridPruning ... 4 (adaptive)
+Weight generation scheme         WeightScheme... mBecke (2022)
+Basis function cutoff            BFCut       ... 1.0000e-10
+Integration weight cutoff        WCut        ... 1.0000e-14
+Partially contracted basis set               ... off
+Rotationally invariant grid construction     ... off
+Angular grids for H and He will be reduced by one unit
+
+Total number of grid points                  ...    12260
+Total number of batches                      ...      192
+Average number of points per batch           ...       63
+Average number of grid points per atom       ...     6130
+Grids setup in   0.1 sec
+Initializing property integral containers    ... done (  0.0 sec)
+
+SHARK setup successfully completed in   0.4 seconds
+
+Maximum memory used throughout the entire STARTUP-calculation: 13.7 MB
+
+
+           ************************************************************
+           *        Program running with 4 parallel MPI-processes     *
+           *              working on a common directory               *
+           ************************************************************
+-------------------------------------------------------------------------------
+                                 ORCA GUESS
+                   Start orbitals & Density for SCF / CASSCF
+-------------------------------------------------------------------------------
+
+------------
+SCF SETTINGS
+------------
+Hamiltonian:
+ Ab initio Hamiltonian  Method          .... Hartree-Fock(GTOs)
+
+
+General Settings:
+ Integral files         IntName         .... mol
+ Hartree-Fock type      HFTyp           .... CASSCF
+ Total Charge           Charge          ....    0
+ Multiplicity           Mult            ....    3
+ Number of Electrons    NEL             ....   16
+ Basis Dimension        Dim             ....   62
+ Nuclear Repulsion      ENuc            ....     28.0870304621 Eh
+
+---------------------
+INITIAL GUESS: MOREAD
+---------------------
+
+
+WARNING!!!!!!!
+Your GBWFile is either corrupt or from a different ORCA version!
+Please be VERY careful with your calculation results!!!
+
+Data_size, sizeof( TOrcaInfo ): 964984, 965112
+Guess MOs are being read from file: CASSCF.gbw
+Input Geometry matches current geometry (good)
+Input basis set matches current basis set (good)
+Occupation numbers will be reassigned to an Aufbau configuration
+MOs were renormalized
+Gram-Schmidt orthogonalization of all MOs with pivot on actives
+                      ------------------
+                      INITIAL GUESS DONE (   0.1 sec)
+                      ------------------
+----------------------
+GUESS ORBITAL ENERGIES
+----------------------
+
+
+  Index      OCC           E(Eh)             E(eV)
+ ----------------------------------------------------
+     0      2.0000     -20.69546583      -563.152255
+     1      2.0000     -20.69477063      -563.133338
+     2      2.0000      -1.47116919       -40.032549
+     3      2.0000      -1.08749231       -29.592170
+     4      2.0000      -0.88263659       -24.017763
+     5      2.0000      -0.68764766       -18.711844
+     6      2.0000      -0.68764765       -18.711844
+     7      2.0000      -0.20619535        -5.610861
+     8      0.0000      -0.20619535        -5.610861
+     9      0.0000       0.66655329        18.137837
+    10      0.0000       1.31341232        35.739766
+    11      0.0000       1.31341289        35.739782
+    12      0.0000       2.26429728        61.614661
+    13      0.0000       2.45382993        66.772107
+    14      0.0000       0.51068849        13.896540
+    15      0.0000       0.64316953        17.501533
+    16      0.0000       0.64316955        17.501533
+    17      0.0000       0.89128559        24.253114
+    18      0.0000       1.08410406        29.499971
+    19      0.0000       1.23626584        33.640504
+    20      0.0000       1.23626602        33.640509
+    21      0.0000       1.47716735        40.195767
+    22      0.0000       1.47716735        40.195767
+    23      0.0000       1.63589577        44.514987
+    24      0.0000       1.91054454        51.988560
+    25      0.0000       1.91054454        51.988560
+    26      0.0000       2.15153566        58.546262
+    27      0.0000       2.38531566        64.907739
+    28      0.0000       2.38531604        64.907749
+    29      0.0000       2.41544592        65.727625
+    30      0.0000       2.41544592        65.727625
+    31      0.0000       2.91816260        79.407241
+    32      0.0000       3.04925030        82.974319
+    33      0.0000       3.15654172        85.893867
+    34      0.0000       3.15654172        85.893867
+    35      0.0000       4.28382727       116.568866
+    36      0.0000       5.00074601       136.077217
+    37      0.0000       5.00074601       136.077217
+    38      0.0000       5.03770367       137.082886
+    39      0.0000       5.03770369       137.082887
+    40      0.0000       5.34754557       145.514113
+    41      0.0000       5.34754557       145.514113
+    42      0.0000       5.36776705       146.064367
+    43      0.0000       5.59914466       152.360472
+    44      0.0000       5.59914466       152.360472
+    45      0.0000       6.15390759       167.456339
+    46      0.0000       6.15390759       167.456339
+    47      0.0000       6.56226508       178.568311
+    48      0.0000       6.56226508       178.568311
+    49      0.0000       6.71097611       182.614944
+    50      0.0000       6.77236593       184.285446
+    51      0.0000       6.77236593       184.285446
+    52      0.0000       6.80506124       185.175131
+    53      0.0000       6.80506124       185.175131
+    54      0.0000       6.91713101       188.224704
+    55      0.0000       6.91713101       188.224704
+    56      0.0000       7.68150599       209.024405
+    57      0.0000       7.68150599       209.024405
+    58      0.0000       7.91771193       215.451895
+    59      0.0000       9.02747315       245.650033
+    60      0.0000      44.52661452      1211.630779
+    61      0.0000      45.06492537      1226.278962
+
+             **** ENERGY FILE WAS UPDATED (mol.en.tmp) ****
+Finished Guess after   0.2 sec
+Maximum memory used throughout the entire GUESS-calculation: 7.1 MB
+
+
+           ************************************************************
+           *        Program running with 4 parallel MPI-processes     *
+           *              working on a common directory               *
+           ************************************************************
+-------------------------------------------------------------------------------
+                              ORCA-CASSCF
+-------------------------------------------------------------------------------
+
+Setting up CIPSI                      ... 
+
+
+Checking CIPSI (ICE) Settings:
+     MaxDim    10
+     UsingRI   0
+     CIPSISweepWindow   -1
+     CIETol    1.000e-08
+     CIRTol    1.000e-08
+     NGMat     2048
+done (  0.0 sec)
+
+SYSTEM-SPECIFIC SETTINGS:
+Number of active electrons          ...    8
+Number of active orbitals           ...   10
+Total number of electrons           ...   16
+Total number of orbitals            ...   62
+
+Determined orbital ranges:
+   Internal       0 -    3 (   4 orbitals)
+   Active         4 -   13 (  10 orbitals)
+   External      14 -   61 (  48 orbitals)
+Number of rotation parameters      ...    712
+
+NOTE: act-act rotations are not considered despite being non-zero for incomplete reference spaces!
+
+CI-STEP:
+CI strategy                         ... ICE (approximate)
+Number of multiplicity blocks       ...    2
+BLOCK  0 WEIGHT=   0.5000
+  Multiplicity                      ...    3
+  #(Configurations)                 ...    0
+  #(CSFs)                           ...    1
+  #(Roots)                          ...    1
+    ROOT=0 WEIGHT=    0.500000
+
+BLOCK  1 WEIGHT=   0.5000
+  Multiplicity                      ...    1
+  #(Configurations)                 ...    0
+  #(CSFs)                           ...    3
+  #(Roots)                          ...    3
+    ROOT=0 WEIGHT=    0.166667
+    ROOT=1 WEIGHT=    0.166667
+    ROOT=2 WEIGHT=    0.166667
+
+  PrintLevel                        ...    1
+  N(GuessMat)                       ...      2048
+  MaxDim(CI)                        ...        10
+  MaxIter(CI)                       ...        64
+  Energy Tolerance CI               ... -1.00e+00
+  Residual Tolerance CI             ... -1.00e+00
+  Shift(CI)                         ...  1.00e-04
+  ICE TGen                          ... 0.000e+00
+  ICE TVar                          ... 0.000e+00
+  ICE Type                          ... 1
+
+INTEGRAL-TRANSFORMATION-STEP:
+  Algorithm                         ... EXACT
+
+ORBITAL-IMPROVEMENT-STEP:
+  MaxMacroIter 1 detected                >>> CAS-CI. Check your FINAL ORBITAL options!
+
+SCF-SETTINGS:
+  Incremental                       ... on
+  RIJCOSX approximation             ... off
+  RI-JK approximation               ... off
+  AO integral handling              ... DIRECT
+  Integral Neglect Thresh           ...  1.00e-10
+  Primitive cutoff TCut             ...  1.00e-11
+  Energy convergence tolerance      ...  1.00e-07
+  Orbital gradient convergence      ...  1.00e-03
+  Max. number of iterations         ...         1  
+
+
+FINAL ORBITALS:
+  Active   Orbitals                 ... unchanged 
+  Internal Orbitals                 ... canonical 
+  External Orbitals                 ... canonical 
+
+------------------
+CAS-SCF ITERATIONS
+------------------
+
+
+MACRO-ITERATION   1: 
+   --- Inactive Energy E0 = -127.93315199 Eh
+   --- All densities will be recomputed
+
+                       ****Iteration    0****
+  T(sigma)=     0.016 sec T(BLAS)=    0.000 NAv(S)= 325.0 NMax(S)=65
+   Maximum residual norm  :     0.000000000000
+
+      *** CONVERGENCE OF RESIDUAL NORM REACHED ***
+STATE   0 MULT= 3: E=   -149.6587519750 Eh W=  0.5000 DE= 0.000 eV      0.0 cm**-1
+      1.00000 ( 1.000000000) CSF = 2 2 2 1+1+0 0 0 0 0 
+
+
+                  **********************************
+                  *  ICECI/CSF MACROITERATION   1  *
+                  **********************************
+
+   # of selected CSFs                    ...    765
+
+                       ****Iteration    0****
+  T(sigma)=     0.057 sec T(BLAS)=    0.000 NAv(S)=58154.8 NMax(S)=3778
+   Maximum residual norm  :     0.000000000000
+
+      *** CONVERGENCE OF RESIDUAL NORM REACHED ***
+STATE   0 MULT= 3: E=   -149.8033322642 Eh W=  0.5000 DE= 0.000 eV      0.0 cm**-1
+      0.94712 (-0.973200440) CSF = 2 2 2 1+1+0 0 0 0 0 
+      0.01297 (-0.113866176) CSF = 2 1+1+2 2 0 0 0 0 0 
+      0.00572 ( 0.075599030) CSF = 0 2 2 1+1+2 0 0 0 0 
+      0.00367 (-0.060569298) CSF = 1+2 1+2 1+1-0 0 0 0 
+      0.00367 ( 0.060569296) CSF = 1+1+2 1+2 1-0 0 0 0 
+      0.00322 (-0.056761532) CSF = 1+2 1-2 1+1+0 0 0 0 
+      0.00322 ( 0.056761529) CSF = 1+1-2 1+2 1+0 0 0 0 
+
+Resetting TVAR
+   # of selected  CSFs                        ...    765
+   # of generator CSFs                        ...    765
+   # of NEW generator CSFs                    ...    764
+   # of S+D CSFs generated                    ...  11690
+   Selecting from the generated CSFs          ...    # of CSFs after Selection                  ...  11477
+   # of NEW selected CSFs                     ...  10712
+
+                  **********************************
+                  *  ICECI/CSF MACROITERATION   2  *
+                  **********************************
+
+   # of selected CSFs                    ...  11477
+
+                       ****Iteration    0****
+  T(sigma)=     2.736 sec T(BLAS)=    0.000 NAv(S)=420012.9 NMax(S)=18714
+   Maximum residual norm  :     0.050368681589
+
+                       ****Iteration    1****
+  T(sigma)=     2.738 sec T(BLAS)=    0.000 NAv(S)=420012.9 NMax(S)=18714
+   Maximum residual norm  :     0.005440115952
+
+                       ****Iteration    2****
+  T(sigma)=     2.758 sec T(BLAS)=    0.000 NAv(S)=420012.9 NMax(S)=18714
+   Maximum residual norm  :     0.000697553074
+
+                       ****Iteration    3****
+  T(sigma)=     2.741 sec T(BLAS)=    0.000 NAv(S)=420012.9 NMax(S)=18714
+   Maximum residual norm  :     0.000047364834
+
+                       ****Iteration    4****
+  T(sigma)=     2.746 sec T(BLAS)=    0.000 NAv(S)=420012.9 NMax(S)=18714
+   Maximum residual norm  :     0.000003313349
+
+                       ****Iteration    5****
+  T(sigma)=     2.748 sec T(BLAS)=    0.000 NAv(S)=420012.9 NMax(S)=18714
+   Maximum residual norm  :     0.000000366302
+
+                       ****Iteration    6****
+  T(sigma)=     2.754 sec T(BLAS)=    0.000 NAv(S)=420012.9 NMax(S)=18714
+   Maximum residual norm  :     0.000000037810
+
+                       ****Iteration    7****
+  T(sigma)=     2.753 sec T(BLAS)=    0.000 NAv(S)=420012.9 NMax(S)=18714
+
+         *** CONVERGENCE OF ENERGIES REACHED ***
+STATE   0 MULT= 3: E=   -149.8145328761 Eh W=  0.5000 DE= 0.000 eV      0.0 cm**-1
+      0.93582 ( 0.967378486) CSF = 2 2 2 1+1+0 0 0 0 0 
+      0.01635 ( 0.127849637) CSF = 2 1+1+2 2 0 0 0 0 0 
+      0.00628 (-0.079218651) CSF = 0 2 2 1+1+2 0 0 0 0 
+      0.00438 ( 0.066201351) CSF = 1+2 1+2 1+1-0 0 0 0 
+      0.00438 (-0.066201348) CSF = 1+1+2 1+2 1-0 0 0 0 
+      0.00372 ( 0.060974638) CSF = 1+2 1-2 1+1+0 0 0 0 
+      0.00372 (-0.060974634) CSF = 1+1-2 1+2 1+0 0 0 0 
+      0.00251 ( 0.050075789) CSF = 2 2 1+1-1+0 1+0 0 0 
+
+Resetting TVAR
+   # of selected  CSFs                        ...  11477
+   # of generator CSFs                        ...  11477
+   # of NEW generator CSFs                    ...  10712
+   # of S+D CSFs generated                    ...  20440
+   Selecting from the generated CSFs          ...    # of CSFs after Selection                  ...  20411
+   # of NEW selected CSFs                     ...   8934
+   maximum energy change                ... 1.120e-02 Eh
+
+                  **********************************
+                  *  ICECI/CSF MACROITERATION   3  *
+                  **********************************
+
+   # of selected CSFs                    ...  20411
+
+                       ****Iteration    0****
+  T(sigma)=     9.574 sec T(BLAS)=    0.000 NAv(S)=633883.2 NMax(S)=22940
+   Maximum residual norm  :     0.000629362684
+
+                       ****Iteration    1****
+  T(sigma)=     6.901 sec T(BLAS)=    0.000 NAv(S)=633883.2 NMax(S)=22940
+   Maximum residual norm  :     0.000020014427
+
+                       ****Iteration    2****
+  T(sigma)=     6.371 sec T(BLAS)=    0.000 NAv(S)=633883.2 NMax(S)=22940
+   Maximum residual norm  :     0.000001469385
+
+                       ****Iteration    3****
+  T(sigma)=     6.473 sec T(BLAS)=    0.000 NAv(S)=633883.2 NMax(S)=22940
+   Maximum residual norm  :     0.000000147431
+
+                       ****Iteration    4****
+  T(sigma)=     6.903 sec T(BLAS)=    0.000 NAv(S)=633883.2 NMax(S)=22940
+   Maximum residual norm  :     0.000000018893
+
+                       ****Iteration    5****
+  T(sigma)=     8.199 sec T(BLAS)=    0.000 NAv(S)=633883.2 NMax(S)=22940
+
+         *** CONVERGENCE OF ENERGIES REACHED ***
+STATE   0 MULT= 3: E=   -149.8146417839 Eh W=  0.5000 DE= 0.000 eV      0.0 cm**-1
+      0.93567 (-0.967301653) CSF = 2 2 2 1+1+0 0 0 0 0 
+      0.01638 (-0.127990676) CSF = 2 1+1+2 2 0 0 0 0 0 
+      0.00628 ( 0.079240805) CSF = 0 2 2 1+1+2 0 0 0 0 
+      0.00439 (-0.066227628) CSF = 1+2 1+2 1+1-0 0 0 0 
+      0.00439 ( 0.066227625) CSF = 1+1+2 1+2 1-0 0 0 0 
+      0.00372 (-0.060989108) CSF = 1+2 1-2 1+1+0 0 0 0 
+      0.00372 ( 0.060989103) CSF = 1+1-2 1+2 1+0 0 0 0 
+      0.00251 (-0.050130501) CSF = 2 2 1+1-1+0 1+0 0 0 
+
+Resetting TVAR
+   # of selected  CSFs                        ...  20411
+   # of generator CSFs                        ...  20411
+   # of NEW generator CSFs                    ...   8934
+   # of S+D CSFs generated                    ...  20642
+   Selecting from the generated CSFs          ...    # of CSFs after Selection                  ...  20769
+   # of NEW selected CSFs                     ...    358
+   maximum energy change                ... 1.089e-04 Eh
+
+                  **********************************
+                  *  ICECI/CSF MACROITERATION   4  *
+                  **********************************
+
+   # of selected CSFs                    ...  20769
+
+                       ****Iteration    0****
+  T(sigma)=     7.777 sec T(BLAS)=    0.000 NAv(S)=638072.1 NMax(S)=19988
+   Maximum residual norm  :     0.000000030075
+
+                       ****Iteration    1****
+  T(sigma)=     8.923 sec T(BLAS)=    0.000 NAv(S)=638072.1 NMax(S)=19988
+
+         *** CONVERGENCE OF ENERGIES REACHED ***
+STATE   0 MULT= 3: E=   -149.8146417846 Eh W=  0.5000 DE= 0.000 eV      0.0 cm**-1
+      0.93567 (-0.967301653) CSF = 2 2 2 1+1+0 0 0 0 0 
+      0.01638 (-0.127990676) CSF = 2 1+1+2 2 0 0 0 0 0 
+      0.00628 ( 0.079240805) CSF = 0 2 2 1+1+2 0 0 0 0 
+      0.00439 (-0.066227628) CSF = 1+2 1+2 1+1-0 0 0 0 
+      0.00439 ( 0.066227625) CSF = 1+1+2 1+2 1-0 0 0 0 
+      0.00372 (-0.060989108) CSF = 1+2 1-2 1+1+0 0 0 0 
+      0.00372 ( 0.060989103) CSF = 1+1-2 1+2 1+0 0 0 0 
+      0.00251 (-0.050130501) CSF = 2 2 1+1-1+0 1+0 0 0 
+
+Resetting TVAR
+   # of selected  CSFs                        ...  20769
+   # of generator CSFs                        ...  20769
+   # of NEW generator CSFs                    ...    358
+   # of S+D CSFs generated                    ...  14058
+   Selecting from the generated CSFs          ...    # of CSFs after Selection                  ...  20775
+   # of NEW selected CSFs                     ...      6
+   maximum energy change                ... 6.473e-10 Eh
+
+                  **********************************
+                  *  ICECI/CSF MACROITERATION   5  *
+                  **********************************
+
+   # of selected CSFs                    ...  20775
+
+                       ****Iteration    0****
+  T(sigma)=     8.777 sec T(BLAS)=    0.000 NAv(S)=638482.0 NMax(S)=19996
+   Maximum residual norm  :     0.000000030075
+
+                       ****Iteration    1****
+  T(sigma)=     8.022 sec T(BLAS)=    0.000 NAv(S)=638482.0 NMax(S)=19996
+
+         *** CONVERGENCE OF ENERGIES REACHED ***
+STATE   0 MULT= 3: E=   -149.8146417846 Eh W=  0.5000 DE= 0.000 eV      0.0 cm**-1
+      0.93567 (-0.967301653) CSF = 2 2 2 1+1+0 0 0 0 0 
+      0.01638 (-0.127990676) CSF = 2 1+1+2 2 0 0 0 0 0 
+      0.00628 ( 0.079240805) CSF = 0 2 2 1+1+2 0 0 0 0 
+      0.00439 (-0.066227628) CSF = 1+2 1+2 1+1-0 0 0 0 
+      0.00439 ( 0.066227625) CSF = 1+1+2 1+2 1-0 0 0 0 
+      0.00372 (-0.060989108) CSF = 1+2 1-2 1+1+0 0 0 0 
+      0.00372 ( 0.060989103) CSF = 1+1-2 1+2 1+0 0 0 0 
+      0.00251 (-0.050130501) CSF = 2 2 1+1-1+0 1+0 0 0 
+
+Resetting TVAR
+   # of selected  CSFs                        ...  20775
+   # of generator CSFs                        ...  20775
+   # of NEW generator CSFs                    ...      6
+   # of S+D CSFs generated                    ...   7131
+   Selecting from the generated CSFs          ...    # of CSFs after Selection                  ...  20775
+   # of NEW selected CSFs                     ...      0
+   maximum energy change                ... 2.842e-14 Eh
+
+                  **********************************
+                  *  ICECI/CSF ORB SWEEP: MOs   0 -  10 *
+                  **********************************
+
+   # of selected  CSFs                        ...  20775
+   # of generator CSFs                        ...  20775
+   # of NEW generator CSFs                    ...      0
+
+
+FINAL CIPSI ENERGIES
+  Final CIPSI Energy Root   0:   -149.814641785 EH
+   CI-PROBLEM SOLVED (184.9 sec)
+   DENSITIES MADE
+
+                       ****Iteration    0****
+  T(sigma)=     0.017 sec T(BLAS)=    0.000 NAv(S)= 445.7 NMax(S)=63
+   Maximum residual norm  :     0.000000000000
+
+      *** CONVERGENCE OF RESIDUAL NORM REACHED ***
+STATE   0 MULT= 1: E=   -149.6103538890 Eh W=  0.1667 DE= 0.000 eV      0.0 cm**-1
+      0.35698 ( 0.597478219) CSF = 2 2 2 0 2 0 0 0 0 0 
+      0.35698 (-0.597477939) CSF = 2 2 2 2 0 0 0 0 0 0 
+      0.28604 ( 0.534826972) CSF = 2 2 2 1+1-0 0 0 0 0 
+
+STATE   1 MULT= 1: E=   -149.6103538883 Eh W=  0.1667 DE= 0.000 eV      0.0 cm**-1
+      0.71396 (-0.844961603) CSF = 2 2 2 1+1-0 0 0 0 0 
+      0.14302 ( 0.378179819) CSF = 2 2 2 0 2 0 0 0 0 0 
+      0.14302 (-0.378179739) CSF = 2 2 2 2 0 0 0 0 0 0 
+
+STATE   2 MULT= 1: E=   -149.5619558023 Eh W=  0.1667 DE= 1.317 eV  10622.2 cm**-1
+      0.50000 ( 0.707106921) CSF = 2 2 2 2 0 0 0 0 0 0 
+      0.50000 ( 0.707106642) CSF = 2 2 2 0 2 0 0 0 0 0 
+
+
+                  **********************************
+                  *  ICECI/CSF MACROITERATION   1  *
+                  **********************************
+
+   # of selected CSFs                    ...    730
+
+                       ****Iteration    0****
+  T(sigma)=     0.044 sec T(BLAS)=    0.000 NAv(S)=38939.6 NMax(S)=2544
+   Maximum residual norm  :     0.000000000000
+
+      *** CONVERGENCE OF RESIDUAL NORM REACHED ***
+STATE   0 MULT= 1: E=   -149.7610289588 Eh W=  0.1667 DE= 0.000 eV      0.0 cm**-1
+      0.34677 ( 0.588875035) CSF = 2 2 2 2 0 0 0 0 0 0 
+      0.34677 (-0.588874736) CSF = 2 2 2 0 2 0 0 0 0 0 
+      0.24145 (-0.491370727) CSF = 2 2 2 1+1-0 0 0 0 0 
+      0.01489 (-0.122017455) CSF = 2 0 2 2 2 0 0 0 0 0 
+      0.01489 ( 0.122017376) CSF = 2 2 0 2 2 0 0 0 0 0 
+      0.00374 ( 0.061139311) CSF = 1+1-2 2 1+1-0 0 0 0 
+      0.00374 (-0.061139291) CSF = 1+2 1-1+2 1-0 0 0 0 
+      0.00319 (-0.056493116) CSF = 1+1+2 2 1-1-0 0 0 0 
+      0.00319 ( 0.056493103) CSF = 1+2 1+1-2 1-0 0 0 0 
+
+STATE   1 MULT= 1: E=   -149.7610289552 Eh W=  0.1667 DE= 0.000 eV      0.0 cm**-1
+      0.69355 (-0.832794849) CSF = 2 2 2 1+1-0 0 0 0 0 
+      0.12072 ( 0.347451664) CSF = 2 2 2 0 2 0 0 0 0 0 
+      0.12072 (-0.347451482) CSF = 2 2 2 2 0 0 0 0 0 0 
+      0.02978 ( 0.172558689) CSF = 2 1+1-2 2 0 0 0 0 0 
+      0.00432 ( 0.065710739) CSF = 0 2 2 1+1-2 0 0 0 0 
+      0.00374 ( 0.061139302) CSF = 1+1-2 1+2 1-0 0 0 0 
+      0.00374 ( 0.061139300) CSF = 1+2 1-2 1+1-0 0 0 0 
+      0.00319 (-0.056493111) CSF = 1+1+2 1-2 1-0 0 0 0 
+      0.00319 (-0.056493109) CSF = 1+2 1+2 1-1-0 0 0 0 
+
+STATE   2 MULT= 1: E=   -149.7260932584 Eh W=  0.1667 DE= 0.951 eV   7667.5 cm**-1
+      0.45871 (-0.677284220) CSF = 2 2 2 0 2 0 0 0 0 0 
+      0.45871 (-0.677284046) CSF = 2 2 2 2 0 0 0 0 0 0 
+      0.02534 ( 0.159192657) CSF = 2 2 0 2 2 0 0 0 0 0 
+      0.02534 ( 0.159192609) CSF = 2 0 2 2 2 0 0 0 0 0 
+      0.00327 (-0.057194603) CSF = 1+2 1-1+2 1-0 0 0 0 
+      0.00327 (-0.057194571) CSF = 1+1-2 2 1+1-0 0 0 0 
+      0.00283 ( 0.053181466) CSF = 0 2 2 0 2 2 0 0 0 0 
+      0.00283 ( 0.053181452) CSF = 0 2 2 2 0 2 0 0 0 0 
+
+Resetting TVAR
+   # of selected  CSFs                        ...    730
+   # of generator CSFs                        ...    730
+   # of NEW generator CSFs                    ...    727
+   # of S+D CSFs generated                    ...   8465
+   Selecting from the generated CSFs          ...    # of CSFs after Selection                  ...   8296
+   # of NEW selected CSFs                     ...   7566
+
+                  **********************************
+                  *  ICECI/CSF MACROITERATION   2  *
+                  **********************************
+
+   # of selected CSFs                    ...   8296
+
+                       ****Iteration    0****
+  T(sigma)=     1.472 sec T(BLAS)=    0.000 NAv(S)=280792.5 NMax(S)=11953
+   Maximum residual norm  :     0.058219900927
+
+                       ****Iteration    1****
+  T(sigma)=     1.460 sec T(BLAS)=    0.000 NAv(S)=280792.5 NMax(S)=11953
+   Maximum residual norm  :     0.006394485252
+
+                       ****Iteration    2****
+  T(sigma)=     1.455 sec T(BLAS)=    0.000 NAv(S)=280792.5 NMax(S)=11953
+   Maximum residual norm  :     0.001081040290
+
+                       ****Iteration    3****
+  T(sigma)=     1.456 sec T(BLAS)=    0.000 NAv(S)=280792.5 NMax(S)=11953
+   Maximum residual norm  :     0.000088741184
+
+                       ****Iteration    4****
+  T(sigma)=     1.473 sec T(BLAS)=    0.000 NAv(S)=280792.5 NMax(S)=11953
+   Maximum residual norm  :     0.000007081886
+
+                       ****Iteration    5****
+  T(sigma)=     1.454 sec T(BLAS)=    0.000 NAv(S)=280792.5 NMax(S)=11953
+   Maximum residual norm  :     0.000000634751
+
+                       ****Iteration    6****
+  T(sigma)=     1.459 sec T(BLAS)=    0.000 NAv(S)=280792.5 NMax(S)=11953
+   Maximum residual norm  :     0.000000053642
+
+                       ****Iteration    7****
+  T(sigma)=     1.455 sec T(BLAS)=    0.000 NAv(S)=280792.5 NMax(S)=11953
+   Maximum residual norm  :     0.000000005134
+
+      *** CONVERGENCE OF RESIDUAL NORM REACHED ***
+STATE   0 MULT= 1: E=   -149.7731642483 Eh W=  0.1667 DE= 0.000 eV      0.0 cm**-1
+      0.32900 (-0.573581554) CSF = 2 2 2 2 0 0 0 0 0 0 
+      0.32900 ( 0.573581183) CSF = 2 2 2 0 2 0 0 0 0 0 
+      0.26334 ( 0.513168804) CSF = 2 2 2 1+1-0 0 0 0 0 
+      0.01801 ( 0.134208336) CSF = 2 0 2 2 2 0 0 0 0 0 
+      0.01801 (-0.134208233) CSF = 2 2 0 2 2 0 0 0 0 0 
+      0.00428 (-0.065415367) CSF = 1+1-2 2 1+1-0 0 0 0 
+      0.00428 ( 0.065415337) CSF = 1+2 1-1+2 1-0 0 0 0 
+      0.00385 ( 0.062060186) CSF = 1+1+2 2 1-1-0 0 0 0 
+      0.00385 (-0.062060164) CSF = 1+2 1+1-2 1-0 0 0 0 
+      0.00261 ( 0.051116885) CSF = 2 2 1+1-1+0 0 1-0 0 
+
+STATE   1 MULT= 1: E=   -149.7731642435 Eh W=  0.1667 DE= 0.000 eV      0.0 cm**-1
+      0.65799 (-0.811166707) CSF = 2 2 2 1+1-0 0 0 0 0 
+      0.13167 ( 0.362865137) CSF = 2 2 2 0 2 0 0 0 0 0 
+      0.13167 (-0.362864961) CSF = 2 2 2 2 0 0 0 0 0 0 
+      0.03602 ( 0.189799229) CSF = 2 1+1-2 2 0 0 0 0 0 
+      0.00457 ( 0.067568569) CSF = 0 2 2 1+1-2 0 0 0 0 
+      0.00428 ( 0.065414926) CSF = 1+1-2 1+2 1-0 0 0 0 
+      0.00428 ( 0.065414924) CSF = 1+2 1-2 1+1-0 0 0 0 
+      0.00385 (-0.062060847) CSF = 1+1+2 1-2 1-0 0 0 0 
+      0.00385 (-0.062060845) CSF = 1+2 1+2 1-1-0 0 0 0 
+
+STATE   2 MULT= 1: E=   -149.7396825750 Eh W=  0.1667 DE= 0.911 eV   7348.4 cm**-1
+      0.45055 (-0.671231217) CSF = 2 2 2 0 2 0 0 0 0 0 
+      0.45055 (-0.671230989) CSF = 2 2 2 2 0 0 0 0 0 0 
+      0.02959 ( 0.172021333) CSF = 2 2 0 2 2 0 0 0 0 0 
+      0.02959 ( 0.172021257) CSF = 2 0 2 2 2 0 0 0 0 0 
+      0.00380 (-0.061646726) CSF = 1+2 1-1+2 1-0 0 0 0 
+      0.00380 (-0.061646688) CSF = 1+1-2 2 1+1-0 0 0 0 
+      0.00312 ( 0.055836416) CSF = 0 2 2 0 2 2 0 0 0 0 
+      0.00312 ( 0.055836400) CSF = 0 2 2 2 0 2 0 0 0 0 
+      0.00282 ( 0.053142516) CSF = 1+2 1+1-2 1-0 0 0 0 
+      0.00282 ( 0.053142480) CSF = 1+1+2 2 1-1-0 0 0 0 
+
+Resetting TVAR
+   # of selected  CSFs                        ...   8296
+   # of generator CSFs                        ...   8296
+   # of NEW generator CSFs                    ...   7566
+   # of S+D CSFs generated                    ...  13643
+   Selecting from the generated CSFs          ...    # of CSFs after Selection                  ...  13645
+   # of NEW selected CSFs                     ...   5349
+   maximum energy change                ... 1.359e-02 Eh
+
+                  **********************************
+                  *  ICECI/CSF MACROITERATION   3  *
+                  **********************************
+
+   # of selected CSFs                    ...  13645
+
+                       ****Iteration    0****
+  T(sigma)=     3.948 sec T(BLAS)=    0.000 NAv(S)=429282.8 NMax(S)=15324
+   Maximum residual norm  :     0.000677922477
+
+                       ****Iteration    1****
+  T(sigma)=     3.915 sec T(BLAS)=    0.000 NAv(S)=429282.8 NMax(S)=15324
+   Maximum residual norm  :     0.000022452630
+
+                       ****Iteration    2****
+  T(sigma)=     3.992 sec T(BLAS)=    0.000 NAv(S)=429282.8 NMax(S)=15324
+   Maximum residual norm  :     0.000001800010
+
+                       ****Iteration    3****
+  T(sigma)=     4.236 sec T(BLAS)=    0.000 NAv(S)=429282.8 NMax(S)=15324
+   Maximum residual norm  :     0.000000168323
+
+                       ****Iteration    4****
+  T(sigma)=     3.851 sec T(BLAS)=    0.000 NAv(S)=429282.8 NMax(S)=15324
+   Maximum residual norm  :     0.000000029532
+
+                       ****Iteration    5****
+  T(sigma)=     3.722 sec T(BLAS)=    0.000 NAv(S)=429282.8 NMax(S)=15324
+
+         *** CONVERGENCE OF ENERGIES REACHED ***
+STATE   0 MULT= 1: E=   -149.7732754108 Eh W=  0.1667 DE= 0.000 eV      0.0 cm**-1
+      0.38330 (-0.619113447) CSF = 2 2 2 2 0 0 0 0 0 0 
+      0.38330 ( 0.619113053) CSF = 2 2 2 0 2 0 0 0 0 0 
+      0.15458 ( 0.393168791) CSF = 2 2 2 1+1-0 0 0 0 0 
+      0.01684 ( 0.129771692) CSF = 2 0 2 2 2 0 0 0 0 0 
+      0.01684 (-0.129771585) CSF = 2 2 0 2 2 0 0 0 0 0 
+      0.00444 (-0.066656458) CSF = 1+1-2 2 1+1-0 0 0 0 
+      0.00444 ( 0.066656425) CSF = 1+2 1-1+2 1-0 0 0 0 
+      0.00400 ( 0.063252821) CSF = 1+1+2 2 1-1-0 0 0 0 
+      0.00400 (-0.063252793) CSF = 1+2 1+1-2 1-0 0 0 0 
+      0.00338 ( 0.058096892) CSF = 2 1+1-2 2 0 0 0 0 0 
+      0.00266 ( 0.051590623) CSF = 0 2 2 2 0 2 0 0 0 0 
+      0.00266 (-0.051590590) CSF = 0 2 2 0 2 2 0 0 0 0 
+      0.00252 ( 0.050190965) CSF = 2 2 1+1-1+0 0 1-0 0 
+
+STATE   1 MULT= 1: E=   -149.7732754068 Eh W=  0.1667 DE= 0.000 eV      0.0 cm**-1
+      0.76660 (-0.875558775) CSF = 2 2 2 1+1-0 0 0 0 0 
+      0.07729 ( 0.278012174) CSF = 2 2 2 0 2 0 0 0 0 0 
+      0.07729 (-0.278011929) CSF = 2 2 2 2 0 0 0 0 0 0 
+      0.03368 ( 0.183526227) CSF = 2 1+1-2 2 0 0 0 0 0 
+      0.00532 ( 0.072958927) CSF = 0 2 2 1+1-2 0 0 0 0 
+      0.00444 ( 0.066656390) CSF = 1+1-2 1+2 1-0 0 0 0 
+      0.00444 ( 0.066656387) CSF = 1+2 1-2 1+1-0 0 0 0 
+      0.00400 (-0.063251608) CSF = 1+1+2 1-2 1-0 0 0 0 
+      0.00400 (-0.063251604) CSF = 1+2 1+2 1-1-0 0 0 0 
+
+STATE   2 MULT= 1: E=   -149.7397984943 Eh W=  0.1667 DE= 0.911 eV   7347.3 cm**-1
+      0.45047 (-0.671172714) CSF = 2 2 2 0 2 0 0 0 0 0 
+      0.45047 (-0.671172442) CSF = 2 2 2 2 0 0 0 0 0 0 
+      0.02962 ( 0.172094076) CSF = 2 2 0 2 2 0 0 0 0 0 
+      0.02962 ( 0.172093992) CSF = 2 0 2 2 2 0 0 0 0 0 
+      0.00380 (-0.061671157) CSF = 1+2 1-1+2 1-0 0 0 0 
+      0.00380 (-0.061671111) CSF = 1+1-2 2 1+1-0 0 0 0 
+      0.00312 ( 0.055852742) CSF = 0 2 2 0 2 2 0 0 0 0 
+      0.00312 ( 0.055852720) CSF = 0 2 2 2 0 2 0 0 0 0 
+      0.00283 ( 0.053180617) CSF = 1+2 1+1-2 1-0 0 0 0 
+      0.00283 ( 0.053180571) CSF = 1+1+2 2 1-1-0 0 0 0 
+
+Resetting TVAR
+   # of selected  CSFs                        ...  13645
+   # of generator CSFs                        ...  13645
+   # of NEW generator CSFs                    ...   5349
+   # of S+D CSFs generated                    ...  13364
+   Selecting from the generated CSFs          ...    # of CSFs after Selection                  ...  13860
+   # of NEW selected CSFs                     ...    215
+   maximum energy change                ... 1.159e-04 Eh
+
+                  **********************************
+                  *  ICECI/CSF MACROITERATION   4  *
+                  **********************************
+
+   # of selected CSFs                    ...  13860
+
+                       ****Iteration    0****
+  T(sigma)=     3.700 sec T(BLAS)=    0.000 NAv(S)=432599.6 NMax(S)=15324
+   Maximum residual norm  :     0.000000048964
+
+                       ****Iteration    1****
+  T(sigma)=     3.710 sec T(BLAS)=    0.000 NAv(S)=432599.6 NMax(S)=15324
+
+         *** CONVERGENCE OF ENERGIES REACHED ***
+STATE   0 MULT= 1: E=   -149.7732754107 Eh W=  0.1667 DE= 0.000 eV      0.0 cm**-1
+      0.38330 (-0.619108357) CSF = 2 2 2 2 0 0 0 0 0 0 
+      0.38329 ( 0.619107963) CSF = 2 2 2 0 2 0 0 0 0 0 
+      0.15459 ( 0.393184820) CSF = 2 2 2 1+1-0 0 0 0 0 
+      0.01684 ( 0.129772444) CSF = 2 0 2 2 2 0 0 0 0 0 
+      0.01684 (-0.129772337) CSF = 2 2 0 2 2 0 0 0 0 0 
+      0.00444 (-0.066656388) CSF = 1+1-2 2 1+1-0 0 0 0 
+      0.00444 ( 0.066656355) CSF = 1+2 1-1+2 1-0 0 0 0 
+      0.00400 ( 0.063252754) CSF = 1+1+2 2 1-1-0 0 0 0 
+      0.00400 (-0.063252726) CSF = 1+2 1+1-2 1-0 0 0 0 
+      0.00337 ( 0.058093532) CSF = 2 1+1-2 2 0 0 0 0 0 
+      0.00266 ( 0.051590199) CSF = 0 2 2 2 0 2 0 0 0 0 
+      0.00266 (-0.051590166) CSF = 0 2 2 0 2 2 0 0 0 0 
+      0.00252 ( 0.050191158) CSF = 2 2 1+1-1+0 0 1-0 0 
+
+STATE   1 MULT= 1: E=   -149.7732754064 Eh W=  0.1667 DE= 0.000 eV      0.0 cm**-1
+      0.76659 ( 0.875551577) CSF = 2 2 2 1+1-0 0 0 0 0 
+      0.07730 (-0.278023508) CSF = 2 2 2 0 2 0 0 0 0 0 
+      0.07730 ( 0.278023263) CSF = 2 2 2 2 0 0 0 0 0 0 
+      0.03368 (-0.183527291) CSF = 2 1+1-2 2 0 0 0 0 0 
+      0.00532 (-0.072958327) CSF = 0 2 2 1+1-2 0 0 0 0 
+      0.00444 (-0.066656319) CSF = 1+1-2 1+2 1-0 0 0 0 
+      0.00444 (-0.066656316) CSF = 1+2 1-2 1+1-0 0 0 0 
+      0.00400 ( 0.063251541) CSF = 1+1+2 1-2 1-0 0 0 0 
+      0.00400 ( 0.063251537) CSF = 1+2 1+2 1-1-0 0 0 0 
+
+STATE   2 MULT= 1: E=   -149.7397984953 Eh W=  0.1667 DE= 0.911 eV   7347.3 cm**-1
+      0.45047 (-0.671172714) CSF = 2 2 2 0 2 0 0 0 0 0 
+      0.45047 (-0.671172442) CSF = 2 2 2 2 0 0 0 0 0 0 
+      0.02962 ( 0.172094076) CSF = 2 2 0 2 2 0 0 0 0 0 
+      0.02962 ( 0.172093992) CSF = 2 0 2 2 2 0 0 0 0 0 
+      0.00380 (-0.061671157) CSF = 1+2 1-1+2 1-0 0 0 0 
+      0.00380 (-0.061671111) CSF = 1+1-2 2 1+1-0 0 0 0 
+      0.00312 ( 0.055852742) CSF = 0 2 2 0 2 2 0 0 0 0 
+      0.00312 ( 0.055852720) CSF = 0 2 2 2 0 2 0 0 0 0 
+      0.00283 ( 0.053180617) CSF = 1+2 1+1-2 1-0 0 0 0 
+      0.00283 ( 0.053180571) CSF = 1+1+2 2 1-1-0 0 0 0 
+
+Resetting TVAR
+   ==>>> 1.CI space has converged. No new CSFs
+
+
+FINAL CIPSI ENERGIES
+  Final CIPSI Energy Root   0:   -149.773275411 EH
+  Final CIPSI Energy Root   1:   -149.773275406 EH
+  Final CIPSI Energy Root   2:   -149.739798495 EH
+   CI-PROBLEM SOLVED ( 73.0 sec)
+   DENSITIES MADE
+
+                 <<<<<<<<<<<<<<<<<<INITIAL CI STATE CHECK>>>>>>>>>>>>>>>>>>
+
+BLOCK  0 MULT= 3 NROOTS= 1 
+STATE   0 MULT= 3: E=   -149.8146417846 Eh W=  0.5000 DE= 0.000 eV      0.0 cm**-1
+      0.93567 (-0.967301653) CSF = 2 2 2 1+1+0 0 0 0 0 
+      0.01638 (-0.127990676) CSF = 2 1+1+2 2 0 0 0 0 0 
+      0.00628 ( 0.079240805) CSF = 0 2 2 1+1+2 0 0 0 0 
+      0.00439 (-0.066227628) CSF = 1+2 1+2 1+1-0 0 0 0 
+      0.00439 ( 0.066227625) CSF = 1+1+2 1+2 1-0 0 0 0 
+      0.00372 (-0.060989108) CSF = 1+2 1-2 1+1+0 0 0 0 
+      0.00372 ( 0.060989103) CSF = 1+1-2 1+2 1+0 0 0 0 
+      0.00251 (-0.050130501) CSF = 2 2 1+1-1+0 1+0 0 0 
+
+
+BLOCK  1 MULT= 1 NROOTS= 3 
+STATE   0 MULT= 1: E=   -149.7732754107 Eh W=  0.1667 DE= 0.000 eV      0.0 cm**-1
+      0.38330 (-0.619108357) CSF = 2 2 2 2 0 0 0 0 0 0 
+      0.38329 ( 0.619107963) CSF = 2 2 2 0 2 0 0 0 0 0 
+      0.15459 ( 0.393184820) CSF = 2 2 2 1+1-0 0 0 0 0 
+      0.01684 ( 0.129772444) CSF = 2 0 2 2 2 0 0 0 0 0 
+      0.01684 (-0.129772337) CSF = 2 2 0 2 2 0 0 0 0 0 
+      0.00444 (-0.066656388) CSF = 1+1-2 2 1+1-0 0 0 0 
+      0.00444 ( 0.066656355) CSF = 1+2 1-1+2 1-0 0 0 0 
+      0.00400 ( 0.063252754) CSF = 1+1+2 2 1-1-0 0 0 0 
+      0.00400 (-0.063252726) CSF = 1+2 1+1-2 1-0 0 0 0 
+      0.00337 ( 0.058093532) CSF = 2 1+1-2 2 0 0 0 0 0 
+      0.00266 ( 0.051590199) CSF = 0 2 2 2 0 2 0 0 0 0 
+      0.00266 (-0.051590166) CSF = 0 2 2 0 2 2 0 0 0 0 
+      0.00252 ( 0.050191158) CSF = 2 2 1+1-1+0 0 1-0 0 
+
+STATE   1 MULT= 1: E=   -149.7732754064 Eh W=  0.1667 DE= 0.000 eV      0.0 cm**-1
+      0.76659 ( 0.875551577) CSF = 2 2 2 1+1-0 0 0 0 0 
+      0.07730 (-0.278023508) CSF = 2 2 2 0 2 0 0 0 0 0 
+      0.07730 ( 0.278023263) CSF = 2 2 2 2 0 0 0 0 0 0 
+      0.03368 (-0.183527291) CSF = 2 1+1-2 2 0 0 0 0 0 
+      0.00532 (-0.072958327) CSF = 0 2 2 1+1-2 0 0 0 0 
+      0.00444 (-0.066656319) CSF = 1+1-2 1+2 1-0 0 0 0 
+      0.00444 (-0.066656316) CSF = 1+2 1-2 1+1-0 0 0 0 
+      0.00400 ( 0.063251541) CSF = 1+1+2 1-2 1-0 0 0 0 
+      0.00400 ( 0.063251537) CSF = 1+2 1+2 1-1-0 0 0 0 
+
+STATE   2 MULT= 1: E=   -149.7397984953 Eh W=  0.1667 DE= 0.911 eV   7347.3 cm**-1
+      0.45047 (-0.671172714) CSF = 2 2 2 0 2 0 0 0 0 0 
+      0.45047 (-0.671172442) CSF = 2 2 2 2 0 0 0 0 0 0 
+      0.02962 ( 0.172094076) CSF = 2 2 0 2 2 0 0 0 0 0 
+      0.02962 ( 0.172093992) CSF = 2 0 2 2 2 0 0 0 0 0 
+      0.00380 (-0.061671157) CSF = 1+2 1-1+2 1-0 0 0 0 
+      0.00380 (-0.061671111) CSF = 1+1-2 2 1+1-0 0 0 0 
+      0.00312 ( 0.055852742) CSF = 0 2 2 0 2 2 0 0 0 0 
+      0.00312 ( 0.055852720) CSF = 0 2 2 2 0 2 0 0 0 0 
+      0.00283 ( 0.053180617) CSF = 1+2 1+1-2 1-0 0 0 0 
+      0.00283 ( 0.053180571) CSF = 1+1+2 2 1-1-0 0 0 0 
+
+
+                 <<<<<<<<<<<<<<<<<<INITIAL CI STATE CHECK>>>>>>>>>>>>>>>>>>
+
+   E(CAS)=  -149.788379111 Eh DE=    0.000000e+00
+   --- Energy gap subspaces: Ext-Act = -1.943   Act-Int = 0.205
+   N(occ)=  1.95964 1.95023 1.95023 1.03807 1.03807 0.04059 0.01050 0.01050 0.00167 0.00050
+   ||g|| =     3.102936e-04 Max(G)=    1.385944e-04 Rot=13,1
+--------------
+CASSCF RESULTS
+--------------
+
+Final CASSCF energy       : -149.788379111 Eh   -4075.9490 eV
+
+----------------
+ORBITAL ENERGIES
+----------------
+
+  NO   OCC          E(Eh)            E(eV) 
+   0   2.0000     -20.695465      -563.1522 
+   1   2.0000     -20.694770      -563.1333 
+   2   2.0000      -1.471169       -40.0325 
+   3   2.0000      -1.087492       -29.5922 
+   4   1.9596      -0.882637       -24.0178 
+   5   1.9502      -0.687648       -18.7118 
+   6   1.9502      -0.687648       -18.7118 
+   7   1.0381      -0.206195        -5.6109 
+   8   1.0381      -0.206195        -5.6109 
+   9   0.0406       0.666555        18.1379 
+  10   0.0105       1.313413        35.7398 
+  11   0.0105       1.313413        35.7398 
+  12   0.0017       2.264298        61.6147 
+  13   0.0005       2.453830        66.7721 
+  14   0.0000       0.510689        13.8965 
+  15   0.0000       0.643170        17.5015 
+  16   0.0000       0.643170        17.5015 
+  17   0.0000       0.891286        24.2531 
+  18   0.0000       1.084104        29.5000 
+  19   0.0000       1.236266        33.6405 
+  20   0.0000       1.236266        33.6405 
+  21   0.0000       1.477168        40.1958 
+  22   0.0000       1.477168        40.1958 
+  23   0.0000       1.635896        44.5150 
+  24   0.0000       1.910545        51.9886 
+  25   0.0000       1.910545        51.9886 
+  26   0.0000       2.151536        58.5463 
+  27   0.0000       2.385316        64.9077 
+  28   0.0000       2.385316        64.9078 
+  29   0.0000       2.415446        65.7276 
+  30   0.0000       2.415446        65.7276 
+  31   0.0000       2.918163        79.4072 
+  32   0.0000       3.049251        82.9743 
+  33   0.0000       3.156542        85.8939 
+  34   0.0000       3.156542        85.8939 
+  35   0.0000       4.283828       116.5689 
+  36   0.0000       5.000746       136.0772 
+  37   0.0000       5.000746       136.0772 
+  38   0.0000       5.037704       137.0829 
+  39   0.0000       5.037704       137.0829 
+  40   0.0000       5.347546       145.5141 
+  41   0.0000       5.347546       145.5141 
+  42   0.0000       5.367767       146.0644 
+  43   0.0000       5.599145       152.3605 
+  44   0.0000       5.599145       152.3605 
+  45   0.0000       6.153908       167.4563 
+  46   0.0000       6.153908       167.4563 
+  47   0.0000       6.562265       178.5683 
+  48   0.0000       6.562265       178.5683 
+  49   0.0000       6.710977       182.6150 
+  50   0.0000       6.772366       184.2855 
+  51   0.0000       6.772366       184.2855 
+  52   0.0000       6.805062       185.1751 
+  53   0.0000       6.805062       185.1751 
+  54   0.0000       6.917131       188.2247 
+  55   0.0000       6.917131       188.2247 
+  56   0.0000       7.681506       209.0244 
+  57   0.0000       7.681506       209.0244 
+  58   0.0000       7.917712       215.4519 
+  59   0.0000       9.027474       245.6500 
+  60   0.0000      44.526615      1211.6308 
+  61   0.0000      45.064926      1226.2790 
+
+
+---------------------------------------------
+CAS-SCF STATES FOR BLOCK  0 MULT= 3 NROOTS= 1
+---------------------------------------------
+
+STATE   0 MULT= 3: E=   -149.8146417846 Eh W=  0.5000 DE= 0.000 eV      0.0 cm**-1
+      0.93567 (-0.967301653) CSF = 2 2 2 1+1+0 0 0 0 0 
+      0.01638 (-0.127990676) CSF = 2 1+1+2 2 0 0 0 0 0 
+      0.00628 ( 0.079240805) CSF = 0 2 2 1+1+2 0 0 0 0 
+      0.00439 (-0.066227628) CSF = 1+2 1+2 1+1-0 0 0 0 
+      0.00439 ( 0.066227625) CSF = 1+1+2 1+2 1-0 0 0 0 
+      0.00372 (-0.060989108) CSF = 1+2 1-2 1+1+0 0 0 0 
+      0.00372 ( 0.060989103) CSF = 1+1-2 1+2 1+0 0 0 0 
+      0.00251 (-0.050130501) CSF = 2 2 1+1-1+0 1+0 0 0 
+
+
+
+---------------------------------------------
+CAS-SCF STATES FOR BLOCK  1 MULT= 1 NROOTS= 3
+---------------------------------------------
+
+STATE   0 MULT= 1: E=   -149.7732754107 Eh W=  0.1667 DE= 0.000 eV      0.0 cm**-1
+      0.38330 (-0.619108357) CSF = 2 2 2 2 0 0 0 0 0 0 
+      0.38329 ( 0.619107963) CSF = 2 2 2 0 2 0 0 0 0 0 
+      0.15459 ( 0.393184820) CSF = 2 2 2 1+1-0 0 0 0 0 
+      0.01684 ( 0.129772444) CSF = 2 0 2 2 2 0 0 0 0 0 
+      0.01684 (-0.129772337) CSF = 2 2 0 2 2 0 0 0 0 0 
+      0.00444 (-0.066656388) CSF = 1+1-2 2 1+1-0 0 0 0 
+      0.00444 ( 0.066656355) CSF = 1+2 1-1+2 1-0 0 0 0 
+      0.00400 ( 0.063252754) CSF = 1+1+2 2 1-1-0 0 0 0 
+      0.00400 (-0.063252726) CSF = 1+2 1+1-2 1-0 0 0 0 
+      0.00337 ( 0.058093532) CSF = 2 1+1-2 2 0 0 0 0 0 
+      0.00266 ( 0.051590199) CSF = 0 2 2 2 0 2 0 0 0 0 
+      0.00266 (-0.051590166) CSF = 0 2 2 0 2 2 0 0 0 0 
+      0.00252 ( 0.050191158) CSF = 2 2 1+1-1+0 0 1-0 0 
+
+STATE   1 MULT= 1: E=   -149.7732754064 Eh W=  0.1667 DE= 0.000 eV      0.0 cm**-1
+      0.76659 ( 0.875551577) CSF = 2 2 2 1+1-0 0 0 0 0 
+      0.07730 (-0.278023508) CSF = 2 2 2 0 2 0 0 0 0 0 
+      0.07730 ( 0.278023263) CSF = 2 2 2 2 0 0 0 0 0 0 
+      0.03368 (-0.183527291) CSF = 2 1+1-2 2 0 0 0 0 0 
+      0.00532 (-0.072958327) CSF = 0 2 2 1+1-2 0 0 0 0 
+      0.00444 (-0.066656319) CSF = 1+1-2 1+2 1-0 0 0 0 
+      0.00444 (-0.066656316) CSF = 1+2 1-2 1+1-0 0 0 0 
+      0.00400 ( 0.063251541) CSF = 1+1+2 1-2 1-0 0 0 0 
+      0.00400 ( 0.063251537) CSF = 1+2 1+2 1-1-0 0 0 0 
+
+STATE   2 MULT= 1: E=   -149.7397984953 Eh W=  0.1667 DE= 0.911 eV   7347.3 cm**-1
+      0.45047 (-0.671172714) CSF = 2 2 2 0 2 0 0 0 0 0 
+      0.45047 (-0.671172442) CSF = 2 2 2 2 0 0 0 0 0 0 
+      0.02962 ( 0.172094076) CSF = 2 2 0 2 2 0 0 0 0 0 
+      0.02962 ( 0.172093992) CSF = 2 0 2 2 2 0 0 0 0 0 
+      0.00380 (-0.061671157) CSF = 1+2 1-1+2 1-0 0 0 0 
+      0.00380 (-0.061671111) CSF = 1+1-2 2 1+1-0 0 0 0 
+      0.00312 ( 0.055852742) CSF = 0 2 2 0 2 2 0 0 0 0 
+      0.00312 ( 0.055852720) CSF = 0 2 2 2 0 2 0 0 0 0 
+      0.00283 ( 0.053180617) CSF = 1+2 1+1-2 1-0 0 0 0 
+      0.00283 ( 0.053180571) CSF = 1+1+2 2 1-1-0 0 0 0 
+
+
+
+-----------------------------
+SA-CASSCF TRANSITION ENERGIES
+------------------------------
+
+LOWEST ROOT (ROOT 0 ,MULT 3) =   -149.814641785 Eh -4076.664 eV
+
+STATE   ROOT MULT  DE/a.u.    DE/eV    DE/cm**-1
+   1:    0    1   0.041366     1.126   9078.9
+   2:    1    1   0.041366     1.126   9078.9
+   3:    2    1   0.074843     2.037  16426.2
+
+
+--------------
+DENSITY MATRIX
+--------------
+
+                  0          1          2          3          4          5    
+      0       1.959644  -0.000000   0.000000   0.000000   0.000000   0.000000
+      1      -0.000000   1.950228  -0.000000  -0.000000   0.000000  -0.000000
+      2       0.000000  -0.000000   1.950228   0.000000  -0.000000   0.000000
+      3       0.000000  -0.000000   0.000000   1.038068   0.000000   0.000000
+      4       0.000000   0.000000  -0.000000   0.000000   1.038068  -0.000000
+      5       0.000000  -0.000000   0.000000   0.000000  -0.000000   0.040593
+      6      -0.000000  -0.000001   0.000002   0.000000  -0.000000  -0.000000
+      7      -0.000000  -0.000002  -0.000001  -0.000000  -0.000000  -0.000000
+      8      -0.000002  -0.000000   0.000000  -0.000000  -0.000000  -0.000000
+      9      -0.000000   0.000000  -0.000000  -0.000000   0.000000   0.000001
+                  6          7          8          9    
+      0      -0.000000  -0.000000  -0.000002  -0.000000
+      1      -0.000001  -0.000002  -0.000000   0.000000
+      2       0.000002  -0.000001   0.000000  -0.000000
+      3       0.000000  -0.000000  -0.000000  -0.000000
+      4      -0.000000  -0.000000  -0.000000   0.000000
+      5      -0.000000  -0.000000  -0.000000   0.000001
+      6       0.010501  -0.000000   0.000000   0.000000
+      7      -0.000000   0.010501  -0.000000   0.000000
+      8       0.000000  -0.000000   0.001667   0.000000
+      9       0.000000   0.000000   0.000000   0.000502
+Trace of the electron density:  8.000000
+Extracting Spin-Density from 2-RDM (MULT=3) ... done
+Extracting Spin-Density from 2-RDM (MULT=1) ... done
+
+-------------------
+SPIN-DENSITY MATRIX
+-------------------
+
+                  0          1          2          3          4          5    
+      0      -0.001386   0.000000   0.000000  -0.000000  -0.000000  -0.000000
+      1       0.000000   0.015725  -0.000000  -0.000000   0.000000  -0.000000
+      2       0.000000  -0.000000   0.015725   0.000000  -0.000000   0.000000
+      3      -0.000000  -0.000000   0.000000   0.480826   0.000000   0.000000
+      4      -0.000000   0.000000  -0.000000   0.000000   0.480826   0.000000
+      5      -0.000000  -0.000000   0.000000   0.000000   0.000000   0.002071
+      6       0.000000  -0.000502   0.031292   0.000000  -0.000000   0.000000
+      7      -0.000000  -0.031292  -0.000502  -0.000000  -0.000000   0.000000
+      8       0.003196  -0.000000   0.000000  -0.000000  -0.000000   0.000000
+      9       0.000000   0.000000  -0.000000  -0.000000  -0.000000  -0.000179
+                  6          7          8          9    
+      0       0.000000  -0.000000   0.003196   0.000000
+      1      -0.000502  -0.031292  -0.000000   0.000000
+      2       0.031292  -0.000502   0.000000  -0.000000
+      3       0.000000  -0.000000  -0.000000  -0.000000
+      4      -0.000000  -0.000000  -0.000000  -0.000000
+      5       0.000000   0.000000   0.000000  -0.000179
+      6       0.003097  -0.000000   0.000000  -0.000000
+      7      -0.000000   0.003097  -0.000000  -0.000000
+      8       0.000000  -0.000000   0.000017   0.000000
+      9      -0.000000  -0.000000   0.000000   0.000002
+Trace of the spin density:  1.000000
+
+-----------------
+ENERGY COMPONENTS
+-----------------
+
+One electron energy          :   -261.862854053 Eh       -7125.6505 eV
+Two electron energy          :     83.987444480 Eh        2285.4146 eV
+Nuclear repulsion energy     :     28.087030462 Eh         764.2870 eV
+                               ----------------
+                                 -149.788379111
+
+Kinetic energy               :    149.874077906 Eh        4078.2810 eV
+Potential energy             :   -299.662457017 Eh       -8154.2300 eV
+Virial ratio                 :     -1.999428195 
+                               ----------------
+                                 -149.788379111
+
+Core energy                  :   -127.933151987 Eh    -3481.2380 eV
+
+
+----------------------------
+LOEWDIN ORBITAL-COMPOSITIONS
+----------------------------
+
+                      0         1         2         3         4         5   
+                 -20.69547 -20.69477  -1.47117  -1.08749  -0.88264  -0.68765
+                   2.00000   2.00000   2.00000   2.00000   1.95964   1.95023
+                  --------  --------  --------  --------  --------  --------
+ 0 O  s              49.9      49.9      48.1      33.3       0.5       0.0
+ 0 O  pz              0.0       0.0       1.0      15.1      48.2       0.0
+ 0 O  py              0.0       0.0       0.0       0.0       0.0      48.7
+ 0 O  dz2             0.0       0.0       0.8       1.5       1.1       0.0
+ 0 O  dyz             0.0       0.0       0.0       0.0       0.0       1.1
+ 0 O  f0              0.0       0.0       0.1       0.1       0.2       0.0
+ 0 O  f-1             0.0       0.0       0.0       0.0       0.0       0.1
+ 1 O  s              49.9      49.9      48.1      33.3       0.5       0.0
+ 1 O  pz              0.0       0.0       1.0      15.1      48.2       0.0
+ 1 O  py              0.0       0.0       0.0       0.0       0.0      48.7
+ 1 O  dz2             0.0       0.0       0.8       1.5       1.1       0.0
+ 1 O  dyz             0.0       0.0       0.0       0.0       0.0       1.1
+ 1 O  f0              0.0       0.0       0.1       0.1       0.2       0.0
+ 1 O  f-1             0.0       0.0       0.0       0.0       0.0       0.1
+
+                      6         7         8         9        10        11   
+                  -0.68765  -0.20620  -0.20620   0.66655   1.31341   1.31341
+                   1.95023   1.03807   1.03807   0.04059   0.01050   0.01050
+                  --------  --------  --------  --------  --------  --------
+ 0 O  s               0.0       0.0       0.0       4.4       0.0       0.0
+ 0 O  pz              0.0       0.0       0.0      37.7       0.0       0.0
+ 0 O  px             48.7      42.4       5.3       0.0      43.9       0.1
+ 0 O  py              0.0       5.3      42.4       0.0       0.1      43.9
+ 0 O  dz2             0.0       0.0       0.0       6.7       0.0       0.0
+ 0 O  dxz             1.1       1.8       0.2       0.0       6.0       0.0
+ 0 O  dyz             0.0       0.2       1.8       0.0       0.0       6.0
+ 0 O  f0              0.0       0.0       0.0       1.2       0.0       0.0
+ 0 O  f+1             0.1       0.3       0.0       0.0       0.1       0.0
+ 0 O  f-1             0.0       0.0       0.3       0.0       0.0       0.1
+ 1 O  s               0.0       0.0       0.0       4.4       0.0       0.0
+ 1 O  pz              0.0       0.0       0.0      37.7       0.0       0.0
+ 1 O  px             48.7      42.4       5.3       0.0      43.9       0.1
+ 1 O  py              0.0       5.3      42.4       0.0       0.1      43.9
+ 1 O  dz2             0.0       0.0       0.0       6.7       0.0       0.0
+ 1 O  dxz             1.1       1.8       0.2       0.0       6.0       0.0
+ 1 O  dyz             0.0       0.2       1.8       0.0       0.0       6.0
+ 1 O  f0              0.0       0.0       0.0       1.2       0.0       0.0
+ 1 O  f+1             0.1       0.3       0.0       0.0       0.1       0.0
+ 1 O  f-1             0.0       0.0       0.3       0.0       0.0       0.1
+
+                     12        13        14        15        16        17   
+                   2.26430   2.45383   0.51069   0.64317   0.64317   0.89129
+                   0.00167   0.00050   0.00000   0.00000   0.00000   0.00000
+                  --------  --------  --------  --------  --------  --------
+ 0 O  s               3.3       2.8      36.6       0.0       0.0      40.9
+ 0 O  pz             45.6      25.7       8.1       0.0       0.0       4.5
+ 0 O  px              0.0       0.0       0.0       7.9      41.3       0.0
+ 0 O  py              0.0       0.0       0.0      41.3       7.9       0.0
+ 0 O  dz2             0.6      19.6       5.0       0.0       0.0       4.3
+ 0 O  dxz             0.0       0.0       0.0       0.1       0.6       0.0
+ 0 O  dyz             0.0       0.0       0.0       0.6       0.1       0.0
+ 0 O  f0              0.5       1.9       0.3       0.0       0.0       0.3
+ 1 O  s               3.3       2.8      36.6       0.0       0.0      40.9
+ 1 O  pz             45.6      25.7       8.1       0.0       0.0       4.5
+ 1 O  px              0.0       0.0       0.0       7.9      41.3       0.0
+ 1 O  py              0.0       0.0       0.0      41.3       7.9       0.0
+ 1 O  dz2             0.6      19.6       5.0       0.0       0.0       4.3
+ 1 O  dxz             0.0       0.0       0.0       0.1       0.6       0.0
+ 1 O  dyz             0.0       0.0       0.0       0.6       0.1       0.0
+ 1 O  f0              0.5       1.9       0.3       0.0       0.0       0.3
+
+                     18        19        20        21        22        23   
+                   1.08410   1.23627   1.23627   1.47717   1.47717   1.63590
+                   0.00000   0.00000   0.00000   0.00000   0.00000   0.00000
+                  --------  --------  --------  --------  --------  --------
+ 0 O  s               7.0       0.0       0.0       0.0       0.0       6.2
+ 0 O  pz             37.6       0.0       0.0       0.0       0.0      42.8
+ 0 O  px              0.0       0.0      16.2       0.0       0.0       0.0
+ 0 O  py              0.0      16.2       0.0       0.0       0.0       0.0
+ 0 O  dz2             5.2       0.0       0.0       0.0       0.0       0.4
+ 0 O  dxz             0.0       0.0      33.5       0.0       0.0       0.0
+ 0 O  dyz             0.0      33.5       0.0       0.0       0.0       0.0
+ 0 O  dx2y2           0.0       0.0       0.0      45.2       4.4       0.0
+ 0 O  dxy             0.0       0.0       0.0       4.4      45.2       0.0
+ 0 O  f0              0.1       0.0       0.0       0.0       0.0       0.6
+ 0 O  f+1             0.0       0.0       0.3       0.0       0.0       0.0
+ 0 O  f-1             0.0       0.3       0.0       0.0       0.0       0.0
+ 0 O  f+2             0.0       0.0       0.0       0.3       0.0       0.0
+ 0 O  f-2             0.0       0.0       0.0       0.0       0.3       0.0
+ 1 O  s               7.0       0.0       0.0       0.0       0.0       6.2
+ 1 O  pz             37.6       0.0       0.0       0.0       0.0      42.8
+ 1 O  px              0.0       0.0      16.2       0.0       0.0       0.0
+ 1 O  py              0.0      16.2       0.0       0.0       0.0       0.0
+ 1 O  dz2             5.2       0.0       0.0       0.0       0.0       0.4
+ 1 O  dxz             0.0       0.0      33.5       0.0       0.0       0.0
+ 1 O  dyz             0.0      33.5       0.0       0.0       0.0       0.0
+ 1 O  dx2y2           0.0       0.0       0.0      45.2       4.4       0.0
+ 1 O  dxy             0.0       0.0       0.0       4.4      45.2       0.0
+ 1 O  f0              0.1       0.0       0.0       0.0       0.0       0.6
+ 1 O  f+1             0.0       0.0       0.3       0.0       0.0       0.0
+ 1 O  f-1             0.0       0.3       0.0       0.0       0.0       0.0
+ 1 O  f+2             0.0       0.0       0.0       0.3       0.0       0.0
+ 1 O  f-2             0.0       0.0       0.0       0.0       0.3       0.0
+
+                     24        25        26        27        28        29   
+                   1.91054   1.91054   2.15154   2.38532   2.38532   2.41545
+                   0.00000   0.00000   0.00000   0.00000   0.00000   0.00000
+                  --------  --------  --------  --------  --------  --------
+ 0 O  s               0.0       0.0       6.4       0.0       0.0       0.0
+ 0 O  pz              0.0       0.0       2.0       0.0       0.0       0.0
+ 0 O  px              0.0       0.0       0.0       0.0      40.8       0.0
+ 0 O  py              0.0       0.0       0.0      40.8       0.0       7.5
+ 0 O  dz2             0.0       0.0      41.4       0.0       0.0       0.0
+ 0 O  dxz             0.0       0.0       0.0       0.0       9.1       0.0
+ 0 O  dyz             0.0       0.0       0.0       9.1       0.0      39.7
+ 0 O  dx2y2           0.3      49.3       0.0       0.0       0.0       0.0
+ 0 O  dxy            49.3       0.3       0.0       0.0       0.0       0.0
+ 0 O  f0              0.0       0.0       0.2       0.0       0.0       0.0
+ 0 O  f-1             0.0       0.0       0.0       0.0       0.0       2.8
+ 0 O  f+2             0.0       0.4       0.0       0.0       0.0       0.0
+ 0 O  f-2             0.4       0.0       0.0       0.0       0.0       0.0
+ 1 O  s               0.0       0.0       6.4       0.0       0.0       0.0
+ 1 O  pz              0.0       0.0       2.0       0.0       0.0       0.0
+ 1 O  px              0.0       0.0       0.0       0.0      40.8       0.0
+ 1 O  py              0.0       0.0       0.0      40.8       0.0       7.5
+ 1 O  dz2             0.0       0.0      41.4       0.0       0.0       0.0
+ 1 O  dxz             0.0       0.0       0.0       0.0       9.1       0.0
+ 1 O  dyz             0.0       0.0       0.0       9.1       0.0      39.7
+ 1 O  dx2y2           0.3      49.3       0.0       0.0       0.0       0.0
+ 1 O  dxy            49.3       0.3       0.0       0.0       0.0       0.0
+ 1 O  f0              0.0       0.0       0.2       0.0       0.0       0.0
+ 1 O  f-1             0.0       0.0       0.0       0.0       0.0       2.8
+ 1 O  f+2             0.0       0.4       0.0       0.0       0.0       0.0
+ 1 O  f-2             0.4       0.0       0.0       0.0       0.0       0.0
+
+                     30        31        32        33        34        35   
+                   2.41545   2.91816   3.04925   3.15654   3.15654   4.28383
+                   0.00000   0.00000   0.00000   0.00000   0.00000   0.00000
+                  --------  --------  --------  --------  --------  --------
+ 0 O  s               0.0      45.9      25.8       0.0       0.0      19.0
+ 0 O  pz              0.0       1.2      10.9       0.0       0.0       2.0
+ 0 O  px              7.5       0.0       0.0       4.4      37.6       0.0
+ 0 O  py              0.0       0.0       0.0      37.6       4.4       0.0
+ 0 O  dz2             0.0       1.3      11.0       0.0       0.0       3.2
+ 0 O  dxz            39.7       0.0       0.0       0.3       3.0       0.0
+ 0 O  dyz             0.0       0.0       0.0       3.0       0.3       0.0
+ 0 O  f0              0.0       1.6       2.3       0.0       0.0      25.8
+ 0 O  f+1             2.8       0.0       0.0       0.5       4.1       0.0
+ 0 O  f-1             0.0       0.0       0.0       4.1       0.5       0.0
+ 1 O  s               0.0      45.9      25.8       0.0       0.0      19.0
+ 1 O  pz              0.0       1.2      10.9       0.0       0.0       2.0
+ 1 O  px              7.5       0.0       0.0       4.4      37.6       0.0
+ 1 O  py              0.0       0.0       0.0      37.6       4.4       0.0
+ 1 O  dz2             0.0       1.3      11.0       0.0       0.0       3.2
+ 1 O  dxz            39.7       0.0       0.0       0.3       3.0       0.0
+ 1 O  dyz             0.0       0.0       0.0       3.0       0.3       0.0
+ 1 O  f0              0.0       1.6       2.3       0.0       0.0      25.8
+ 1 O  f+1             2.8       0.0       0.0       0.5       4.1       0.0
+ 1 O  f-1             0.0       0.0       0.0       4.1       0.5       0.0
+
+                     36        37        38        39        40        41   
+                   5.00075   5.00075   5.03770   5.03770   5.34755   5.34755
+                   0.00000   0.00000   0.00000   0.00000   0.00000   0.00000
+                  --------  --------  --------  --------  --------  --------
+ 0 O  px              0.0       0.0       0.0       0.2       0.0       0.0
+ 0 O  py              0.0       0.0       0.2       0.0       0.0       0.0
+ 0 O  dxz             0.0       0.0       0.0       4.6       0.0       0.0
+ 0 O  dyz             0.0       0.0       4.6       0.0       0.0       0.0
+ 0 O  dx2y2           0.3       0.0       0.0       0.0       0.0       0.0
+ 0 O  dxy             0.0       0.3       0.0       0.0       0.0       0.0
+ 0 O  f+1             0.0       0.0       0.1      45.0       0.0       0.0
+ 0 O  f-1             0.0       0.0      45.0       0.1       0.0       0.0
+ 0 O  f+2            46.3       3.4       0.0       0.0       0.0       0.0
+ 0 O  f-2             3.4      46.3       0.0       0.0       0.0       0.0
+ 0 O  f+3             0.0       0.0       0.0       0.0      21.5      28.5
+ 0 O  f-3             0.0       0.0       0.0       0.0      28.5      21.5
+ 1 O  px              0.0       0.0       0.0       0.2       0.0       0.0
+ 1 O  py              0.0       0.0       0.2       0.0       0.0       0.0
+ 1 O  dxz             0.0       0.0       0.0       4.6       0.0       0.0
+ 1 O  dyz             0.0       0.0       4.6       0.0       0.0       0.0
+ 1 O  dx2y2           0.3       0.0       0.0       0.0       0.0       0.0
+ 1 O  dxy             0.0       0.3       0.0       0.0       0.0       0.0
+ 1 O  f+1             0.0       0.0       0.1      45.0       0.0       0.0
+ 1 O  f-1             0.0       0.0      45.0       0.1       0.0       0.0
+ 1 O  f+2            46.3       3.4       0.0       0.0       0.0       0.0
+ 1 O  f-2             3.4      46.3       0.0       0.0       0.0       0.0
+ 1 O  f+3             0.0       0.0       0.0       0.0      21.5      28.5
+ 1 O  f-3             0.0       0.0       0.0       0.0      28.5      21.5
+
+                     42        43        44        45        46        47   
+                   5.36777   5.59914   5.59914   6.15391   6.15391   6.56227
+                   0.00000   0.00000   0.00000   0.00000   0.00000   0.00000
+                  --------  --------  --------  --------  --------  --------
+ 0 O  s               1.3       0.0       0.0       0.0       0.0       0.0
+ 0 O  pz              0.3       0.0       0.0       0.0       0.0       0.0
+ 0 O  dz2            14.7       0.0       0.0       0.0       0.0       0.0
+ 0 O  dx2y2           0.0       0.0       0.0       0.3       5.4       0.8
+ 0 O  dxy             0.0       0.0       0.0       5.4       0.3      49.2
+ 0 O  f0             33.7       0.0       0.0       0.0       0.0       0.0
+ 0 O  f+2             0.0       0.0       0.0       2.3      42.0       0.0
+ 0 O  f-2             0.0       0.0       0.0      42.0       2.3       0.0
+ 0 O  f+3             0.0       0.2      49.8       0.0       0.0       0.0
+ 0 O  f-3             0.0      49.8       0.2       0.0       0.0       0.0
+ 1 O  s               1.3       0.0       0.0       0.0       0.0       0.0
+ 1 O  pz              0.3       0.0       0.0       0.0       0.0       0.0
+ 1 O  dz2            14.7       0.0       0.0       0.0       0.0       0.0
+ 1 O  dx2y2           0.0       0.0       0.0       0.3       5.4       0.8
+ 1 O  dxy             0.0       0.0       0.0       5.4       0.3      49.2
+ 1 O  f0             33.7       0.0       0.0       0.0       0.0       0.0
+ 1 O  f+2             0.0       0.0       0.0       2.3      42.0       0.0
+ 1 O  f-2             0.0       0.0       0.0      42.0       2.3       0.0
+ 1 O  f+3             0.0       0.2      49.8       0.0       0.0       0.0
+ 1 O  f-3             0.0      49.8       0.2       0.0       0.0       0.0
+
+                     48        49        50        51        52        53   
+                   6.56227   6.71098   6.77237   6.77237   6.80506   6.80506
+                   0.00000   0.00000   0.00000   0.00000   0.00000   0.00000
+                  --------  --------  --------  --------  --------  --------
+ 0 O  s               0.0       1.9       0.0       0.0       0.0       0.0
+ 0 O  pz              0.0       0.8       0.0       0.0       0.0       0.0
+ 0 O  px              0.0       0.0       0.0       0.0       0.1       0.0
+ 0 O  py              0.0       0.0       0.0       0.0       0.0       0.1
+ 0 O  dz2             0.0      43.9       0.0       0.0       0.0       0.0
+ 0 O  dxz             0.0       0.0       0.0       0.0      46.6       0.7
+ 0 O  dyz             0.0       0.0       0.0       0.0       0.7      46.6
+ 0 O  dx2y2          49.2       0.0       0.6      44.1       0.0       0.0
+ 0 O  dxy             0.8       0.0      44.1       0.6       0.0       0.0
+ 0 O  f0              0.0       3.4       0.0       0.0       0.0       0.0
+ 0 O  f+1             0.0       0.0       0.0       0.0       2.6       0.0
+ 0 O  f-1             0.0       0.0       0.0       0.0       0.0       2.6
+ 0 O  f+2             0.0       0.0       0.1       5.2       0.0       0.0
+ 0 O  f-2             0.0       0.0       5.2       0.1       0.0       0.0
+ 1 O  s               0.0       1.9       0.0       0.0       0.0       0.0
+ 1 O  pz              0.0       0.8       0.0       0.0       0.0       0.0
+ 1 O  px              0.0       0.0       0.0       0.0       0.1       0.0
+ 1 O  py              0.0       0.0       0.0       0.0       0.0       0.1
+ 1 O  dz2             0.0      43.9       0.0       0.0       0.0       0.0
+ 1 O  dxz             0.0       0.0       0.0       0.0      46.6       0.7
+ 1 O  dyz             0.0       0.0       0.0       0.0       0.7      46.6
+ 1 O  dx2y2          49.2       0.0       0.6      44.1       0.0       0.0
+ 1 O  dxy             0.8       0.0      44.1       0.6       0.0       0.0
+ 1 O  f0              0.0       3.4       0.0       0.0       0.0       0.0
+ 1 O  f+1             0.0       0.0       0.0       0.0       2.6       0.0
+ 1 O  f-1             0.0       0.0       0.0       0.0       0.0       2.6
+ 1 O  f+2             0.0       0.0       0.1       5.2       0.0       0.0
+ 1 O  f-2             0.0       0.0       5.2       0.1       0.0       0.0
+
+                     54        55        56        57        58        59   
+                   6.91713   6.91713   7.68151   7.68151   7.91771   9.02747
+                   0.00000   0.00000   0.00000   0.00000   0.00000   0.00000
+                  --------  --------  --------  --------  --------  --------
+ 0 O  s               0.0       0.0       0.0       0.0       1.8      14.8
+ 0 O  pz              0.0       0.0       0.0       0.0       0.8      15.6
+ 0 O  px              0.1       0.0       3.3       0.1       0.0       0.0
+ 0 O  py              0.0       0.1       0.1       3.3       0.0       0.0
+ 0 O  dz2             0.0       0.0       0.0       0.0      34.6       4.5
+ 0 O  dxz            38.0       7.5       6.7       0.3       0.0       0.0
+ 0 O  dyz             7.5      38.0       0.3       6.7       0.0       0.0
+ 0 O  f0              0.0       0.0       0.0       0.0      12.8      15.0
+ 0 O  f+1             3.7       0.7      38.0       1.6       0.0       0.0
+ 0 O  f-1             0.7       3.7       1.6      38.0       0.0       0.0
+ 1 O  s               0.0       0.0       0.0       0.0       1.8      14.8
+ 1 O  pz              0.0       0.0       0.0       0.0       0.8      15.6
+ 1 O  px              0.1       0.0       3.3       0.1       0.0       0.0
+ 1 O  py              0.0       0.1       0.1       3.3       0.0       0.0
+ 1 O  dz2             0.0       0.0       0.0       0.0      34.6       4.5
+ 1 O  dxz            38.0       7.5       6.7       0.3       0.0       0.0
+ 1 O  dyz             7.5      38.0       0.3       6.7       0.0       0.0
+ 1 O  f0              0.0       0.0       0.0       0.0      12.8      15.0
+ 1 O  f+1             3.7       0.7      38.0       1.6       0.0       0.0
+ 1 O  f-1             0.7       3.7       1.6      38.0       0.0       0.0
+
+                     60        61   
+                  44.52661  45.06493
+                   0.00000   0.00000
+                  --------  --------
+ 0 O  s              50.0      50.0
+ 1 O  s              50.0      50.0
+
+----------------------------
+LOEWDIN REDUCED ACTIVE MOs  
+----------------------------
+
+                      0         1         2         3         4         5   
+                 -20.69547 -20.69477  -1.47117  -1.08749  -0.88264  -0.68765
+                   2.00000   2.00000   2.00000   2.00000   1.95964   1.95023
+                  --------  --------  --------  --------  --------  --------
+ 0 O  s              49.9      49.9      48.1      33.3       0.5       0.0
+ 0 O  pz              0.0       0.0       1.0      15.1      48.2       0.0
+ 0 O  py              0.0       0.0       0.0       0.0       0.0      48.7
+ 1 O  s              49.9      49.9      48.1      33.3       0.5       0.0
+ 1 O  pz              0.0       0.0       1.0      15.1      48.2       0.0
+ 1 O  py              0.0       0.0       0.0       0.0       0.0      48.7
+
+                      6         7         8         9        10        11   
+                  -0.68765  -0.20620  -0.20620   0.66655   1.31341   1.31341
+                   1.95023   1.03807   1.03807   0.04059   0.01050   0.01050
+                  --------  --------  --------  --------  --------  --------
+ 0 O  pz              0.0       0.0       0.0      37.7       0.0       0.0
+ 0 O  px             48.7      42.4       5.3       0.0      43.9       0.1
+ 0 O  py              0.0       5.3      42.4       0.0       0.1      43.9
+ 0 O  dz2             0.0       0.0       0.0       6.7       0.0       0.0
+ 0 O  dxz             1.1       1.8       0.2       0.0       6.0       0.0
+ 0 O  dyz             0.0       0.2       1.8       0.0       0.0       6.0
+ 1 O  pz              0.0       0.0       0.0      37.7       0.0       0.0
+ 1 O  px             48.7      42.4       5.3       0.0      43.9       0.1
+ 1 O  py              0.0       5.3      42.4       0.0       0.1      43.9
+ 1 O  dz2             0.0       0.0       0.0       6.7       0.0       0.0
+ 1 O  dxz             1.1       1.8       0.2       0.0       6.0       0.0
+ 1 O  dyz             0.0       0.2       1.8       0.0       0.0       6.0
+
+                     12        13        14        15        16        17   
+                   2.26430   2.45383   0.51069   0.64317   0.64317   0.89129
+                   0.00167   0.00050   0.00000   0.00000   0.00000   0.00000
+                  --------  --------  --------  --------  --------  --------
+ 0 O  s               3.3       2.8      36.6       0.0       0.0      40.9
+ 0 O  pz             45.6      25.7       8.1       0.0       0.0       4.5
+ 0 O  px              0.0       0.0       0.0       7.9      41.3       0.0
+ 0 O  py              0.0       0.0       0.0      41.3       7.9       0.0
+ 0 O  dz2             0.6      19.6       5.0       0.0       0.0       4.3
+ 1 O  s               3.3       2.8      36.6       0.0       0.0      40.9
+ 1 O  pz             45.6      25.7       8.1       0.0       0.0       4.5
+ 1 O  px              0.0       0.0       0.0       7.9      41.3       0.0
+ 1 O  py              0.0       0.0       0.0      41.3       7.9       0.0
+ 1 O  dz2             0.6      19.6       5.0       0.0       0.0       4.3
+
+------------------------------------------------------------------------------
+                           ORCA POPULATION ANALYSIS
+------------------------------------------------------------------------------
+Input electron density              ... mol.scfp
+Input spin density                  ... mol.scfr
+BaseName (.gbw .S,...)              ... mol
+
+                    ********************************
+                    * MULLIKEN POPULATION ANALYSIS *
+                    ********************************
+
+------------------------------------------
+MULLIKEN ATOMIC CHARGES AND SPIN DENSITIES
+------------------------------------------
+   0 O :    0.000000    0.500000
+   1 O :   -0.000000    0.500000
+Sum of atomic charges       :   -0.0000000
+Sum of atomic spin densities:    1.0000000
+
+---------------------------------------------------
+MULLIKEN REDUCED ORBITAL CHARGES AND SPIN DENSITIES
+---------------------------------------------------
+CHARGE
+  0 O s       :     3.913297  s :     3.913297
+      pz      :     1.066680  p :     4.029180
+      px      :     1.481250
+      py      :     1.481250
+      dz2     :     0.019094  d :     0.052773
+      dxz     :     0.016840
+      dyz     :     0.016840
+      dx2y2   :     0.000000
+      dxy     :     0.000000
+      f0      :     0.002132  f :     0.004750
+      f+1     :     0.001309
+      f-1     :     0.001309
+      f+2     :     0.000000
+      f-2     :     0.000000
+      f+3     :     0.000000
+      f-3     :     0.000000
+  1 O s       :     3.913297  s :     3.913297
+      pz      :     1.066680  p :     4.029180
+      px      :     1.481250
+      py      :     1.481250
+      dz2     :     0.019094  d :     0.052773
+      dxz     :     0.016840
+      dyz     :     0.016840
+      dx2y2   :     0.000000
+      dxy     :     0.000000
+      f0      :     0.002132  f :     0.004750
+      f+1     :     0.001309
+      f-1     :     0.001309
+      f+2     :     0.000000
+      f-2     :     0.000000
+      f+3     :     0.000000
+      f-3     :     0.000000
+
+SPIN
+  0 O s       :     0.000095  s :     0.000095
+      pz      :     0.000354  p :     0.501276
+      px      :     0.250461
+      py      :     0.250461
+      dz2     :    -0.000100  d :    -0.001387
+      dxz     :    -0.000644
+      dyz     :    -0.000644
+      dx2y2   :     0.000000
+      dxy     :     0.000000
+      f0      :     0.000003  f :     0.000016
+      f+1     :     0.000007
+      f-1     :     0.000007
+      f+2     :     0.000000
+      f-2     :     0.000000
+      f+3     :     0.000000
+      f-3     :     0.000000
+  1 O s       :     0.000095  s :     0.000095
+      pz      :     0.000354  p :     0.501276
+      px      :     0.250461
+      py      :     0.250461
+      dz2     :    -0.000100  d :    -0.001387
+      dxz     :    -0.000644
+      dyz     :    -0.000644
+      dx2y2   :     0.000000
+      dxy     :     0.000000
+      f0      :     0.000003  f :     0.000016
+      f+1     :     0.000007
+      f-1     :     0.000007
+      f+2     :     0.000000
+      f-2     :     0.000000
+      f+3     :     0.000000
+      f-3     :     0.000000
+
+
+                     *******************************
+                     * LOEWDIN POPULATION ANALYSIS *
+                     *******************************
+
+-----------------------------------------
+LOEWDIN ATOMIC CHARGES AND SPIN DENSITIES
+-----------------------------------------
+   0 O :    0.000000    0.500000
+   1 O :   -0.000000    0.500000
+
+--------------------------------------------------
+LOEWDIN REDUCED ORBITAL CHARGES AND SPIN DENSITIES
+--------------------------------------------------
+CHARGE
+  0 O s       :     3.638003  s :     3.638003
+      pz      :     1.283607  p :     4.183685
+      px      :     1.450039
+      py      :     1.450039
+      dz2     :     0.071754  d :     0.159049
+      dxz     :     0.043647
+      dyz     :     0.043647
+      dx2y2   :     0.000000
+      dxy     :     0.000000
+      f0      :     0.007839  f :     0.019263
+      f+1     :     0.005712
+      f-1     :     0.005712
+      f+2     :     0.000000
+      f-2     :     0.000000
+      f+3     :     0.000000
+      f-3     :     0.000000
+  1 O s       :     3.638003  s :     3.638003
+      pz      :     1.283607  p :     4.183685
+      px      :     1.450039
+      py      :     1.450039
+      dz2     :     0.071754  d :     0.159049
+      dxz     :     0.043647
+      dyz     :     0.043647
+      dx2y2   :     0.000000
+      dxy     :     0.000000
+      f0      :     0.007839  f :     0.019263
+      f+1     :     0.005712
+      f-1     :     0.005712
+      f+2     :     0.000000
+      f-2     :     0.000000
+      f+3     :     0.000000
+      f-3     :     0.000000
+
+SPIN
+  0 O s       :     0.000025  s :     0.000025
+      pz      :     0.000157  p :     0.479971
+      px      :     0.239907
+      py      :     0.239907
+      dz2     :     0.000123  d :     0.017135
+      dxz     :     0.008506
+      dyz     :     0.008506
+      dx2y2   :     0.000000
+      dxy     :     0.000000
+      f0      :     0.000047  f :     0.002869
+      f+1     :     0.001411
+      f-1     :     0.001411
+      f+2     :     0.000000
+      f-2     :     0.000000
+      f+3     :     0.000000
+      f-3     :     0.000000
+  1 O s       :     0.000025  s :     0.000025
+      pz      :     0.000157  p :     0.479971
+      px      :     0.239907
+      py      :     0.239907
+      dz2     :     0.000123  d :     0.017135
+      dxz     :     0.008506
+      dyz     :     0.008506
+      dx2y2   :     0.000000
+      dxy     :     0.000000
+      f0      :     0.000047  f :     0.002869
+      f+1     :     0.001411
+      f-1     :     0.001411
+      f+2     :     0.000000
+      f-2     :     0.000000
+      f+3     :     0.000000
+      f-3     :     0.000000
+
+
+                      *****************************
+                      * MAYER POPULATION ANALYSIS *
+                      *****************************
+
+  NA   - Mulliken gross atomic population
+  ZA   - Total nuclear charge
+  QA   - Mulliken gross atomic charge
+  VA   - Mayer's total valence
+  BVA  - Mayer's bonded valence
+  FA   - Mayer's free valence
+
+  ATOM       NA         ZA         QA         VA         BVA        FA
+  0 O      8.0000     8.0000     0.0000     2.4282     1.3292     1.0990
+  1 O      8.0000     8.0000    -0.0000     2.4282     1.3292     1.0990
+
+  Mayer bond orders larger than 0.100000
+B(  0-O ,  1-O ) :   1.3292 
+
+
+-------------------------------------------------------------
+ Forming the transition density       ... done in 0.4 sec
+-------------------------------------------------------------
+
+--------------
+CASSCF TIMINGS
+--------------
+
+Total time                       ...      272.4 sec
+Sum of individual times          ...      272.0 sec ( 99.9%)
+
+Calculation of AO operators
+   F(Core) operator              ...        0.1 sec (  0.0%)
+   G(Act) operator               ...        0.0 sec (  0.0%)
+Calculation of MO transformed quantities
+   J(MO) operators               ...        0.1 sec (  0.0%)
+   AO->MO one electron integrals ...        0.0 sec (  0.0%)
+Configuration interaction steps
+   CI-setup phase                ...        0.0 sec (  0.0%)
+   CI-solution phase             ...      257.8 sec ( 94.7%)
+   Generation of densities       ...       13.5 sec (  5.0%)
+Orbital improvement steps
+   Orbital gradient              ...        0.0 sec (  0.0%)
+CPCM steps
+   Total CPCM time               ...        0.0 sec (  0.0%)
+Properties                       ...        0.4 sec (  0.2%)
+   SOC integral calculation      ...        0.0 sec (  0.0%)
+   SSC RMEs (incl. integrals)    ...        0.0 sec (  0.0%)
+   SOC RMEs                      ...        0.0 sec (  0.0%)
+
+Maximum memory used throughout the entire CASSCF-calculation: 4988.3 MB
+
+
+           ************************************************************
+           *        Program running with 4 parallel MPI-processes     *
+           *              working on a common directory               *
+           ************************************************************
+
+------------------------------------------------------------------------------
+                         ORCA PROPERTY INTEGRAL CALCULATIONS
+------------------------------------------------------------------------------
+
+GBWName                                   ... mol.gbw
+Number of atoms                           ...      2
+Number of basis functions                 ...     62
+Max core memory                           ...   8000 MB
+
+Dipole integrals                          ... YES
+Quadrupole integrals                      ...  NO
+Linear momentum integrals                 ...  NO
+Angular momentum integrals                ... YES
+Higher moments length integrals           ...  NO
+Higher moments velocity integrals         ...  NO
+Kinetic energy integrals                  ...  NO
+GIAO right hand sides                     ...  NO
+GIAO dipole derivative integrals          ...  NO
+SOC integrals                             ... YES
+EPR diamagnetic integrals (GIAO)          ...  NO
+EPR gauge integrals                       ...  NO
+Field gradient integrals                  ...  NO (   0 nuclei)
+Spin-dipole/Fermi contact integrals       ...  NO (   0 nuclei)
+Contact density integrals                 ...  NO (   0 nuclei)
+Nucleus-orbit integrals                   ...  NO (   0 nuclei)
+Geometric perturbations                   ...  NO (   2 nuclei)
+
+Choice of electric origin   ... Center of mass
+Position of electric origin ... (  0.0000,  0.0000,  1.1393) 
+Choice of magnetic origin   ... GIAO
+Position of magnetic origin ... (  0.0000,  0.0000,  0.0000) 
+
+Calculating integrals                     ... Electric Dipole (Length)     done (  0.0 sec)
+Calculating integrals                     ... Angular Momentum  (ElOri)    done (  0.0 sec)
+Calculating integrals                     ... Spin-Orbit Coupling
+  Spin-orbit operator                     ... Spin-Orbit Mean-Field (SOMF)
+      1-El-Flag                           ...  1 ON
+      Coulomb-Flag                        ...  4 ON (Exact integrals)
+      Exchange-Flag                       ...  3 ON (AMFI type)
+      DFT-Correlation Flag                ...  0 OFF
+      Max-Center                          ...  4   
+      Relativistic Picture Change         ... OFF     
+  One-electron part                       ... done (  0.0 sec)
+  Two-electron DoJ,X=1,1 MaxCenter=4      ... done (  0.6 sec)
+  SOC integrals done (  0.6 sec)
+
+Property integrals calculated in   0.6 sec
+
+Maximum memory used throughout the entire PROPINT-calculation: 9.0 MB
+
+
+           ************************************************************
+           *        Program running with 4 parallel MPI-processes     *
+           *              working on a common directory               *
+           ************************************************************
+-------------------------------------------------------------------------------
+                              ORCA-CASSCF
+-------------------------------------------------------------------------------
+
+Setting up the integral package     ... SharkInputFile = mol.SHARKINP.tmpdone
+
+PROPERTIES-SETTINGS:
+  Spin orbit coupling               ... true
+  QDPT diagonal energies            ... NEVPT2 energies 
+
+
+==========================================
+CASSCF UV, CD spectra and dipole moments
+==========================================
+
+==============================
+CASSCF RELATIVISTIC PROPERTIES
+==============================
+
+
+Calculating SOCInts
+
+----------------------------------
+QDPT WITH CASSCF DIAGONAL ENERGIES
+----------------------------------
+
+
+*************************************
+COMPUTING QDPT HAMILTONIAN
+*************************************
+
+*************************************
+Doing QDPT with ONLY SOC!
+*************************************
+
+Lowest eigenvalue of the SOC matrix:    -149.81465182 Eh
+Energy stabilization:    -2.20181 cm-1
+Eigenvalues:     cm-1         eV      Boltzmann populations at T =  300.000 K
+   0:            0.00        0.0000       3.36e-01
+   1:            2.20        0.0003       3.32e-01
+   2:            2.20        0.0003       3.32e-01
+   3:         9081.07        1.1259       4.09e-20
+   4:         9081.07        1.1259       4.09e-20
+   5:        16430.61        2.0371       2.01e-35
+
+The threshold for printing is 0.0100
+Eigenvectors:
+                         Weight      Real          Image    : Block Root    Spin   Ms
+ STATE   0:       0.0000
+                         0.999866    -0.000000    -0.999933 :     0    0    1    0
+ STATE   1:       2.2018
+                         0.500000    -0.595601     0.381129 :     0    0    1    1
+                         0.500000    -0.595601    -0.381129 :     0    0    1   -1
+ STATE   2:       2.2018
+                         0.500000     0.694986     0.130362 :     0    0    1    1
+                         0.500000    -0.172803    -0.685667 :     0    0    1   -1
+ STATE   3:    9081.0715
+                         1.000000    -1.000000    -0.000000 :     1    0    0    0
+ STATE   4:    9081.0724
+                         1.000000     1.000000     0.000000 :     1    1    0    0
+ STATE   5:   16430.6069
+                         0.999866     0.999933     0.000000 :     1    2    0    0
+
+*************************************
+COMPUTING QDPT PROPERTIES
+*************************************
+
+
+--------------------------------------------
+           ZERO-FIELD SPLITTING
+2ND ORDER SOC CONTRIBUTION
+--------------------------------------------
+
+Second order D-tensor: component '0'
+    0.000000     0.000000     0.000000 
+    0.000000     0.000000     0.000000 
+    0.000000     0.000000     0.000000 
+
+Second order D-tensor: component '-'
+    0.000000     0.000000    -0.000000 
+    0.000000     0.000000    -0.000000 
+   -0.000000    -0.000000     2.202110 
+
+Second order D-tensor: component '+'
+    0.000000     0.000000     0.000000 
+    0.000000     0.000000     0.000000 
+    0.000000     0.000000     0.000000 
+
+Raw matrix (cm-1):
+    0.000000     0.000000    -0.000000 
+    0.000000     0.000000    -0.000000 
+   -0.000000    -0.000000     2.202110 
+
+Eigenvalues (cm-1):
+    0.000000     0.000000     2.202110 
+
+Eigenvalues (traceless) (cm-1):
+   -0.734037    -0.734037     1.468073 
+
+Eigenvectors:
+   -0.994489     0.104840    -0.000000 
+    0.104840     0.994489    -0.000000 
+   -0.000000     0.000000     1.000000 
+
+Euler angles w.r.t. molecular frame (degrees):
+      6.0179       0.0000       0.0000
+
+D   =    2.202110  cm-1
+E/D =    0.000000
+
+Individual contributions to D-tensor:
+Block  Mult  Root          D          E
+    0     3     0      0.000      0.000
+    1     1     0      0.000     -0.000
+    1     1     1      0.000      0.000
+    1     1     2      2.202     -0.000
+Norm of projected state 0 of the effective Hamiltonian: 0.999866
+Norm of projected state 1 of the effective Hamiltonian: 1.000000
+Norm of projected state 2 of the effective Hamiltonian: 1.000000
+WARNING: If the projections have norms significantly smaller than 1, the effective Hamiltonian might not be very meaningful!
+
+--------------------------------------------------------
+                  ZERO-FIELD SPLITTING
+EFFECTIVE HAMILTONIAN SOC CONTRIBUTION
+--------------------------------------------------------
+
+Effective Hamiltonian from projected relativistic states and relativistic energies:
+
+Real part:  
+                  0          1          2    
+      0       2.201815  -0.000000  -0.000000
+      1      -0.000000   0.000000   0.000000
+      2      -0.000000   0.000000   2.201815
+
+Image part: 
+                  0          1          2    
+      0       0.000000   0.000000   0.000000
+      1      -0.000000   0.000000  -0.000000
+      2      -0.000000   0.000000   0.000000
+Raw matrix (cm-1):
+   -0.000000    -0.000000    -0.000000 
+   -0.000000     0.000000    -0.000000 
+   -0.000000    -0.000000     2.201815 
+
+Eigenvalues (cm-1):
+    0.000000    -0.000000     2.201815 
+
+Eigenvalues (traceless) (cm-1):
+   -0.733938    -0.733938     1.467877 
+
+Eigenvectors:
+   -0.538998    -0.842307     0.000000 
+    0.842307    -0.538998     0.000000 
+    0.000000    -0.000000    -1.000000 
+
+Euler angles w.r.t. molecular frame (degrees):
+     57.3845       0.0000       0.0000
+
+D   =    2.201815  cm-1
+E/D =    0.000000
+
+  *** Storing geometry in DTensor axis frame as mol.CASSCF_DTensor_HEFF_rotated.xyz  ***
+
+Individual contributions to D-tensor:
+Block  Mult  Root          D          E
+    1     1     0     -0.000     -0.000
+    1     1     1      0.000      0.000
+    1     1     2      2.202     -0.000
+-----------------------------------------
+Computing the QDPT Transition Densities ...
+10% done
+20% done
+30% done
+40% done
+50% done
+60% done
+70% done
+80% done
+90% done
+100% done
+ done 
+-----------------------------------------
+
+
+Energy levels:  cm-1      eV      Boltzmann populations for T = 300.00  K 
+
+   0 :         0.000     0.0000         3.36e-01 
+   1 :         2.202     0.0003         3.32e-01 
+   2 :         2.202     0.0003         3.32e-01 
+   3 :      9081.071     1.1259         4.09e-20 
+   4 :      9081.072     1.1259         4.09e-20 
+   5 :     16430.607     2.0371         2.01e-35 
+
+--------------------------------------------------------------------------------------------------------
+      SOC CORRECTED ABSORPTION SPECTRUM VIA TRANSITION ELECTRIC DIPOLE MOMENTS    
+--------------------------------------------------------------------------------------------------------
+      Transition         Energy     Energy  Wavelength fosc(D2)      D2       |DX|      |DY|      |DZ|  
+                          (eV)      (cm-1)    (nm)  (*population)  (au**2)    (au)      (au)      (au)  
+--------------------------------------------------------------------------------------------------------
+  1-3.0A  ->  2-3.0A    0.000000       0.0     0.0   0.000000000   0.00000   0.00000   0.00000   0.00000
+  0-3.0A  ->  1-3.0A    0.000273       2.2  4541707.8   0.000000000   0.00000   0.00000   0.00000   0.00000
+  0-3.0A  ->  2-3.0A    0.000273       2.2  4541707.8   0.000000000   0.00000   0.00000   0.00000   0.00000
+  2-3.0A  ->  3-1.0A    1.125636    9078.9  1101.5   0.000000000   0.00000   0.00000   0.00000   0.00000
+  1-3.0A  ->  3-1.0A    1.125636    9078.9  1101.5   0.000000000   0.00000   0.00000   0.00000   0.00000
+  2-3.0A  ->  4-1.0A    1.125636    9078.9  1101.5   0.000000000   0.00000   0.00000   0.00000   0.00000
+  1-3.0A  ->  4-1.0A    1.125636    9078.9  1101.5   0.000000000   0.00000   0.00000   0.00000   0.00000
+  0-3.0A  ->  3-1.0A    1.125909    9081.1  1101.2   0.000000000   0.00000   0.00000   0.00000   0.00000
+  0-3.0A  ->  4-1.0A    1.125909    9081.1  1101.2   0.000000000   0.00000   0.00000   0.00000   0.00000
+  2-3.0A  ->  5-1.0A    2.036862   16428.4   608.7   0.000000000   0.00000   0.00000   0.00000   0.00000
+  1-3.0A  ->  5-1.0A    2.036862   16428.4   608.7   0.000000000   0.00000   0.00000   0.00000   0.00000
+  0-3.0A  ->  5-1.0A    2.037135   16430.6   608.6   0.000000000   0.00000   0.00000   0.00000   0.00000
+
+----------------------------------------------------------------------------------------------
+      SOC CORRECTED CD SPECTRUM VIA TRANSITION ELECTRIC DIPOLE MOMENTS    
+----------------------------------------------------------------------------------------------
+      Transition         Energy     Energy  Wavelength    R       |MX|      |MY|      |MZ|  
+                          (eV)      (cm-1)    (nm)    (1e40*cgs)  (au)      (au)      (au)  
+----------------------------------------------------------------------------------------------
+  1-3.0A  ->  2-3.0A    0.000000       0.0     0.0   -0.00000   0.00000   0.00000   0.00000
+  0-3.0A  ->  1-3.0A    0.000273       2.2  4541707.8   -0.00000   0.00000   0.00000   0.00000
+  0-3.0A  ->  2-3.0A    0.000273       2.2  4541707.8   -0.00000   0.00000   0.00000   0.00000
+  2-3.0A  ->  3-1.0A    1.125636    9078.9  1101.5    0.00000   0.00000   0.00000   0.00000
+  1-3.0A  ->  3-1.0A    1.125636    9078.9  1101.5   -0.00000   0.00000   0.00000   0.00000
+  2-3.0A  ->  4-1.0A    1.125636    9078.9  1101.5   -0.00000   0.00000   0.00000   0.00000
+  1-3.0A  ->  4-1.0A    1.125636    9078.9  1101.5    0.00000   0.00000   0.00000   0.00000
+  0-3.0A  ->  3-1.0A    1.125909    9081.1  1101.2   -0.00000   0.00000   0.00000   0.00000
+  0-3.0A  ->  4-1.0A    1.125909    9081.1  1101.2   -0.00000   0.00000   0.00000   0.00000
+  2-3.0A  ->  5-1.0A    2.036862   16428.4   608.7    0.00000   0.00000   0.00000   0.00000
+  1-3.0A  ->  5-1.0A    2.036862   16428.4   608.7    0.00000   0.00000   0.00000   0.00000
+  0-3.0A  ->  5-1.0A    2.037135   16430.6   608.6   -0.00000   0.00000   0.00000   0.00000
+
+----------------------------------
+QDPT WITH CASSCF DIAGONAL ENERGIES
+----------------------------------
+
+
+
+-------------------------------------------
+Calculating Spin-Spin Coupling Integrals
+-------------------------------------------
+   => Entering HalfTrafo. NBasis=  62
+   => Orbital Range for op=62 =    0-   4
+   => Past Init
+
+-------------------------
+SHARK HALF TRANSFORMATION (Kernel = Spin-Spin-Coupling)
+-------------------------
+
+Number of basis functions                ...     62
+Number of operators                      ...      1
+   Operator  0:    4-  13
+
+Integral generator used                  ... SHARK
+Contraction scheme used                  ... SEGMENTED CONTRACTION
+MaxCore in resort                        ...   8000 MB
+
+   => Past RestoreShellData
+Half transformed ints op=   0, dir=xx    ... mol.SHARK_MNPQ_KNLxx_0.tmp
+Resorted half transformed integrals      ... mol.SS_PQMN_0_0.tmp
+Half transformed ints op=   0, dir=yy    ... mol.SHARK_MNPQ_KNLyy_0.tmp
+Resorted half transformed integrals      ... mol.SS_PQMN_0_0.tmp
+Half transformed ints op=   0, dir=zz    ... mol.SHARK_MNPQ_KNLzz_0.tmp
+Resorted half transformed integrals      ... mol.SS_PQMN_0_0.tmp
+Half transformed ints op=   0, dir=xy    ... mol.SHARK_MNPQ_KNLxy_0.tmp
+Resorted half transformed integrals      ... mol.SS_PQMN_0_0.tmp
+Half transformed ints op=   0, dir=xz    ... mol.SHARK_MNPQ_KNLxz_0.tmp
+Resorted half transformed integrals      ... mol.SS_PQMN_0_0.tmp
+Half transformed ints op=   0, dir=yz    ... mol.SHARK_MNPQ_KNLyz_0.tmp
+Resorted half transformed integrals      ... mol.SS_PQMN_0_0.tmp
+   => Past Container Init
+Starting integral generation + half trafo... 
+   => Entering segmented contraction
+Half trafo (segmented) done. Total time =  0.6 sec. integrals=  0.5 sec trafo=  0.1 sec
+   => Past AO integral part
+   => Past Decontract orbitals
+Starting integral resorting              ... 
+----------------------
+SHARK INTEGRAL SORTING
+----------------------
+
+Input container                             ... mol.SHARK_MNPQ_KNLxx_0.tmp
+Output container                            ... mol.SS_PQMN_0_0.tmp
+Range of p-indices                          ...    0 -   61
+Range of q-indices                          ...    0 -   61
+Number of (p,q) pairs generated             ... 1953
+Symmetric p,q (triangle)                    ... YES
+Range of r-indices                          ...    4 -   13
+Range of s-indices                          ...    4 -   13
+Number of (r,s) pairs generated             ...   55
+Symmetric r,s (triangle)                    ... YES
+Transpose final matrix                      ... NO
+Max Core memory in MB                       ...   8000
+
+Available core memory in MB                 ...   7949.09
+MB needed for one item                      ...      0.01
+Number of items                             ...        14
+Number of batches                           ...         1
+Items treated per batch                     ...        14
+Batch   0                                ...      0-    13 (    14)
+   => Closing output file and leaving
+
+----------------------
+SHARK INTEGRAL SORTING
+----------------------
+
+Input container                             ... mol.SHARK_MNPQ_KNLyy_0.tmp
+Output container                            ... mol.SS_PQMN_0_1.tmp
+Range of p-indices                          ...    0 -   61
+Range of q-indices                          ...    0 -   61
+Number of (p,q) pairs generated             ... 1953
+Symmetric p,q (triangle)                    ... YES
+Range of r-indices                          ...    4 -   13
+Range of s-indices                          ...    4 -   13
+Number of (r,s) pairs generated             ...   55
+Symmetric r,s (triangle)                    ... YES
+Transpose final matrix                      ... NO
+Max Core memory in MB                       ...   8000
+
+Available core memory in MB                 ...   7949.09
+MB needed for one item                      ...      0.01
+Number of items                             ...        14
+Number of batches                           ...         1
+Items treated per batch                     ...        14
+Batch   0                                ...      0-    13 (    14)
+   => Closing output file and leaving
+
+----------------------
+SHARK INTEGRAL SORTING
+----------------------
+
+Input container                             ... mol.SHARK_MNPQ_KNLzz_0.tmp
+Output container                            ... mol.SS_PQMN_0_2.tmp
+Range of p-indices                          ...    0 -   61
+Range of q-indices                          ...    0 -   61
+Number of (p,q) pairs generated             ... 1953
+Symmetric p,q (triangle)                    ... YES
+Range of r-indices                          ...    4 -   13
+Range of s-indices                          ...    4 -   13
+Number of (r,s) pairs generated             ...   55
+Symmetric r,s (triangle)                    ... YES
+Transpose final matrix                      ... NO
+Max Core memory in MB                       ...   8000
+
+Available core memory in MB                 ...   7949.10
+MB needed for one item                      ...      0.01
+Number of items                             ...        14
+Number of batches                           ...         1
+Items treated per batch                     ...        14
+Batch   0                                ...      0-    13 (    14)
+   => Closing output file and leaving
+
+----------------------
+SHARK INTEGRAL SORTING
+----------------------
+
+Input container                             ... mol.SHARK_MNPQ_KNLxy_0.tmp
+Output container                            ... mol.SS_PQMN_0_3.tmp
+Range of p-indices                          ...    0 -   61
+Range of q-indices                          ...    0 -   61
+Number of (p,q) pairs generated             ... 1953
+Symmetric p,q (triangle)                    ... YES
+Range of r-indices                          ...    4 -   13
+Range of s-indices                          ...    4 -   13
+Number of (r,s) pairs generated             ...   55
+Symmetric r,s (triangle)                    ... YES
+Transpose final matrix                      ... NO
+Max Core memory in MB                       ...   8000
+
+Available core memory in MB                 ...   7949.10
+MB needed for one item                      ...      0.01
+Number of items                             ...        14
+Number of batches                           ...         1
+Items treated per batch                     ...        14
+Batch   0                                ...      0-    13 (    14)
+   => Closing output file and leaving
+
+----------------------
+SHARK INTEGRAL SORTING
+----------------------
+
+Input container                             ... mol.SHARK_MNPQ_KNLxz_0.tmp
+Output container                            ... mol.SS_PQMN_0_4.tmp
+Range of p-indices                          ...    0 -   61
+Range of q-indices                          ...    0 -   61
+Number of (p,q) pairs generated             ... 1953
+Symmetric p,q (triangle)                    ... YES
+Range of r-indices                          ...    4 -   13
+Range of s-indices                          ...    4 -   13
+Number of (r,s) pairs generated             ...   55
+Symmetric r,s (triangle)                    ... YES
+Transpose final matrix                      ... NO
+Max Core memory in MB                       ...   8000
+
+Available core memory in MB                 ...   7949.10
+MB needed for one item                      ...      0.01
+Number of items                             ...        14
+Number of batches                           ...         1
+Items treated per batch                     ...        14
+Batch   0                                ...      0-    13 (    14)
+   => Closing output file and leaving
+
+----------------------
+SHARK INTEGRAL SORTING
+----------------------
+
+Input container                             ... mol.SHARK_MNPQ_KNLyz_0.tmp
+Output container                            ... mol.SS_PQMN_0_5.tmp
+Range of p-indices                          ...    0 -   61
+Range of q-indices                          ...    0 -   61
+Number of (p,q) pairs generated             ... 1953
+Symmetric p,q (triangle)                    ... YES
+Range of r-indices                          ...    4 -   13
+Range of s-indices                          ...    4 -   13
+Number of (r,s) pairs generated             ...   55
+Symmetric r,s (triangle)                    ... YES
+Transpose final matrix                      ... NO
+Max Core memory in MB                       ...   8000
+
+Available core memory in MB                 ...   7949.10
+MB needed for one item                      ...      0.01
+Number of items                             ...        14
+Number of batches                           ...         1
+Items treated per batch                     ...        14
+Batch   0                                ...      0-    13 (    14)
+   => Closing output file and leaving
+done (  0.0 sec)
+   => Past delete buffer
+   => Past re-contract
+
+SHARK half integral transformation SOC done. Total time =  0.6 sec.
+
+----------------------------------
+J-TRAFO SECOND HALF TRANSFORMATION
+----------------------------------
+
+Generate (ij|kl)                        ... YES
+Generate (ij|ka)                        ... NO
+Generate (ij|ab)                        ... NO
+Generate (ia|bc)                        ... NO
+Generate (ab|cd)                        ... NO
+Generate (pq|rs)                        ... NO
+
+Number of operators                     ... 1
+   Operator 0                           ...    4-  13 to   14-  61
+   PQMN-Container name                  ... mol.SS_PQMN_0_0.tmp
+   IJKL-Container name    op=0,0        ... mol.SS_IJKL_0_0.tmp
+
+Starting integral transformations       ... done
+Completed Coulomb integral formation in   0.1 sec
+
+----------------------------------
+J-TRAFO SECOND HALF TRANSFORMATION
+----------------------------------
+
+Generate (ij|kl)                        ... YES
+Generate (ij|ka)                        ... NO
+Generate (ij|ab)                        ... NO
+Generate (ia|bc)                        ... NO
+Generate (ab|cd)                        ... NO
+Generate (pq|rs)                        ... NO
+
+Number of operators                     ... 1
+   Operator 0                           ...    4-  13 to   14-  61
+   PQMN-Container name                  ... mol.SS_PQMN_0_1.tmp
+   IJKL-Container name    op=0,0        ... mol.SS_IJKL_0_1.tmp
+
+Starting integral transformations       ... done
+Completed Coulomb integral formation in   0.0 sec
+
+----------------------------------
+J-TRAFO SECOND HALF TRANSFORMATION
+----------------------------------
+
+Generate (ij|kl)                        ... YES
+Generate (ij|ka)                        ... NO
+Generate (ij|ab)                        ... NO
+Generate (ia|bc)                        ... NO
+Generate (ab|cd)                        ... NO
+Generate (pq|rs)                        ... NO
+
+Number of operators                     ... 1
+   Operator 0                           ...    4-  13 to   14-  61
+   PQMN-Container name                  ... mol.SS_PQMN_0_2.tmp
+   IJKL-Container name    op=0,0        ... mol.SS_IJKL_0_2.tmp
+
+Starting integral transformations       ... done
+Completed Coulomb integral formation in   0.0 sec
+
+----------------------------------
+J-TRAFO SECOND HALF TRANSFORMATION
+----------------------------------
+
+Generate (ij|kl)                        ... YES
+Generate (ij|ka)                        ... NO
+Generate (ij|ab)                        ... NO
+Generate (ia|bc)                        ... NO
+Generate (ab|cd)                        ... NO
+Generate (pq|rs)                        ... NO
+
+Number of operators                     ... 1
+   Operator 0                           ...    4-  13 to   14-  61
+   PQMN-Container name                  ... mol.SS_PQMN_0_3.tmp
+   IJKL-Container name    op=0,0        ... mol.SS_IJKL_0_3.tmp
+
+Starting integral transformations       ... done
+Completed Coulomb integral formation in   0.0 sec
+
+----------------------------------
+J-TRAFO SECOND HALF TRANSFORMATION
+----------------------------------
+
+Generate (ij|kl)                        ... YES
+Generate (ij|ka)                        ... NO
+Generate (ij|ab)                        ... NO
+Generate (ia|bc)                        ... NO
+Generate (ab|cd)                        ... NO
+Generate (pq|rs)                        ... NO
+
+Number of operators                     ... 1
+   Operator 0                           ...    4-  13 to   14-  61
+   PQMN-Container name                  ... mol.SS_PQMN_0_4.tmp
+   IJKL-Container name    op=0,0        ... mol.SS_IJKL_0_4.tmp
+
+Starting integral transformations       ... done
+Completed Coulomb integral formation in   0.0 sec
+
+----------------------------------
+J-TRAFO SECOND HALF TRANSFORMATION
+----------------------------------
+
+Generate (ij|kl)                        ... YES
+Generate (ij|ka)                        ... NO
+Generate (ij|ab)                        ... NO
+Generate (ia|bc)                        ... NO
+Generate (ab|cd)                        ... NO
+Generate (pq|rs)                        ... NO
+
+Number of operators                     ... 1
+   Operator 0                           ...    4-  13 to   14-  61
+   PQMN-Container name                  ... mol.SS_PQMN_0_5.tmp
+   IJKL-Container name    op=0,0        ... mol.SS_IJKL_0_5.tmp
+
+Starting integral transformations       ... done
+Completed Coulomb integral formation in   0.0 sec
+
+
+Time needed for calculating the SSC RMEs: 35.215909 seconds
+
+***********************************************************
+* DOING EVERYTHING A SECOND TIME: THIS TIME INCLUDING SSC *
+***********************************************************
+
+*************************************
+COMPUTING QDPT HAMILTONIAN
+*************************************
+
+*************************************
+Doing QDPT with SOC AND SSC!
+*************************************
+
+Lowest eigenvalue of the SOC matrix:    -149.81465657 Eh
+Energy stabilization:    -3.24506 cm-1
+Eigenvalues:     cm-1         eV      Boltzmann populations at T =  300.000 K
+   0:            0.00        0.0000       1.68e-01
+   1:            3.77        0.0005       1.65e-01
+   2:            3.77        0.0005       1.65e-01
+   3:         9082.11        1.1260       2.04e-20
+   4:         9082.12        1.1260       2.04e-20
+   5:        16431.65        2.0373       1.00e-35
+
+The threshold for printing is 0.0100
+Eigenvectors:
+                         Weight      Real          Image    : Block Root    Spin   Ms
+ STATE   0:       0.0000
+                         0.999866     0.000000    -0.999933 :     0    0    1    0
+ STATE   1:       3.7668
+                         0.420681    -0.594087    -0.260273 :     0    0    1    1
+                         0.579319    -0.703360     0.290867 :     0    0    1   -1
+ STATE   2:       3.7668
+                         0.579319     0.620126    -0.441320 :     0    0    1    1
+                         0.420681    -0.095158     0.641581 :     0    0    1   -1
+ STATE   3:    9082.1147
+                         1.000000    -1.000000    -0.000000 :     1    0    0    0
+ STATE   4:    9082.1156
+                         1.000000    -1.000000    -0.000000 :     1    1    0    0
+ STATE   5:   16431.6500
+                         0.999866     0.999933     0.000000 :     1    2    0    0
+
+*************************************
+COMPUTING QDPT PROPERTIES
+*************************************
+
+
+--------------------------------------------
+           ZERO-FIELD SPLITTING
+2ND ORDER SOC and SSC CONTRIBUTION
+--------------------------------------------
+
+Second order D-tensor: component '0'
+    0.000000     0.000000     0.000000 
+    0.000000     0.000000     0.000000 
+    0.000000     0.000000     0.000000 
+
+Second order D-tensor: component '-'
+    0.000000     0.000000    -0.000000 
+    0.000000     0.000000    -0.000000 
+   -0.000000    -0.000000     2.202110 
+
+Second order D-tensor: component '+'
+    0.000000     0.000000     0.000000 
+    0.000000     0.000000     0.000000 
+    0.000000     0.000000     0.000000 
+
+Raw matrix (cm-1):
+   -0.521692     0.000000    -0.000000 
+    0.000000    -0.521692    -0.000000 
+   -0.000000    -0.000000     3.245493 
+
+Eigenvalues (cm-1):
+   -0.521692    -0.521692     3.245493 
+
+Eigenvalues (traceless) (cm-1):
+   -1.255728    -1.255728     2.511457 
+
+Eigenvectors:
+   -0.474929     0.880024     0.000000 
+   -0.880024    -0.474929     0.000000 
+   -0.000000    -0.000000    -1.000000 
+
+Euler angles w.r.t. molecular frame (degrees):
+    -61.6453       0.0000       0.0000
+
+D   =    3.767185  cm-1
+E/D =    0.000000
+
+Individual contributions to D-tensor:
+Block  Mult  Root          D          E
+    0     3     0      0.000      0.000
+    1     1     0      0.000      0.000
+    1     1     1      0.000     -0.000
+    1     1     2      2.202      0.000
+Norm of projected state 0 of the effective Hamiltonian: 0.999866
+Norm of projected state 1 of the effective Hamiltonian: 1.000000
+Norm of projected state 2 of the effective Hamiltonian: 1.000000
+WARNING: If the projections have norms significantly smaller than 1, the effective Hamiltonian might not be very meaningful!
+
+--------------------------------------------------------
+                  ZERO-FIELD SPLITTING
+EFFECTIVE HAMILTONIAN SOC and SSC CONTRIBUTION
+--------------------------------------------------------
+
+Effective Hamiltonian from projected relativistic states and relativistic energies:
+
+Real part:  
+                  0          1          2    
+      0       3.766750  -0.000000  -0.000000
+      1      -0.000000   0.000000   0.000000
+      2      -0.000000   0.000000   3.766750
+
+Image part: 
+                  0          1          2    
+      0      -0.000000   0.000000  -0.000000
+      1      -0.000000  -0.000000  -0.000000
+      2       0.000000   0.000000  -0.000000
+Raw matrix (cm-1):
+   -0.000000     0.000000    -0.000000 
+    0.000000     0.000000    -0.000000 
+   -0.000000    -0.000000     3.766750 
+
+Eigenvalues (cm-1):
+    0.000000    -0.000000     3.766750 
+
+Eigenvalues (traceless) (cm-1):
+   -1.255583    -1.255583     2.511167 
+
+Eigenvectors:
+   -0.391739     0.920076     0.000000 
+   -0.920076    -0.391739     0.000000 
+   -0.000000    -0.000000    -1.000000 
+
+Euler angles w.r.t. molecular frame (degrees):
+    -66.9372       0.0000       0.0000
+
+D   =    3.766750  cm-1
+E/D =    0.000000
+
+  *** Storing geometry in DTensor axis frame as mol.CASSCF_DTensor_HEFF_rotated.xyz  ***
+
+Individual contributions to D-tensor:
+Block  Mult  Root          D          E
+    1     1     0     -0.000     -0.000
+    1     1     1      0.000      0.000
+    1     1     2      2.202     -0.000
+-----------------------------------------
+Computing the QDPT Transition Densities ...
+10% done
+20% done
+30% done
+40% done
+50% done
+60% done
+70% done
+80% done
+90% done
+100% done
+ done 
+-----------------------------------------
+
+
+Energy levels:  cm-1      eV      Boltzmann populations for T = 300.00  K 
+
+   0 :         0.000     0.0000         3.37e-01 
+   1 :         3.767     0.0005         3.31e-01 
+   2 :         3.767     0.0005         3.31e-01 
+   3 :      9082.115     1.1260         4.09e-20 
+   4 :      9082.116     1.1260         4.09e-20 
+   5 :     16431.650     2.0373         2.01e-35 
+
+--------------------------------------------------------------------------------------------------------
+  SOC+SSC CORRECTED ABSORPTION SPECTRUM VIA TRANSITION ELECTRIC DIPOLE MOMENTS    
+--------------------------------------------------------------------------------------------------------
+      Transition         Energy     Energy  Wavelength fosc(D2)      D2       |DX|      |DY|      |DZ|  
+                          (eV)      (cm-1)    (nm)  (*population)  (au**2)    (au)      (au)      (au)  
+--------------------------------------------------------------------------------------------------------
+  1-3.0A  ->  2-3.0A    0.000000       0.0     0.0   0.000000000   0.00000   0.00000   0.00000   0.00000
+  0-3.0A  ->  1-3.0A    0.000467       3.8  2654808.5   0.000000000   0.00000   0.00000   0.00000   0.00000
+  0-3.0A  ->  2-3.0A    0.000467       3.8  2654808.5   0.000000000   0.00000   0.00000   0.00000   0.00000
+  2-3.0A  ->  3-1.0A    1.125572    9078.3  1101.5   0.000000000   0.00000   0.00000   0.00000   0.00000
+  1-3.0A  ->  3-1.0A    1.125572    9078.3  1101.5   0.000000000   0.00000   0.00000   0.00000   0.00000
+  2-3.0A  ->  4-1.0A    1.125572    9078.3  1101.5   0.000000000   0.00000   0.00000   0.00000   0.00000
+  1-3.0A  ->  4-1.0A    1.125572    9078.3  1101.5   0.000000000   0.00000   0.00000   0.00000   0.00000
+  0-3.0A  ->  3-1.0A    1.126039    9082.1  1101.1   0.000000000   0.00000   0.00000   0.00000   0.00000
+  0-3.0A  ->  4-1.0A    1.126039    9082.1  1101.1   0.000000000   0.00000   0.00000   0.00000   0.00000
+  2-3.0A  ->  5-1.0A    2.036798   16427.9   608.7   0.000000000   0.00000   0.00000   0.00000   0.00000
+  1-3.0A  ->  5-1.0A    2.036798   16427.9   608.7   0.000000000   0.00000   0.00000   0.00000   0.00000
+  0-3.0A  ->  5-1.0A    2.037265   16431.7   608.6   0.000000000   0.00000   0.00000   0.00000   0.00000
+
+----------------------------------------------------------------------------------------------
+  SOC+SSC CORRECTED CD SPECTRUM VIA TRANSITION ELECTRIC DIPOLE MOMENTS    
+----------------------------------------------------------------------------------------------
+      Transition         Energy     Energy  Wavelength    R       |MX|      |MY|      |MZ|  
+                          (eV)      (cm-1)    (nm)    (1e40*cgs)  (au)      (au)      (au)  
+----------------------------------------------------------------------------------------------
+  1-3.0A  ->  2-3.0A    0.000000       0.0     0.0   -0.00000   0.00000   0.00000   0.00000
+  0-3.0A  ->  1-3.0A    0.000467       3.8  2654808.5   -0.00000   0.00000   0.00000   0.00000
+  0-3.0A  ->  2-3.0A    0.000467       3.8  2654808.5   -0.00000   0.00000   0.00000   0.00000
+  2-3.0A  ->  3-1.0A    1.125572    9078.3  1101.5   -0.00000   0.00000   0.00000   0.00000
+  1-3.0A  ->  3-1.0A    1.125572    9078.3  1101.5    0.00000   0.00000   0.00000   0.00000
+  2-3.0A  ->  4-1.0A    1.125572    9078.3  1101.5    0.00000   0.00000   0.00000   0.00000
+  1-3.0A  ->  4-1.0A    1.125572    9078.3  1101.5   -0.00000   0.00000   0.00000   0.00000
+  0-3.0A  ->  3-1.0A    1.126039    9082.1  1101.1   -0.00000   0.00000   0.00000   0.00000
+  0-3.0A  ->  4-1.0A    1.126039    9082.1  1101.1   -0.00000   0.00000   0.00000   0.00000
+  2-3.0A  ->  5-1.0A    2.036798   16427.9   608.7    0.00000   0.00000   0.00000   0.00000
+  1-3.0A  ->  5-1.0A    2.036798   16427.9   608.7    0.00000   0.00000   0.00000   0.00000
+  0-3.0A  ->  5-1.0A    2.037265   16431.7   608.6   -0.00000   0.00000   0.00000   0.00000
+
+--------------
+CASSCF TIMINGS
+--------------
+
+Total time                       ...       38.0 sec
+Sum of individual times          ...       73.8 sec (194.1%)
+
+Calculation of AO operators
+Calculation of MO transformed quantities
+Configuration interaction steps
+   CI-setup phase                ...        0.1 sec (  0.2%)
+Orbital improvement steps
+Properties                       ...       37.4 sec ( 98.4%)
+   SOC integral calculation      ...        0.0 sec (  0.0%)
+   SSC RMEs (incl. integrals)    ...       35.2 sec ( 92.6%)
+   SOC RMEs                      ...        1.1 sec (  2.9%)
+
+Maximum memory used throughout the entire CASSCF-calculation: 56.4 MB
+
+-------------------------   --------------------
+FINAL SINGLE POINT ENERGY      -149.814656570134
+-------------------------   --------------------
+
+
+
+           ************************************************************
+           *        Program running with 4 parallel MPI-processes     *
+           *              working on a common directory               *
+           ************************************************************
+
+------------------------------------------------------------------------------
+                              ORCA PROPERTY CALCULATIONS
+------------------------------------------------------------------------------
+
+GBWName                                 ... mol.gbw
+Number of atoms                         ...      2
+Number of basis functions               ...     62
+Max core memory                         ...   8000 MB
+
+Electric properties:
+Dipole moment                           ... YES
+Quadrupole moment                       ...  NO
+Static polarizability (Dipole/Dipole)   ...  NO
+Static polarizability (Dipole/Quad.)    ...  NO
+Static polarizability (Quad./Quad.)     ...  NO
+Static polarizability (Velocity)        ...  NO
+
+Atomic electric properties:
+Dipole moment                           ...  NO
+Quadrupole moment                       ...  NO
+Static polarizability                   ...  NO
+
+Choice of electric origin               ... Center of mass
+Position of electric origin             ...     0.000000     0.000000     1.139316
+
+General magnetic properties:
+Magnetizability                         ...  NO
+
+EPR properties:
+g-Tensor (aka g-matrix)                 ...  NO
+Zero-Field splitting spin-orbit         ...  NO
+Zero-field splitting spin-spin          ...  NO
+Hyperfine couplings                     ...  NO (   0 nuclei)
+Quadrupole couplings                    ...  NO (   0 nuclei)
+Contact density                         ...  NO (   0 nuclei)
+
+NMR properties:
+Chemical shifts                         ...  NO (   0 nuclei)
+Spin-rotation constants                 ...  NO (   0 nuclei)
+Spin-spin couplings                     ...  NO (   0 nuclei,    0 pairs)
+
+Choice of magnetic origin               ... GIAO
+Position of magnetic origin             ...     0.000000     0.000000     0.000000
+
+Properties with geometric perturbations:
+SCF Hessian                             ...  NO
+IR spectrum                             ...  NO
+VCD spectrum                            ...  NO
+X-ray spectroscopy properties:
+SCF XES/XAS/RIXS spectra                ...  NO
+
+SCF SOC stabilization energy            ...  NO
+Diagonal Born-Oppenheimer correction    ...  NO
+
+-------------
+DIPOLE MOMENT
+-------------
+
+Method             : CASSCF/ALL STATES AVERAGE
+Type of density    : Electron Density
+Level              : Unrelaxed density
+State              :  -1
+Multiplicity       :  -1
+Irrep              :   0
+Energy             :  -149.7883791110229765 Eh
+Basis              : AO
+                                X                 Y                 Z
+Electronic contribution:      0.000000039      -0.000000059      -0.000000000
+Nuclear contribution   :      0.000000000       0.000000000       0.000000000
+                        -----------------------------------------
+Total Dipole Moment    :      0.000000039      -0.000000059      -0.000000000
+                        -----------------------------------------
+Magnitude (a.u.)       :      0.000000070
+Magnitude (Debye)      :      0.000000179
+
+
+
+--------------------
+Rotational spectrum 
+--------------------
+ 
+Rotational constants in cm-1:             0.000000             1.449384             1.449384 
+Rotational constants in MHz :             0.000000         43451.442843         43451.442843 
+
+Dipole components along the rotational axes: 
+x,y,z [a.u.] :    -0.000000    -0.000000     0.000000 
+x,y,z [Debye]:    -0.000000    -0.000000     0.000000 
+
+ 
+
+Dipole moment calculation done in   0.0 sec 
+
+Maximum memory used throughout the entire PROP-calculation: 4.2 MB
+
+--------------------------------
+SUGGESTED CITATIONS FOR THIS RUN
+--------------------------------
+
+Below you find a list of papers that are relevant to this ORCA run
+We neither can nor want to force you to cite these papers, but we appreciate if you do
+You receive ORCA, which is the product of decades of hard work by many enthusiastic individuals, for free
+The only thing we kindly ask in return is that you cite our papers,
+We deeply appreciate it, if you show your appreciation for ORCA by not just citing the generic ORCA reference.
+
+Please note that relegating all ORCA citations to the supporting information does *not* help us.
+SI sections are not indexed - citations you put there will not count into any citation statistics
+But we need these citations in order to attract the funding resources that allow us to do what we are doing
+
+Therefore, if you are a happy ORCA user, please consider citing a few of the papers listed below in the main body of your paper
+
+In addition to the list printed below, the program has created the file mol.bibtex that contains the list in bibtex format
+You can import this file easily into all common literature databanks and citation aid programs
+
+
+List of essential papers. We consider these as the minimum necessary citations
+
+  1. Neese, F.
+     Software update: the ORCA program system, version 5.0
+     WIRES Comput. Molec. Sci. 2022 12(1), e1606
+     doi.org/10.1002/wcms.1606
+
+List of papers to cite with high priority. The work reported in these papers was absolutely
+necessary for this run to complete.
+Our perspective: the developers of density functionals and basis sets usually get cited in chemistry papers
+Good! But without the algorithms to do something with them, the functionals or basis sets would not do anything.
+Hence, in our opinion, the algorithm design and method developments papers are equally worthy of getting cited
+
+  1. Ganyushin, D.; Neese, F.
+     First-principles calculations of zero-field splitting parameters
+     J. Chem. Phys. 2006 125(2), Art. No. 024103
+     doi.org/10.1063/1.2213976
+  2. Ganyushin, D.; Gilka, N.; Taylor, P.R.; Marian, C.M.; Neese, F.
+     The resolution of the identity approximation for calculations of spin-spin contribution to zero-field splitting parameters
+     J. Chem. Phys. 2010 132 , 144111
+     doi.org/10.1063/1.3367718
+  3. Kollmar, C.; Sivalingam, K.; Helmich-Paris, B.; Angeli, C.; Neese, F.
+     A perturbation-based super-CI approach for the orbital optimization of a CASSCF wave function
+     J. Comput. Chem. 2019 40 , 1463-1470
+     doi.org/10.1002/jcc.25801
+  4. Lang, L.; Neese, F.
+     Spin-dependent properties in the framework of the dynamic correlation dressed complete active space method
+     J. Chem. Phys. 2019 150 , 
+     doi.org/10.1063/1.5085203
+  5. Neese, F.
+     The SHARK Integral Generation and Digestion System
+     J. Comp. Chem. 2022  , 1-16
+     doi.org/10.1002/jcc.26942
+
+List of suggested additional citations. These are papers that are important in the 'surrounding' of 
+of this run, or papers that preceded the highly important papers. If you like your results we are grateful for a citation.
+
+  1. Neese, F.
+     The ORCA program system
+     WIRES Comput. Molec. Sci. 2012 2(1), 73-78
+     doi.org/10.1002/wcms.81
+  2. Neese, F.
+     Software update: the ORCA program system, version 4.0
+     WIRES Comput. Molec. Sci. 2018 8(1), 1-6
+     doi.org/10.1002/wcms.1327
+  3. Neese, F.; Wennmohs, F.; Becker, U.; Riplinger, C.
+     The ORCA quantum chemistry program package
+     J. Chem. Phys. 2020 152 , Art. No. L224108
+     doi.org/10.1063/5.0004608
+
+List of optional additional citations
+
+  1. Neese, F.
+     Approximate second-order SCF convergence for spin unrestricted wavefunctions
+     Chem. Phys. Lett. 2000 325(1-3), 93-98
+     doi.org/10.1016/s0009-2614(00)00662-x
+
+Timings for individual modules:
+
+Sum of individual times          ...      313.028 sec (=   5.217 min)
+Startup calculation              ...        0.698 sec (=   0.012 min)   0.2 %
+SCF iterations                   ...        0.342 sec (=   0.006 min)   0.1 %
+CASSCF iterations                ...      310.896 sec (=   5.182 min)  99.3 %
+Property integrals               ...        0.847 sec (=   0.014 min)   0.3 %
+Property calculations            ...        0.245 sec (=   0.004 min)   0.1 %
+                             ****ORCA TERMINATED NORMALLY****
+TOTAL RUN TIME: 0 days 0 hours 5 minutes 13 seconds 463 msec
+'CASSCF.gbw' -> '/csnfs/users/llang/calculations/ICE_SOC_SSC/diatomics/O2/def2-TZVP/comparison_MRCI/CAS_8_10/ICE_SOMF/CASSCF.gbw'
+'mol.CASSCF_DTensor_HEFF_rotated.xyz' -> '/csnfs/users/llang/calculations/ICE_SOC_SSC/diatomics/O2/def2-TZVP/comparison_MRCI/CAS_8_10/ICE_SOMF/mol.CASSCF_DTensor_HEFF_rotated.xyz'
+'mol.bibtex' -> '/csnfs/users/llang/calculations/ICE_SOC_SSC/diatomics/O2/def2-TZVP/comparison_MRCI/CAS_8_10/ICE_SOMF/mol.bibtex'
+'mol.densities' -> '/csnfs/users/llang/calculations/ICE_SOC_SSC/diatomics/O2/def2-TZVP/comparison_MRCI/CAS_8_10/ICE_SOMF/mol.densities'
+'mol.densitiesinfo' -> '/csnfs/users/llang/calculations/ICE_SOC_SSC/diatomics/O2/def2-TZVP/comparison_MRCI/CAS_8_10/ICE_SOMF/mol.densitiesinfo'
+'mol.err' -> '/csnfs/users/llang/calculations/ICE_SOC_SSC/diatomics/O2/def2-TZVP/comparison_MRCI/CAS_8_10/ICE_SOMF/mol.err'
+'mol.gbw' -> '/csnfs/users/llang/calculations/ICE_SOC_SSC/diatomics/O2/def2-TZVP/comparison_MRCI/CAS_8_10/ICE_SOMF/mol.gbw'
+'mol.job' -> '/csnfs/users/llang/calculations/ICE_SOC_SSC/diatomics/O2/def2-TZVP/comparison_MRCI/CAS_8_10/ICE_SOMF/mol.job'
+'mol.property.txt' -> '/csnfs/users/llang/calculations/ICE_SOC_SSC/diatomics/O2/def2-TZVP/comparison_MRCI/CAS_8_10/ICE_SOMF/mol.property.txt'
+cp: cannot stat 'mol.asa.inp': No such file or directory
+cp: missing destination file operand after '/csnfs/users/llang/calculations/ICE_SOC_SSC/diatomics/O2/def2-TZVP/comparison_MRCI/CAS_8_10/ICE_SOMF/'
+Try 'cp --help' for more information.
+cp: cannot stat 'mol.pc.tmp': No such file or directory
+cp: cannot stat 'mol.QM2.pc.tmp': No such file or directory
