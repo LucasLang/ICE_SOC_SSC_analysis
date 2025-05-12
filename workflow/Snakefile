@@ -68,7 +68,7 @@ rule extract_gvalues:
     output:
         "../results/MoHIPT_gvalues"
     shell:
-        "julia scripts/extract_gvalues.jl {input} {output}"
+        "julia scripts/extract_gvalues.jl {input} CASSCF {output}"
 
 rule extract_timings:
     input:
