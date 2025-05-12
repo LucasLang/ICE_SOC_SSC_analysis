@@ -1,0 +1,188 @@
+$PAL_Flags
+   description: The PAL Flags
+   geom. index: 1
+   prop. index: 1
+        Diskflag:     2
+$End
+$CASSCF_Energies
+   description: The CASSCF energies
+   geom. index: 1
+   prop. index: 1
+       Number of Multiplicities          : 2 
+       Number of Electrons               : 16 
+       Number of Frozen core Electrons   : 0 
+       FINAL CASSCF Energy               :   -149.7233797165 
+       Total number of roots             : 4
+Mult   NRoots    Root     Irrep         Energy
+  3       1       0         0      -149.7458856137
+  1       3       0         0      -149.7078387218
+  1       3       1         0      -149.7078360582
+  1       3       2         0      -149.6869466776
+$End
+$Mayer_Pop
+   description: The Mayer population analysis
+   geom. index: 1
+   prop. index: 1
+     Number of atoms                     : 2
+     Threshold for printing              : 0.1000000
+     Number of bond orders printed       : 1
+  NA   - Mulliken gross atomic population
+  ZA   - Total nuclear charge
+  QA   - Mulliken gross atomic charge
+  VA   - Mayer's total valence
+  BVA  - Mayer's bonded valence
+  FA   - Mayer's free valence
+  ATOM       NA         ZA         QA         VA         BVA        FA
+  0   0     8.0000     8.0000    -0.0000     2.4059     1.3427     1.0632
+  1   0     8.0000     8.0000    -0.0000     2.4059     1.3427     1.0632
+      Bond orders larger than 0.1000000
+           Atom A     A.N. of A          Atom B    A.N. of B              Bond order
+                0             8               1            8                1.342667
+$End
+$CASSCF_Dipole
+   description: The CASSCF dipole moments 
+   geom. index: 1
+   prop. index: 1
+        Number of states:  0
+        The CASSCF Dipole moments :
+                  0          1          2          3    
+      0       0.000000  -0.000000  -0.000000   0.000000
+        Info about the states:
+                  0          1    
+      0         0          0     
+$End
+$CASSCF_DTensor
+   description: CASSCF ZFS D tensor 
+   geom. index: 1
+   prop. index: 1
+ Method: 1 CASSCF 
+ Type: 2 SOC_2ND_ORDER 
+ Spin multiplicity: 3 
+ Raw D tensor (cm^-1): 
+                  0          1          2    
+      0       0.000000   0.000000  -0.000000
+      1       0.000000   0.000000  -0.000000
+      2      -0.000000  -0.000000   2.316877
+ D Eigenvalues: 
+                  0    
+      0       0.000000
+      1       0.000000
+      2       2.316877
+ D Eigenvectors: 
+                  0          1          2    
+      0      -0.987165  -0.159706  -0.000000
+      1       0.159706  -0.987165  -0.000000
+      2      -0.000000  -0.000000   1.000000
+ Final D value (cm^-1)   2.316877
+ Final E value (cm^-1)   0.000000
+$End
+$CASSCF_DTensor
+   description: CASSCF ZFS D tensor 
+   geom. index: 1
+   prop. index: 2
+ Method: 1 CASSCF 
+ Type: 2 SOC_2ND_ORDER 
+ Spin multiplicity: 3 
+ Raw D tensor (cm^-1): 
+                  0          1          2    
+      0       0.000000   0.000000   0.000000
+      1       0.000000   0.000000   0.000000
+      2       0.000000   0.000000   0.000000
+ D Eigenvalues: 
+                  0    
+      0       0.000000
+      1       0.000000
+      2       2.316877
+ D Eigenvectors: 
+                  0          1          2    
+      0       0.159706  -0.987165  -0.000000
+      1      -0.987165  -0.159706  -0.000000
+      2      -0.000000  -0.000000   1.000000
+ Final D value (cm^-1)   2.316877
+ Final E value (cm^-1)   0.000000
+$End
+$CASSCF_DTensor
+   description: CASSCF ZFS D tensor 
+   geom. index: 1
+   prop. index: 3
+ Method: 1 CASSCF 
+ Type: 1 SOC_HEFF 
+ Spin multiplicity: 3 
+ Raw D tensor (cm^-1): 
+                  0          1          2    
+      0       0.000000   0.000000   0.000000
+      1       0.000000   0.000000   0.000000
+      2       0.000000   0.000000   0.000000
+ D Eigenvalues: 
+                  0    
+      0       0.000000
+      1      -0.000000
+      2       2.316462
+ D Eigenvectors: 
+                  0          1          2    
+      0      -0.851864   0.523763  -0.000000
+      1       0.523763   0.851864  -0.000000
+      2      -0.000000   0.000000   1.000000
+ Final D value (cm^-1)   2.316462
+ Final E value (cm^-1)   0.000000
+$End
+$CASSCF_DTensor
+   description: CASSCF ZFS D tensor 
+   geom. index: 1
+   prop. index: 4
+ Method: 1 CASSCF 
+ Type: 2 SOC_2ND_ORDER 
+ Spin multiplicity: 3 
+ Raw D tensor (cm^-1): 
+                  0          1          2    
+      0       0.000000   0.000000  -0.000000
+      1       0.000000   0.000000  -0.000000
+      2      -0.000000  -0.000000   2.316877
+ D Eigenvalues: 
+                  0    
+      0       0.000000
+      1       0.000000
+      2       2.316877
+ D Eigenvectors: 
+                  0          1          2    
+      0      -0.987165  -0.159706  -0.000000
+      1       0.159706  -0.987165  -0.000000
+      2      -0.000000  -0.000000   1.000000
+ Final D value (cm^-1)   2.316877
+ Final E value (cm^-1)   0.000000
+$End
+$Calculation_Info
+   description: Details of the calculation
+   geom. index: 1
+   prop. index: 1
+     Multiplicity:                          3
+     Charge:                                0
+     number of atoms:                       2
+     number of electrons:                   0
+     number of frozen core electrons:       1
+     number of correlated electrons:        0
+     number of basis functions:             62
+     number of aux C basis functions:       152
+     number of aux J basis functions:       0
+     number of aux JK basis functions:      0
+     number of aux CABS basis functions:    0
+     Total Energy (Eh)                      -149.7233797165
+$End
+$Calculation_Timings
+   description: Timings of the calculation
+   geom. index: 1
+   prop. index: 1
+Total number of timings: 4
+Sum of Timings               ...       33.579 sec (=    0.560 min) 
+GTO Integrals                ...        0.698 sec (=    0.012 min) (index: 0 )
+SCF iterations               ...        0.255 sec (=    0.004 min) (index: 2 )
+CASSCF iterations            ...       32.172 sec (=    0.536 min) (index: 16 )
+Property integrals           ...        0.455 sec (=   0.008 min) (index: 43 )
+$End
+$Geometry
+    Number of atoms:    2 
+    Geometry Index:     1 
+    Coordinates:
+               0 O      0.000000000000    0.000000000000    0.000000000000
+               1 O      0.000000000000    0.000000000000    1.205800000000
+$End
