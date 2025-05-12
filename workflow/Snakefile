@@ -15,7 +15,9 @@ rule all:
         "../results/ZFS_CAS_8_10_comparison_SOCSSC_ICE",
         "../results/ZFS_CAS_8_10_comparison_SOCSSC_MRCI",
         "../results/ZFS_smallCAS_CASSCF_SOCSSC",
-        "../results/ZFS_smallCAS_NEVPT2_SOCSSC"
+        "../results/ZFS_smallCAS_NEVPT2_SOCSSC",
+        "../results/MoHIPT_gvalues_smallCAS_CASSCF",
+        "../results/MoHIPT_gvalues_smallCAS_NEVPT2"
 
 rule extract_transitionenergies:
     input:
@@ -69,6 +71,14 @@ rule extract_gvalues:
         "../results/MoHIPT_gvalues"
     shell:
         "julia scripts/extract_gvalues.jl {input} CASSCF {output}"
+
+rule extract_gvalues_smallCAS:
+    input:
+        "../resources/ORCA/MoHIPT/RI_NEVPT2/CAS_3_5/mol.mpi8.out"
+    output:
+        "../results/MoHIPT_gvalues_smallCAS_{method}"
+    shell:
+        "julia scripts/extract_gvalues.jl {input} {wildcards.method} {output}"
 
 rule extract_timings:
     input:
