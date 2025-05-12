@@ -2,18 +2,23 @@ using OutputParser
 using DelimitedFiles
 
 ORCAfile = ARGS[1]
-settings = ARGS[2]
-outfile = ARGS[3]
+energysettings = ARGS[2]
+spinopsettings = ARGS[3]
+outfile = ARGS[4]
 
-if settings == "SOC"
-    searchstring1 = "QDPT with ONLY SOC"
-elseif settings == "SOCSSC"
-    searchstring1 = "QDPT with SOC AND SSC"
+if energysettings == "CASSCF" && spinopsettings == "SOC"
+    searchstrings = ["QDPT WITH CASSCF DIAGONAL ENERGIES", "QDPT with ONLY SOC"]
+elseif energysettings == "NEVPT2" && spinopsettings == "SOC"
+    searchstrings = ["QDPT WITH NEVPT2 DIAGONAL ENERGIES", "QDPT with ONLY SOC"]
+elseif energysettings == "CASSCF" && spinopsettings == "SOCSSC"
+    searchstrings = ["THIS TIME INCLUDING SSC", "QDPT with SOC AND SSC"]
+elseif energysettings == "NEVPT2" && spinopsettings == "SOCSSC"
+    searchstrings = ["THIS TIME INCLUDING SSC", "QDPT WITH NEVPT2 DIAGONAL ENERGIES", "QDPT with SOC AND SSC"]
 else
-    error("The only possible settings are 'SOC' and 'SOCSSC'!")
+    error("The only possible methods for diagonal energies are 'CASSCF' and 'NEVPT2' and the only possible spin operator settings are 'SOC' and 'SOCSSC'!")
 end
 
-values = [parse_float(ORCAfile, [searchstring1, "STATE   $state"], 0, 2) for state in 0:2]
+values = [parse_float(ORCAfile, [searchstrings..., "STATE   $state"], 0, 2) for state in 0:2]
 
 average = (values[2]+values[3])/2
 splitting = average-values[1]

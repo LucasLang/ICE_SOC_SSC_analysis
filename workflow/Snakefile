@@ -3,17 +3,19 @@ outfolder = "../results"
 rule all:
     input:
         f"{outfolder}/PES.png",
-        "../results/ZFS_SOC_4roots",
-        "../results/ZFS_SOC_9roots",
-        "../results/ZFS_SOCSSC_4roots",
-        "../results/ZFS_SOCSSC_9roots",
+        "../results/ZFS_ICE_SOC_4roots",
+        "../results/ZFS_ICE_SOC_9roots",
+        "../results/ZFS_ICE_SOCSSC_4roots",
+        "../results/ZFS_ICE_SOCSSC_9roots",
         "../results/MoHIPT_gvalues",
         "../results/times_RME",
         "../results/times_sigma",
         "../results/ZFS_CAS_8_10_comparison_SOC_ICE",
         "../results/ZFS_CAS_8_10_comparison_SOC_MRCI",
         "../results/ZFS_CAS_8_10_comparison_SOCSSC_ICE",
-        "../results/ZFS_CAS_8_10_comparison_SOCSSC_MRCI"
+        "../results/ZFS_CAS_8_10_comparison_SOCSSC_MRCI",
+        "../results/ZFS_smallCAS_CASSCF_SOCSSC",
+        "../results/ZFS_smallCAS_NEVPT2_SOCSSC"
 
 rule extract_transitionenergies:
     input:
@@ -44,13 +46,21 @@ rule plot_PES:
     shell:
         "python scripts/plot_PES.py ../resources/exp_PES {input.transitionenergy_file} {params.outfolder}"
         
-rule extract_ZFS:
+rule extract_ZFS_ICE:
     input:
         "../resources/ORCA/O2/CAS_12_60_{num}roots/mol.mpi24.out"
     output:
-        "../results/ZFS_{settings}_{num}roots"
+        "../results/ZFS_ICE_{settings}_{num}roots"
     shell:
-        "julia scripts/extract_ZFS.jl {input} {wildcards.settings} {output}"
+        "julia scripts/extract_ZFS.jl {input} CASSCF {wildcards.settings} {output}"
+
+rule extract_ZFS_CAS_NEVPT2:
+    input:
+        "../resources/ORCA/O2/NEVPT2/mol.out"
+    output:
+        "../results/ZFS_smallCAS_{energysettings}_{spinopsettings}"
+    shell:
+        "julia scripts/extract_ZFS.jl {input} {wildcards.energysettings} {wildcards.spinopsettings} {output}"
 
 rule extract_gvalues:
     input:
